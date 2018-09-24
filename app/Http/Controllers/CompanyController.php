@@ -42,9 +42,9 @@ class CompanyController extends Controller
         $status = ($request["status"] == "on") ? 1 : 0;
         $inputs = $request->all();
         $rules = array(
-                    'company_name' => 'required',
+                    'company_name' => 'required|distinct',
                     'company_address' => 'required',
-                    'company_email' => 'required',
+                    'company_email' => 'required|distinct',
                     'company_contact' => 'required',
                     'company_gst' => 'required',
                     'company_pan' => 'required',
@@ -52,6 +52,8 @@ class CompanyController extends Controller
                     'status' => 'required'
                 );
         $valids = Validator::make($inputs, $rules);
+        $company_name = $request->company_name;
+        $company_email = $request->company_email;
 
         if($valids->fails()){
             return redirect()->route('company.create')->withErrors($valids)->withInput();
@@ -75,8 +77,13 @@ class CompanyController extends Controller
             else {
                 return 'No File';
             }
+            if (Company::where([ ["company_name", "=", $company_name ]])->exists()) {
+                return redirect()->route('company.create')->with('message','Company Name has a duplicate Value');
+            }
+            if (Company::where([ ["company_email", "=", $company_email ]])->exists()) {
+                return redirect()->route('company.create')->with('message','Company Email has a duplicate Value');
+            }
             $data = $request->all();
-
             $data['company_logo'] = $path;
             $data['status'] = $status;
             Company::create($data);

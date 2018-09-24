@@ -209,6 +209,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'Helpers'   => App\Libraries\Helpers::class,
+        'Helper' => App\Helpers\Helper::class,
     ],
 
 ];

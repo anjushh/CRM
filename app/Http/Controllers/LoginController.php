@@ -3,7 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Login;
+use App\UserLogin;
 use Illuminate\Http\Request;
+use Validator;
+use Session;
+use DB;
+use App\Company;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class LoginController extends Controller
 {
@@ -80,6 +88,33 @@ class LoginController extends Controller
      */
     public function destroy(Login $login)
     {
-        //
+
+    }
+    public function login()
+    {
+        return view('login.login');
+    }
+    public function loginstore(Request $request)
+    {   
+        $userData = UserLogin::where('email', $request->email)->where('password', $request->password)->first();
+        if ($userData) {
+            if( $userData->status == 1) {
+                $request->session()->put('userdata', $userData);
+                $data = $request->session()->all();
+                return redirect()->route('dashboard')->with('success','you logged in succesfully');
+            }
+            else {
+                return redirect()->route('login.login')->with('failed','Your Status is inactive');
+            }
+        }
+        else {
+            return redirect()->route('login.login');
+        }
+    }
+    public function logout(Request $request)
+    {
+        $request->session()->forget('userdata');
+        $request->session()->flush();
+        return redirect()->route('login.login')->with('logout', 'you have been logged out');
     }
 }

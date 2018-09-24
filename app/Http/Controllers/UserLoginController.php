@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\UserLogin;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 use Validator;
 
 class UserLoginController extends Controller
@@ -43,13 +44,20 @@ class UserLoginController extends Controller
         $inputs = $request->all();
         $user_datas = DB::table('user_types')->get();
         $rules = array(
-            'name' => 'required',
-            'email' => 'required',
+            'name' => 'required|distinct',
+            'email' => 'required|distinct',
             'designation' => 'required',
-            'user_type' => 'required'
+            'user_type' => 'required',
+            'password_confirm' => 'same:password'
         );
+        $messages = array(
+            'name.distinct'=>'Name has a duplicate value.',
+            'email.distinct'=>'Email has a duplicate value.',
+        );
+        $name = $request->name;
+        $email = $request->email;
+        
         $valids = Validator::make($inputs, $rules);
-
         if($valids->fails()){
             return redirect()->route('user.create')->withErrors($valids)->withInput();
         }
@@ -62,10 +70,18 @@ class UserLoginController extends Controller
                 return redirect()->route('user.create')->with('i', ($request->input('page', 1) - 1) * 10);
             }
             else {
-                $data = $request->all();
-                $data['status'] = $status;
-                UserLogin::create($data);
-                return redirect()->route('user.create',compact('user_datas'))->with('success','Data Submitted Successfully');
+                if (UserLogin::where([ ["name", "=", $name ]])->exists()) {
+                    return redirect()->route('user.create')->with('message','Name has a duplicate Value');
+                }
+                if (UserLogin::where([ ["email", "=", $email ]])->exists()) {
+                    return redirect()->route('user.create')->with('message','Email has a duplicate Value');
+                }
+                else {
+                    $data = $request->all();
+                    $data['status'] = $status;
+                    UserLogin::create($data);
+                    return redirect()->route('user.create',compact('user_datas'))->with('success','Data Submitted Successfully');
+                }
             }
         }
     }

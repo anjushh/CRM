@@ -9,6 +9,15 @@
         </div>
         <div class="card-body card-block">
             <div class="col-12">
+                @if(session()->has('message'))
+                    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                        <span class="badge badge-pill badge-danger">Failed</span>
+                            {{ session()->get('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                @endif
                 @if($errors->any())
                     @foreach ($errors->all() as $error)
                     <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">

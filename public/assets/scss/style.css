@@ -750,6 +750,20 @@
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease; }
 
+.logo_preview {
+  top: 24px;
+  position: absolute !important;
+  left: 12px !important;
+  border: 1px #ccc solid; }
+
+.logo_update {
+  position: relative;
+  z-index: 10;
+  background: transparent;
+  opacity: 0;
+  top: 0;
+  height: 97px; }
+
 body {
   background: #f1f2f7;
   display: table;
@@ -780,9 +794,12 @@ input:focus {
   float: left;
   width: 100%;
   margin-top: 22px; }
-  .form-group input {
+  .form-group input, .form-group select {
     border-radius: 0px; }
   .form-group ::placeholder {
+    font-size: 12px !important;
+    font-style: italic !important; }
+  .form-group select::placeholder {
     font-size: 12px;
     font-style: italic; }
 
@@ -2584,5 +2601,31 @@ table td {
 
 .table-responsive {
   display: table; }
+
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #989898;
+  margin-right: 0.5em;
+  font-size: 12px;
+  font-style: italic; }
+
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: ""; }
+
+.form-control:focus {
+  box-shadow: none; }
+
+select option:checked:after {
+  content: attr(title);
+  background: #666;
+  color: #fff;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  border: none; }
+
+.final_date, .start_date, .end_date, .time_period {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
