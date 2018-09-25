@@ -28,8 +28,8 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers/helper.php"
-        ]
+            "app/Helpers/helper.php", "app/Helpers/Helpers.php"
+        ]             
     },
     "autoload-dev": {
         "psr-4": {

@@ -15,5 +15,11 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'success_login'     => 'Welcome to Dentclues admin panel',
+    'failed_login'      => 'Invalid login credentials',
+    'logout'            => 'Logout successfully',
+    '404_error'         => 'Invalid request, Page not found',
+    'not_authorized'     => 'You are not authorized.',
+    'auth_required'     => 'Invalid request, Authorization required',
 
 ];

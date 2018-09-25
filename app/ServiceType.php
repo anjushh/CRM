@@ -12,4 +12,31 @@ class ServiceType extends Model
     {
         return $this->where('id',$id)->first();
     }
+
+     //For App---- Khushboo
+    public function validateServiceType($inputs){
+        $rules = [
+            'service_type' => 'required|max:50',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
+
+     //For App---- Khushboo
+    public function validateServiceTypeEdit($inputs){
+        $rules = [
+            'service_type' => 'required|max:50',
+            'id' => 'required|numeric',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
+
+    //For App --- Khushboo
+    public function store($input, $id = null)
+     {
+         if ($id) {
+             return $this->find($id)->update($input);
+         } else {
+             return $this->create($input)->id;
+         }
+     }  
 }
