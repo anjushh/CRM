@@ -30,21 +30,45 @@
                 </div>
                 @endif
             </div>
-            {{--Form Opened--}}
+            <!-- {{--Form Opened--}} -->
             @if(isset($edit_records))
             {!! Form::model($edit_records, ['method' => 'PATCH','route' => ['services.update', $edit_records->id]]) !!}
             @else
             {!! Form::open(array('route' => 'services.store','method'=>'POST','files'=>true)) !!}
             @endif
-            {{--Form Opened--}}
+            <!-- {{--Form Opened--}} -->
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    {!! Form::text('offered_price',Input::old('offered_price'), array('placeholder' => 'Offered Price','class' => 'form-control', 'required'=>'required')) !!}
+                </div>
+            </div>
+            <a class="btn btn-primary">Add Discount</a>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    {!! Form::text('discount', Input::old('discount'), array('placeholder' => 'Add Discount','class' => 'form-control')) !!}
+                </div>
+            </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
                 </div>
             </div>
-            {{-- Form Closed --}}
-            {{ Form::close() }}
-            {{-- Form Closed --}}   
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
+                </div>
+            </div>
+              
         </div>
         @if(isset($create_records))
         <div class="card-body">
@@ -62,10 +86,8 @@
                         @foreach ($create_records as $create_record)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $create_record->service_name }}</td>
-                            <td>{{ $create_record->service_price }}</td>
                             <td>
-                                <a class="btn btn-success btn-sm" href="{{ route('services.edit', $create_record->id) }}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-success btn-sm" href="{{ route('payment.edit', $create_record->id) }}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -74,6 +96,9 @@
             </div>
         </div>
         @endif
+        {{-- Form Closed --}}
+            {{ Form::close() }}
+            {{-- Form Closed --}} 
     </div>
 </div>
 @endsection

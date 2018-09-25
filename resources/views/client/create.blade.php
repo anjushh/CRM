@@ -101,11 +101,6 @@
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('remarks',Input::old('remarks'), array('placeholder' => 'Enter Remarks','class' => 'form-control', 'required'=>'required')) !!}
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                <div class="form-group">
                     {!! Form::text('follow_ups',Input::old('follow_ups'), array('placeholder' => 'Enter Folloups','class' => 'form-control', 'required'=>'required')) !!}
                 </div>
             </div>
@@ -135,6 +130,11 @@
                 </div>
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                    {!! Form::textarea('remarks',Input::old('remarks'), array('placeholder' => 'Enter Remarks','class' => 'form-control')) !!}
+                </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-25 float-left btn-primary btn-xl ml-2']) }}
                 {{ Form::close() }}
             </div>
@@ -156,6 +156,8 @@
                             @if($j == 1) 
                                 <th scope="col">Edit</th>
                             @endif
+                            <th scope="col">Update Status</th>
+                            <th scope="col">Update Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -170,6 +172,20 @@
                                 <a class="btn btn-success btn-sm" href="{{ route('client.edit', $create_record->id) }}"><i class="fa fa-edit"></i></a>
                             </td>
                             @endif
+                            <td>
+                                @php
+                                    $stat_id = \App\StatusUpdate::where('client_id',$create_record->id)->OrderBy('id','desc')->pluck('id')->first();
+                                    $client_id = $create_record->id;
+                                @endphp
+                                <a class="btn btn-success btn-sm" href="{{ route('status_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>
+                            </td>
+                            <td>
+                                @php
+                                    $stat_id = \App\StatusUpdate::where('client_id',$create_record->id)->OrderBy('id','desc')->pluck('id')->first();
+                                    $client_id = $create_record->id;
+                                @endphp
+                                <a class="btn btn-success btn-sm" href="{{ route('payment_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

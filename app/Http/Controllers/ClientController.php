@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Payment;
 use DB;
+use App\StatusUpdate;
 use App\LeadAssignment;
 use Validator;
 use Illuminate\Http\Request;
@@ -58,7 +60,6 @@ class ClientController extends Controller
      */
     public function store(Request $request, $id = null)
     {
-
         $company_id = active_company();
 
         // To get user_type
@@ -108,6 +109,35 @@ class ClientController extends Controller
                 Client::find($id)->update($request->all());
                 $lead->save();
                 // Lead Assiggnment Code
+
+                // Status Update Code
+                $stat = new StatusUpdate;
+                $client_info = Client::where('id', $id)->first();
+                $stat->client_id = $client_info->id;
+                $stat->company_id = $company_id;
+                $stat->user_id = $user->id;
+                $stat->status_type = $request->status;
+                $stat->next_followup = $request->next_followup;
+                $stat->finali_date = $request->finali_date;
+                $stat->start_date = $request->start_date;
+                $stat->end_date = $request->end_date;
+                $stat->time_period = $request->time_period;
+                $stat->remarks = $request->remarks;
+                $stat->save();
+                // Status Update Code
+
+                // Payment Update Code
+                if($request->status == 3){
+                    $pay_ment = new Payment;
+                    $client_info = DB::table('clients')->latest()->first();
+                    $pay_ment->client_id = $client_info->id;
+                    $pay_ment->company_id = $company_id;
+                    $pay_ment->user_id = $user->id;
+                    $pay_ment->offered_price = $request->product_price;
+                    $pay_ment->save();
+                }
+                // Payment Update Code
+
                 return redirect()->route('client.create')->with('success','Data Updated Successfully');
             }
             else {
@@ -127,6 +157,7 @@ class ClientController extends Controller
                 else {
                     $lead->client_id = $client_info->id;
                 }
+
                 $lead->user_id = $user->id;
                 $lead->user_type = $user->user_type;
                 $lead->lead_head = $request->lead_head;
@@ -137,7 +168,34 @@ class ClientController extends Controller
                 $lead->save();
                 // Lead Assiggnment Code
 
+                // Status Update Code
+                $stat = new StatusUpdate;
+                $client_info = DB::table('clients')->latest()->first();
+                $stat->client_id = $client_info->id;
+                $stat->company_id = $company_id;
+                $stat->user_id = $user->id;
+                $stat->status_type = $request->status;
+                $stat->finali_date = $request->finali_date;
+                $stat->start_date = $request->start_date;
+                $stat->end_date = $request->end_date;
+                $stat->time_period = $request->time_period;
+                $stat->remarks = $request->remarks;
+                // dd($stat);
+                $stat->save();
+                // Status Update Code
                 
+                // Payment Update Code
+                if($request->status == 3){
+                    $pay_ment = new Payment;
+                    $client_info = DB::table('clients')->latest()->first();
+                    $pay_ment->client_id = $client_info->id;
+                    $pay_ment->company_id = $company_id;
+                    $pay_ment->user_id = $user->id;
+                    $pay_ment->offered_price = $request->product_price;
+                    $pay_ment->save();
+                }
+                // Payment Update Code
+
                 return redirect()->route('client.create')->with('success','Data Submitted Successfully');
             }
         }

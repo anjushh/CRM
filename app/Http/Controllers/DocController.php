@@ -1,22 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Payment;
 
-use DB;
-use Validator;
+use App\Doc;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class DocController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id = null)
-    {   
-        
+    public function index()
+    {
+        //
     }
 
     /**
@@ -24,14 +22,9 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id = null)
+    public function create()
     {
-        if('id' != null){
-            $create_records = DB::table('payments')->where('id',$id)->first();
-            return view('payment.payment_edit',compact('create_records'))->with('i', ($request->input('page', 1) - 1) * 10); 
-        }
-        $create_records = DB::table('payments')->get();
-        return view('payment.payment',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
+        //
     }
 
     /**
@@ -48,10 +41,10 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Payment  $payment
+     * @param  \App\Doc  $doc
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show(Doc $doc)
     {
         //
     }
@@ -59,10 +52,10 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Payment  $payment
+     * @param  \App\Doc  $doc
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment)
+    public function edit(Doc $doc)
     {
         //
     }
@@ -71,10 +64,10 @@ class PaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
+     * @param  \App\Doc  $doc
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, Doc $doc)
     {
         //
     }
@@ -82,10 +75,10 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Payment  $payment
+     * @param  \App\Doc  $doc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy(Doc $doc)
     {
         //
     }

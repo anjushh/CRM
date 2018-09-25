@@ -793,6 +793,8 @@ input:focus {
   margin-bottom: 1rem;
   float: left;
   width: 100%;
+  max-width: 100%;
+  min-width: 100%;
   margin-top: 22px; }
   .form-group input, .form-group select {
     border-radius: 0px; }
@@ -2129,9 +2131,6 @@ header .form-inline {
       color: #fff; }
 
 @media (max-width: 1368px) {
-  .content {
-    padding: 0 15px; }
-
   .twt-category {
     margin-bottom: 0; }
 
@@ -2625,7 +2624,21 @@ select option:checked:after {
   left: 0;
   border: none; }
 
-.final_date, .start_date, .end_date, .time_period {
+.final_date, .start_date, .end_date, .time_period, .finali_date1, .start_date1, .end_date1, .time_period1 {
   display: none; }
+
+.file_upload input[type='file'] {
+  opacity: 0 !important;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  height: 40px; }
+
+#new_file input[type='file'] {
+  opacity: 0 !important;
+  position: absolute;
+  height: 40px;
+  left: 0;
+  z-index: 5; }
 
 /*# sourceMappingURL=style.css.map */

@@ -101,7 +101,15 @@ Route::group(['middleware' => 'login'], function (){
 
 
 	// Payment Module Routes
-	Route::get('/clients', 'PaymentController@index')->name('all.payments');
+	Route::get('/payments', 'PaymentController@create')->name('all_payments');
+	Route::get('/payment-update/{id}', 'PaymentController@create')->name('payment.edit');
 	// Payment Module Routes
+
+	// Status Update Route
+	Route::get('/status-update', 'StatusUpdateController@create')->name('status_update.update');
+	Route::get('/status-update/{id}/{id1}', 'StatusUpdateController@create')->name('status_update.edit');
+	Route::post('/status-update/store', 'StatusUpdateController@store')->name('status_update.store');
+	Route::patch('/status-update/store/{id}/{id1}', 'StatusUpdateController@store')->name('status_update.update');
+	// Status Update Route
 
 });
