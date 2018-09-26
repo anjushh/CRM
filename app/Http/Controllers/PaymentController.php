@@ -26,11 +26,11 @@ class PaymentController extends Controller
      */
     public function create(Request $request, $id = null)
     {
-        if('id' != null){
-            $create_records = DB::table('payments')->where('id',$id)->first();
-            return view('payment.payment_edit',compact('create_records'))->with('i', ($request->input('page', 1) - 1) * 10); 
+        if($id != null){
+            $edit_records = Payment::where('id',$id)->first();
+            return view('payment.edit',compact('edit_records'))->with('i', ($request->input('page', 1) - 1) * 10);    
         }
-        $create_records = DB::table('payments')->get();
+        $create_records = Payment::get();
         return view('payment.payment',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
@@ -42,7 +42,14 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $company_id = active_company();
+        $user_id = user_data();
+        $data = $request->all();
+        $data['company_id'] = $company_id;
+        $data['user_id'] = $user_id->id;
+        Payment::create($data);
+        return view('payment.payment');
     }
 
     /**

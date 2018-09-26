@@ -103,6 +103,7 @@ Route::group(['middleware' => 'login'], function (){
 	// Payment Module Routes
 	Route::get('/payments', 'PaymentController@create')->name('all_payments');
 	Route::get('/payment-update/{id}', 'PaymentController@create')->name('payment.edit');
+	Route::post('/payment-update/store', 'PaymentController@store')->name('payment.store');
 	// Payment Module Routes
 
 	// Status Update Route

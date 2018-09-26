@@ -37,38 +37,6 @@
             {!! Form::open(array('route' => 'services.store','method'=>'POST','files'=>true)) !!}
             @endif
             <!-- {{--Form Opened--}} -->
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {!! Form::text('offered_price',Input::old('offered_price'), array('placeholder' => 'Offered Price','class' => 'form-control', 'required'=>'required')) !!}
-                </div>
-            </div>
-            <a class="btn btn-primary">Add Discount</a>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {!! Form::text('discount', Input::old('discount'), array('placeholder' => 'Add Discount','class' => 'form-control')) !!}
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
-                </div>
-            </div>
-              
         </div>
         @if(isset($create_records))
         <div class="card-body">
@@ -77,8 +45,8 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Client Name</th>
+                            <th scope="col">Offered Price</th>
                             <th scope="col">Edit</th>
                         </tr>
                     </thead>
@@ -86,6 +54,12 @@
                         @foreach ($create_records as $create_record)
                         <tr>
                             <td>{{ ++$i }}</td>
+                            <td>
+                                {{ $create_record->client_name($create_record->client_id) }}
+                            </td>
+                            <td>
+                                {{ $create_record->offered_price }}
+                            </td>
                             <td>
                                 <a class="btn btn-success btn-sm" href="{{ route('payment.edit', $create_record->id) }}"><i class="fa fa-edit"></i></a>
                             </td>
@@ -96,9 +70,9 @@
             </div>
         </div>
         @endif
-        {{-- Form Closed --}}
-            {{ Form::close() }}
-            {{-- Form Closed --}} 
+        <!-- {{-- Form Closed --}} -->
+        {{ Form::close() }}
+        <!-- {{-- Form Closed --}}  -->
     </div>
 </div>
 @endsection

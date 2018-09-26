@@ -157,7 +157,6 @@
                                 <th scope="col">Edit</th>
                             @endif
                             <th scope="col">Update Status</th>
-                            <th scope="col">Update Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -179,13 +178,7 @@
                                 @endphp
                                 <a class="btn btn-success btn-sm" href="{{ route('status_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>
                             </td>
-                            <td>
-                                @php
-                                    $stat_id = \App\StatusUpdate::where('client_id',$create_record->id)->OrderBy('id','desc')->pluck('id')->first();
-                                    $client_id = $create_record->id;
-                                @endphp
-                                <a class="btn btn-success btn-sm" href="{{ route('payment_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>
-                            </td>
+                            
                         </tr>
                         @endforeach
                     </tbody>
