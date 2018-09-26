@@ -62,4 +62,21 @@ class ServiceTypeContoller extends Controller
 			return apiResponseApp(false, 500, lang('messages.server_error'));
     	}
     }
+
+      //Service List
+    public function serviceList(){
+        try{
+            
+            $service = ServiceType::get();
+            if (count($service) != 0) {
+                return apiResponseApp(true, 200, null, [], $service);
+            }else{
+                return apiResponseApp(false, 400, 'No services found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
 }
