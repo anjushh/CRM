@@ -42,14 +42,9 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $company_id = active_company();
-        $user_id = user_data();
-        $data = $request->all();
-        $data['company_id'] = $company_id;
-        $data['user_id'] = $user_id->id;
-        Payment::create($data);
-        return view('payment.payment');
+        $create_records = Payment::get();
+        Payment::find($id)->update($request->all());
+        return view('payment.payment',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
