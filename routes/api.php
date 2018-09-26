@@ -28,6 +28,8 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	/*Login*/
 	Route::any('v1/login', ['as' => 'login','uses' => 'API\V1\AuthController@index']);
 	/*Login*/
+	Route::any('v1/user-list', ['as' => 'login','uses' => 'API\V1\UserController@userList']);
+	/*Login*/
 	Route::any('v1/user-profile', ['as' => 'user-profile','uses' => 'API\V1\UserController@userProfile']);
 	/*Edit Profile*/
 	Route::any('v1/edit-profile', ['as' => 'edit-profile','uses' => 'API\V1\UserController@editProfile']);

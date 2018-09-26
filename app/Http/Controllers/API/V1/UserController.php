@@ -140,4 +140,23 @@ class UserController extends Controller
             return apiResponseApp(false, 500, lang('messages.server_error'));
         }
     }
+
+     //User List
+    public function userList(){
+        try{
+            
+            $user_profile = UserLogin::get();
+            if (count($user_profile) != 0) {
+                return apiResponseApp(true, 200, null, [], $user_profile);
+            }else{
+                return apiResponseApp(false, 400, 'No User found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+    
 }
