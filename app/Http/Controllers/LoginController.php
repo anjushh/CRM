@@ -94,6 +94,7 @@ class LoginController extends Controller
     {
         return view('login.login');
     }
+    
     public function loginstore(Request $request)
     {   
         $userData = UserLogin::where('email', $request->email)->first();

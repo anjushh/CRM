@@ -43,6 +43,12 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	/*Route Company*/
 	Route::any('v1/edit-company', ['as' => 'edit-company','uses' => 'API\V1\CompanyController@editCompany']);
 	/*Route Company*/
+	Route::any('v1/list-company', ['as' => 'list-company','uses' => 'API\V1\CompanyController@companyList']);
+	/*Route Company*/
+	Route::any('v1/delete-company', ['as' => 'delete-company','uses' => 'API\V1\CompanyController@deleteCompany']);
+	/*Route Company*/
+	Route::any('v1/delete-servicetype', ['as' => 'delete-servicetype','uses' => 'API\V1\ServiceTypeContoller@deleteService']);
+	/*Route Company*/
 	Route::any('v1/all-services-type', ['as' => 'all-services-type','uses' => 'API\V1\ServiceTypeContoller@serviceList']);
 	/*Route Company*/
 	Route::any('v1/other-user-profile', ['as' => 'other-user-profile','uses' => 'API\V1\UserController@userProfileAll']);

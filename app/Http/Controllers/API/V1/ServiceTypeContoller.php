@@ -79,4 +79,25 @@ class ServiceTypeContoller extends Controller
             return apiResponseApp(false, 500, lang('messages.server_error'));
         }
     }
+
+     //Delete Company
+    public function deleteService(Request $request){
+        try{
+            $inputs = $request->all();
+            
+            $validator = ( new ServiceType )->validateServiceTypeDelete( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }
+
+            $id = $inputs['id'];
+            $inputs['status'] = 0;
+            $user_profile = (new ServiceType)->deleteAccount($id);
+            return apiResponseApp(true, 200, 'Service Type record successfully deleted');
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
 }

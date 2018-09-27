@@ -13,6 +13,12 @@ class Company extends Model
         return $this->where('id',$id)->first();
     }
 
+    
+    public function deleteAccount($id)
+    {
+        $this->where('id', $id)->delete();
+    }
+
   	//For App---- Khushboo
     public function validateCompany($inputs){
         $rules = [
@@ -38,14 +44,6 @@ class Company extends Model
     public function validateCompanyEdit($inputs){
         $rules = [
             'id' => 'required|numeric',
-            'company_name' => 'max:50',
-            'company_address' => 'max:100',
-            'company_email' => 'max:50|email',
-            'company_contact' => 'digits:10',
-            'company_gst' => 'max:30',
-            'company_pan' => 'max:30',
-            'status' => 'numeric',
-            'company_logo' => 'mimes:jpg,jpeg,bmp,png|max:1024',
         ];
         
         $messages = [

@@ -13,6 +13,11 @@ class ServiceType extends Model
         return $this->where('id',$id)->first();
     }
 
+    public function deleteAccount($id)
+    {
+        $this->where('id', $id)->delete();
+    }
+
      //For App---- Khushboo
     public function validateServiceType($inputs){
         $rules = [
@@ -25,6 +30,14 @@ class ServiceType extends Model
     public function validateServiceTypeEdit($inputs){
         $rules = [
             'service_type' => 'required|max:50',
+            'id' => 'required|numeric',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
+
+     //For App---- Khushboo
+    public function validateServiceTypeDelete($inputs){
+        $rules = [
             'id' => 'required|numeric',
         ];
         return \Validator::make($inputs, $rules);

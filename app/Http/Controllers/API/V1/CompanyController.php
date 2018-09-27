@@ -71,4 +71,36 @@ class CompanyController extends Controller
 			return apiResponseApp(false, 500, lang('messages.server_error'));
     	}
     }
+
+     //Delete Company
+    public function deleteCompany(Request $request){
+        try{
+            $inputs = $request->all();
+            
+            $validator = ( new Company )->validateCompanyEdit( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }
+            $id = $inputs['id'];
+            $inputs['status'] = 0;
+            $user_profile = (new Company)->deleteAccount($id);
+            return apiResponseApp(true, 200, 'Company record successfully deleted');
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+     //Company List
+    public function companyList(){
+        try{            
+            $user_profile = Company::get();
+            return apiResponseApp(true, 200, null, [], $user_profile);
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
 }
