@@ -41,14 +41,14 @@ class UserLogin extends Model
     public function validateUserEdit($inputs){
         $rules = [
             'user_id' => 'required|numeric',
-            'mobile' => 'digits:10|numeric',
-            'email' => 'email|max:50',
-            'password' => 'min:6',
-            'confirm_password' => 'min:6',
-            'designation' => 'max:30',
-            'name' => 'max:30',
-            'status' => 'numeric',
-            'user_type' => 'numeric',
+            // 'mobile' => 'digits:10|numeric',
+            // 'email' => 'email|max:50',
+            // 'password' => 'min:6',
+            // 'confirm_password' => 'min:6',
+            // 'designation' => 'max:30',
+            // 'name' => 'max:30',
+            // 'status' => 'numeric',
+            // 'user_type' => 'numeric',
         ];
         return \Validator::make($inputs, $rules);
     }
