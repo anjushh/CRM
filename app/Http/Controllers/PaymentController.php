@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Payment;
+use App\PaymentStatus;
 
 use DB;
 use Validator;
@@ -40,11 +41,29 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id = null, $id1 = null)
     {
+
+        $company_id = active_company();
+        $user = user_data();
+        
+        // Payment Status Update
+        $pay = new PaymentStatus;
+        $pay->company_id = $company_id;
+        $pay->client_id = $request->client_id;
+        $pay->payment_id = $id;
+        $pay->user_id = $user->id;
+        $pay->amt_rcvd = null;
+        $pay->out_amount = $request->out_amount;
+        $pay->status = null;
+        $pay->pay_date = null;
+        $pay->save();
+        // Payment Status Update
+
+
         $create_records = Payment::get();
         Payment::find($id)->update($request->all());
-        return view('payment.payment',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
+        return redirect()->route('all_payments',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**

@@ -48,6 +48,7 @@
                             <th scope="col">Client Name</th>
                             <th scope="col">Offered Price</th>
                             <th scope="col">Edit</th>
+                            <th scope="col">Update Payment Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +63,9 @@
                             </td>
                             <td>
                                 <a class="btn btn-success btn-sm" href="{{ route('payment.edit', $create_record->id) }}"><i class="fa fa-edit"></i></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-success btn-sm" href="{{ route('payment_status.update', [$create_record->id,$create_record->pay_id($create_record->id)]) }}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                         @endforeach
