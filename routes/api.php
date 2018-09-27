@@ -52,4 +52,6 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/all-services-type', ['as' => 'all-services-type','uses' => 'API\V1\ServiceTypeContoller@serviceList']);
 	/*Route Company*/
 	Route::any('v1/other-user-profile', ['as' => 'other-user-profile','uses' => 'API\V1\UserController@userProfileAll']);
+	/*Route Company*/
+	Route::any('v1/create-service', ['as' => 'create-service','uses' => 'API\V1\ServiceController@createService']);
 });

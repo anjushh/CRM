@@ -26,11 +26,18 @@ class CompanyController extends Controller
                 return apiResponseApp(false, 406, "",  $message);
             }
 
+            if ($inputs['status'] == 1) {
+                $all_companies = Company::get();
+                foreach ($all_companies as $company) {
+                    Company::where('id', $company->id)->update(['status' => 0]);
+                }
+            }
+
             $company_logo = rand(100000, 999999);
 
             $request->file('company_logo')->move(public_path().'/uploads/company_logo/', $company_logo);
-            unset($inputs['comany_logo']);
-            $inputs = $inputs + ['comany_logo' => $company_logo];
+            unset($inputs['company_logo']);
+            $inputs = $inputs + ['company_logo' => $company_logo];
             $id = (new Company)->store($inputs);
             return apiResponseApp(true, 200, lang('Company created successfully'));
 

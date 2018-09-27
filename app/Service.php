@@ -12,8 +12,17 @@ class Service extends Model
     {
         return $this->where('id',$id)->first();
     }
+
     public function parent_id($id){
     	$child_ids = DB::table('services')->where('parent_id', $id)->get();
     	return $child_ids;
+    }
+
+    //For App-- Khushboo
+    public function validateService($inputs){
+    	$rules = [
+            'service_type' => 'required|max:50',
+        ];
+        return \Validator::make($inputs, $rules);
     }
 }
