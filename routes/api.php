@@ -17,7 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 //Registration -- Khushboo
 Route::any('/v1/register', ['as' => 'register', 'uses' => 'API\V1\UserController@create']);
 //User Types -- Khushboo

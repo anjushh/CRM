@@ -96,8 +96,9 @@ class LoginController extends Controller
     }
     public function loginstore(Request $request)
     {   
-        $userData = UserLogin::where('email', $request->email)->where('password', $request->password)->first();
-        if ($userData) {
+        $userData = UserLogin::where('email', $request->email)->first();
+        $password = \Hash::check($request->password, $userData->password);
+        if ($password) {
             if( $userData->status == 1) {
                 $request->session()->put('userdata', $userData);
                 $data = $request->session()->all();
