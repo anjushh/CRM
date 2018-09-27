@@ -98,14 +98,10 @@ Route::group(['middleware' => 'login'], function (){
 	Route::get('/lead-assign', 'LeadAssignmentController@index')->name('all.leads');
 	// Lead Assignment Routes
 
-
-
 	// Payment Module Routes
 	Route::get('/payments', 'PaymentController@create')->name('all_payments');
 	Route::get('/payment-update/{id}', 'PaymentController@create')->name('payment.edit');
-	Route::post('/payment-update/store/{id}', 'PaymentController@store')->name('payment.store');
-
-	
+	Route::patch('/payment-update/store/{id}', 'PaymentController@store')->name('payment.store');
 	// Payment Module Routes
 
 	// Status Update Route
@@ -115,4 +111,8 @@ Route::group(['middleware' => 'login'], function (){
 	Route::patch('/status-update/store/{id}/{id1}', 'StatusUpdateController@store')->name('status_update.update');
 	// Status Update Route
 
+
+	// Payment Status Update Routes
+	Route::get('/payment-update/status/{id}/{id1}', 'PaymentStatusController@create')->name('payment_status.update');
+	Route::post('/payment-update/status_update/{id}', 'PaymentStatusController@store')->name('payment_status.store');
 });

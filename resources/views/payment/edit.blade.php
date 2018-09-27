@@ -31,10 +31,11 @@
                 @endif
             </div>
             <!-- {{--Form Opened--}} -->
-        {!! Form::open(array('route' => 'payment.store','method'=>'POST','files'=>true)) !!}
+            {!! Form::model($edit_records, ['method' => 'PATCH','route' => ['payment.store', $edit_records->id]]) !!}
             <!-- {{--Form Opened--}} -->
+            
             <div class="form-group">
-                {!! Form::text('client_id',$edit_records->id, array('hidden'=>'hidden')) !!}
+                {!! Form::text('client_id',$edit_records->client_id, array('hidden'=>'hidden')) !!}
             </div>
             
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -163,6 +164,9 @@
 </script>
 
 <script type="text/javascript">
+    insta_calc1();
+    insta_calc2();
+    insta_calc3();
     jQuery('.insta_1').keyup(function(event){
         insta_calc1();
         insta_calc2();
