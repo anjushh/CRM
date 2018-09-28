@@ -18,7 +18,7 @@ class Payment extends Model
     	return $name;
     }
     public function pay_id($id){
-        $pay_id = DB::table('payment_statuses')->where('payment_id', $id)->OrderBy('id','desc')->pluck('id')->first();
+        $pay_id = DB::table('payment_statuses')->where('payment_id',$id)->OrderBy('id','desc')->pluck('id')->first();
         return $pay_id;
     }
 }

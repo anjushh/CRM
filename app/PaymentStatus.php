@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class PaymentStatus extends Model
@@ -11,5 +11,13 @@ class PaymentStatus extends Model
     public function edit($id)
     {
         return $this->where('id',$id)->first();
+    }
+    public function out_amount($id) {
+    	$pay_id = DB::table('payment_statuses')->where('payment_id', $id)->OrderBy('id','desc')->pluck('out_amount')->first();
+        return $pay_id;
+    }
+    public function payment_id($id) {
+    	$pay_id = DB::table('payment_statuses')->where('id', $id)->pluck('payment_id')->first();
+        return $pay_id;
     }
 }

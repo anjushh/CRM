@@ -30,28 +30,28 @@
                 </div>
                 @endif
             </div>
-
-            {!! Form::model($edit_records, ['method' => 'POST','route' => ['payment_status.store',$edit_records->id]]) !!}
+            {!! Form::model($edit_records, ['method' => 'POST','route' => ['payment_status.store',$edit_records->id,$edit_records->payment_id($edit_records->id)]]) !!}
             <!-- {{--Form Opened--}} -->
             <div class="form-group">
                 {!! Form::text('client_id',$edit_records->client_id, array('hidden'=>'hidden')) !!}
+                {!! Form::text('remain_amt',Input::old('remain_amt'), array('hidden'=>'hidden','class'=>'remain_amt')) !!}
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Outstanding Amount</label>
-                    {!! Form::text('out_amount', Input::old('out_amount'), array('class' => 'form-control out_amount','readonly'=>'readonly')) !!}
+                    {!! Form::text('out_amount',$edit_records->out_amount('$edit_records->id'), array('class' => 'form-control out_amount','readonly'=>'readonly')) !!}
                 </div>  
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Amount Received</label>
-                    {!! Form::text('amt_rcvd',Input::old('amt_rcvd'), array('placeholder' => 'Enter Received Amount','class' => 'form-control offered_price', 'required'=>'required')) !!}
+                    {!! Form::text('amt_rcvd','',array('placeholder' => 'Enter Received Amount','class' => 'form-control amt_rcvd','required'=>'required')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Date of Payment</label>
-                    {!! Form::date('pay_date', Input::old('pay_date'), array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount', 'required'=>'required')) !!}
+                    {!! Form::date('pay_date','', array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount', 'required'=>'required')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -73,4 +73,17 @@
         <!-- {{-- Form Closed --}}  -->
     </div>
 </div>
+<script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
+<script type="text/javascript">
+    remaining_amount();
+    function remaining_amount(){
+        var out_amount = jQuery('.out_amount').val();
+        var amt_rcvd = jQuery('.amt_rcvd').val();
+        var remain_amt = out_amount - amt_rcvd;
+        jQuery('.remain_amt').attr('value',remain_amt);
+    }
+    jQuery('.amt_rcvd').keyup(function(event){
+        remaining_amount();
+    });
+</script>
 @endsection
