@@ -70,6 +70,19 @@ class CompanyController extends Controller
 	            }
             }
 
+            if ($inputs['status'] == 1) {
+                $all_companies = Company::get();
+                foreach ($all_companies as $company) {
+                    Company::where('id', $company->id)->update(['status' => 0]);
+                }
+            }
+
+            if (isset($inputs['company_logo'])) {
+                $request->file('company_logo')->move(public_path().'/uploads/company_logo/', $company_logo);
+                unset($inputs['company_logo']);
+                $inputs = $inputs + ['company_logo' => $company_logo];
+            }
+
             $id = (new Company)->store($inputs, $id);
             return apiResponseApp(true, 200, lang('Company updated successfully'));
 

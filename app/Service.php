@@ -21,8 +21,35 @@ class Service extends Model
     //For App-- Khushboo
     public function validateService($inputs){
     	$rules = [
-            'service_type' => 'required|max:50',
+            'service_name' => 'required|max:50',
+            'parent_id' => 'numeric',
+            'service_type' => 'required|numeric',
+            'service_price' => 'required',
+            'status' => 'required|numeric'
         ];
         return \Validator::make($inputs, $rules);
+    }
+
+     //For App-- Khushboo
+    public function validateServiceEdit($inputs){
+        $rules = [
+            'id' => 'required|numeric'
+        ];
+        return \Validator::make($inputs, $rules);
+    }
+
+    //For App --- Khushboo
+    public function store($input, $id = null)
+     {
+         if ($id) {
+             return $this->find($id)->update($input);
+         } else {
+             return $this->create($input)->id;
+         }
+     }  
+     
+    public function deleteAccount($id)
+    {
+        $this->where('id', $id)->delete();
     }
 }

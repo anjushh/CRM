@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Service;
+use App\Company;
 
 class ServiceController extends Controller
 {
@@ -13,25 +14,65 @@ class ServiceController extends Controller
     	try{
     		$inputs = $request->all();
 			
-			$validator = ( new Service )->validateServiceType( $inputs );
+			$validator = ( new Service )->validateService( $inputs );
             if( $validator->fails() ) {
                 return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
             }
 
-            $name = $inputs['service_type'];
-            $check = (new ServiceType)->where('service_type', '=', $name)->first();
-
-            if (count($check) >= 1) {
-                $message = array('Service Type' => 'Service Type already exist in our records');
-                return apiResponseApp(false, 406, "",  $message);
-            }
-
-            $id = (new ServiceType)->store($inputs);
-            return apiResponseApp(true, 200, lang('Service Type created successfully'));
+            $company = Company::where('status', 1)->value('id');
+            $inputs = $inputs + [
+                        'company_id' => 1
+               ];
+            $id = (new Service)->store($inputs);
+            return apiResponseApp(true, 200, lang('Service created successfully'));
 
 
     	}catch(Exception $e){
 			return apiResponseApp(false, 500, lang('messages.server_error'));
     	}
+    }
+
+    //Edit service 
+    public function editService(Request $request){
+      try{
+         $inputs = $request->all();
+         
+         $validator = ( new Service )->validateServiceEdit( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }
+
+            $company = Company::where('status', 1)->value('id');
+            $inputs = $inputs + [
+                        'company_id' => 1
+               ];
+            $id = (new Service)->store($inputs, $inputs['id']);
+            return apiResponseApp(true, 200, lang('Service updated successfully'));
+
+
+      }catch(Exception $e){
+         return apiResponseApp(false, 500, lang('messages.server_error'));
+      }
+    }
+
+
+    //Delete service 
+    public function deleteService(Request $request){
+      try{
+         $inputs = $request->all();
+         
+         $validator = ( new Service )->validateServiceEdit( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }
+
+         
+            $id = (new Service)->deleteAccount($inputs, $inputs['id']);
+            return apiResponseApp(true, 200, lang('Service deleted successfully'));
+
+
+      }catch(Exception $e){
+         return apiResponseApp(false, 500, lang('messages.server_error'));
+      }
     }
 }
