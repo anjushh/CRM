@@ -45,6 +45,9 @@ class PaymentStatusController extends Controller
         $pay = $request->all();
         $pay['company_id'] = $company_id;
         $pay['out_amount'] = $request->remain_amt;
+        if($request->remain_amt == 0){
+            $pay['status'] = 2;    
+        }
         $pay['user_id'] = $user->id;
         $pay['payment_id'] = $id1;
         PaymentStatus::create($pay);
