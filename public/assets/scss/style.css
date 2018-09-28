@@ -1108,6 +1108,7 @@ body.open .navbar .navbar-brand.hidden {
 .right-panel {
   display: table-cell;
   padding-left: 0 !important;
+  overflow: hidden;
   -webkit-transition: all .35s ease;
   -moz-transition: all .35s ease;
   -ms-transition: all .35s ease;
@@ -1165,6 +1166,7 @@ header.fixed-top {
   cursor: pointer;
   font-size: 18px;
   height: 43px;
+  position: absolute;
   line-height: 44px;
   margin: -2px 20px 0 -57px;
   text-align: center;

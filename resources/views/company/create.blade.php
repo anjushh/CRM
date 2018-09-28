@@ -99,10 +99,14 @@
                     {!! Form::checkbox('status', Input::old('status'),null, array('class' => 'form-control d-inline-block w-5 pt-2')) !!}
                 </div>
             </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-	            {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-25 float-left btn-primary btn-xl ml-2']) }}
+            <div class="clearfix"></div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block">
+	            {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-100 float-left btn-primary btn-xl ml-2 rounded-0']) }}
 	            {{ Form::close() }}
 	        </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block">
+                <input type="button" value="Clear All Values" onClick="resetAllValues();" class="form-control d-inline-block w-100 float-left btn-danger btn-xl ml-2 rounded-0">
+            </div>
 		</div>
 	</div>
 </div>
