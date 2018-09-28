@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Service;
 use App\Company;
+use App\ServiceType;
 
 class ServiceController extends Controller
 {
@@ -69,6 +70,28 @@ class ServiceController extends Controller
          
             $id = (new Service)->deleteAccount($inputs, $inputs['id']);
             return apiResponseApp(true, 200, lang('Service deleted successfully'));
+
+
+      }catch(Exception $e){
+         return apiResponseApp(false, 500, lang('messages.server_error'));
+      }
+    }
+
+    //Delete service 
+    public function allService(){
+      try{
+         
+          $data = Service::get();
+          if (count($data) != 0) {
+            foreach ($data as $datas) {
+              $datas['service_type_name'] = ServiceType::where('id', $datas->service_type)->value('service_type');
+              $datas['company_name'] = Company::where('id', $datas->company_id)->value('company_name');
+              $datas['parent_name'] = ServiceType::where('id', $datas->parent_id)->value('service_type');
+            }
+            return apiResponseApp(true, 200, null, [], $data);
+          }else{
+            return apiResponseApp(false, 400, 'No records found for services');
+          }
 
 
       }catch(Exception $e){

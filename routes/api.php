@@ -58,4 +58,6 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/edit-service', ['as' => 'edit-service','uses' => 'API\V1\ServiceController@editService']);
 	/*Route Company*/
 	Route::any('v1/delete-service', ['as' => 'delete-service','uses' => 'API\V1\ServiceController@deleteService']);
+	/*Route Company*/
+	Route::any('v1/all-service', ['as' => 'all-service','uses' => 'API\V1\ServiceController@allService']);
 });
