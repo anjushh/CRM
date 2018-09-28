@@ -178,7 +178,6 @@
                                 @endphp
                                 <a class="btn btn-success btn-sm" href="{{ route('status_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>
                             </td>
-                            
                         </tr>
                         @endforeach
                     </tbody>
@@ -187,6 +186,12 @@
             {{ $create_records->links() }}
         </div>
         @endif
+        <div class="card-body">
+            <div class="col-3">
+                <a class="btn btn-success w-100" href="{{ route('all_payments') }}" >Manage Payments</a>
+            </div>
+        </div>
+
     </div>
 </div>
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>

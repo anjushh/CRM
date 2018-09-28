@@ -61,6 +61,19 @@
                             @endif
                         </ul>
                     </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-id-card-o"></i>Payment</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ route('all_payments') }}">All Payments</a></li>
+                            @php 
+                                $i = user_type();
+                            @endphp
+                            @if($i == 1)
+                            <li><i class="menu-icon ti-themify-logo"></i><a href="{{ route('status.create') }}">Status Master</a></li>
+                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="{{ route('conv_type.create') }}">Conversation Medium Master</a></li>
+                            @endif
+                        </ul>
+                    </li>
                     {{-- 
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Other</a>
