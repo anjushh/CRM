@@ -25,7 +25,7 @@ class PaymentStatusController extends Controller
      */
     public function create(Request $request, $id = null, $id1 = null)
     {
-        $edit_records = Payment::where('id',$id)->first();
+        $edit_records = PaymentStatus::where('id',$id)->first();
         return view('payment.status_update',compact('edit_records'));
     }
 
@@ -35,7 +35,7 @@ class PaymentStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id= null, $id1 = null)
+    public function store(Request $request, $id)
     {
         $company_id = active_company();
         $user = user_data();
@@ -45,10 +45,8 @@ class PaymentStatusController extends Controller
         $pay['company_id'] = $company_id;
         $pay['user_id'] = $user->id;
         $pay['payment_id'] = $id;
-        dd($pay);
-        die();
         PaymentStatus::create($pay);
-        return redirect()->route('\payments');
+        return redirect()->route('all_payments');
     }
 
     /**

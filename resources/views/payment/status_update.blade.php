@@ -32,9 +32,6 @@
             </div>
 
             {!! Form::model($edit_records, ['method' => 'POST','route' => ['payment_status.store',$edit_records->id]]) !!}
-            <!-- @php
-                print_r($edit_records);
-            @endphp -->
             <!-- {{--Form Opened--}} -->
             <div class="form-group">
                 {!! Form::text('client_id',$edit_records->client_id, array('hidden'=>'hidden')) !!}
@@ -54,7 +51,7 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Date of Payment</label>
-                    {!! Form::date('payment_date', Input::old('payment_date'), array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount', 'required'=>'required')) !!}
+                    {!! Form::date('pay_date', Input::old('pay_date'), array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount', 'required'=>'required')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
