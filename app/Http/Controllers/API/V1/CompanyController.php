@@ -78,6 +78,7 @@ class CompanyController extends Controller
             }
 
             if (isset($inputs['company_logo'])) {
+                $company_logo = rand(100000, 999999);
                 $request->file('company_logo')->move(public_path().'/uploads/company_logo/', $company_logo);
                 unset($inputs['company_logo']);
                 $inputs = $inputs + ['company_logo' => $company_logo];
