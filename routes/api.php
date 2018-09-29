@@ -60,4 +60,10 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/delete-service', ['as' => 'delete-service','uses' => 'API\V1\ServiceController@deleteService']);
 	/*Route Company*/
 	Route::any('v1/all-service', ['as' => 'all-service','uses' => 'API\V1\ServiceController@allService']);
+	/*Route Company*/
+	Route::any('v1/create-conv-medium', ['as' => 'create-conv-medium','uses' => 'API\V1\ClientConversationController@createConversation']);
+	/*Route Company*/
+	Route::any('v1/update-conv-medium', ['as' => 'update-conv-medium','uses' => 'API\V1\ClientConversationController@updateConversation']);
+	/*Route Company*/
+	Route::any('v1/all-conv-medium', ['as' => 'all-conv-medium','uses' => 'API\V1\ClientConversationController@allConversation']);
 });
