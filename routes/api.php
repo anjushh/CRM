@@ -66,4 +66,14 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/update-conv-medium', ['as' => 'update-conv-medium','uses' => 'API\V1\ClientConversationController@updateConversation']);
 	/*Route Company*/
 	Route::any('v1/all-conv-medium', ['as' => 'all-conv-medium','uses' => 'API\V1\ClientConversationController@allConversation']);
+	/*Route Company*/
+	Route::any('v1/delete-conv-medium', ['as' => 'delete-conv-medium','uses' => 'API\V1\ClientConversationController@deleteConversation']);
+	/*Route Company*/
+	Route::any('v1/create-status', ['as' => 'create-status','uses' => 'API\V1\ClientStatusController@createStatus']);
+	/*Route Company*/
+	Route::any('v1/update-status', ['as' => 'update-status','uses' => 'API\V1\ClientStatusController@updateStatus']);
+	/*Route Company*/
+	Route::any('v1/all-status', ['as' => 'all-status','uses' => 'API\V1\ClientStatusController@allStatus']);
+	/*Route Company*/
+	Route::any('v1/delete-status', ['as' => 'delete-status','uses' => 'API\V1\ClientStatusController@deleteStatus']);
 });

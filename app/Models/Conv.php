@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conv extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['conv_type'];
     public function edit($id)
     {
@@ -20,10 +23,18 @@ class Conv extends Model
         return \Validator::make($inputs, $rules);
     }
 
-      //For App-- Khushboo
+    //For App-- Khushboo
     public function validateConvUpdate($inputs){
     	 $rules = [
             'conv_type' => 'required|max:50',
+            'id' => 'required|numeric',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
+
+    //For App-- Khushboo
+    public function validateConvDelete($inputs){
+         $rules = [
             'id' => 'required|numeric',
         ];
         return \Validator::make($inputs, $rules);
@@ -38,4 +49,9 @@ class Conv extends Model
              return $this->create($input)->id;
          }
      } 
+     
+    public function deleteAccount($id)
+    {
+        $this->where('id', $id)->delete();
+    }
 }
