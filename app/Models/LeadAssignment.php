@@ -25,4 +25,15 @@ class LeadAssignment extends Model
         $this->status = 1;
         $this->save();
     }
+
+   
+    //For App --- Khushboo
+    public function store($input, $id = null)
+     {
+         if ($id) {
+             return $this->find($id)->update($input);
+         } else {
+             return $this->create($input)->id;
+         }
+     } 
 }

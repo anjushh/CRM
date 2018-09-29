@@ -98,4 +98,26 @@ class ServiceController extends Controller
          return apiResponseApp(false, 500, lang('messages.server_error'));
       }
     }
+
+    //All service  with status 1
+    public function allServiceUpdated(){
+      try{
+         
+          $data = Service::where('status', 1)->get();
+          if (count($data) != 0) {
+            foreach ($data as $datas) {
+              $datas['service_type_name'] = ServiceType::where('id', $datas->service_type)->value('service_type');
+              $datas['company_name'] = Company::where('id', $datas->company_id)->value('company_name');
+              $datas['parent_name'] = ServiceType::where('id', $datas->parent_id)->value('service_type');
+            }
+            return apiResponseApp(true, 200, null, [], $data);
+          }else{
+            return apiResponseApp(false, 400, 'No records found for services');
+          }
+
+
+      }catch(Exception $e){
+         return apiResponseApp(false, 500, lang('messages.server_error'));
+      }
+    }
 }

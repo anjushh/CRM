@@ -5,41 +5,69 @@ namespace App\Http\Controllers\API\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Company;
+use App\Models\LeadAssignment;
+use App\Models\StatusUpdate;
+use App\Models\Payment;
+use Carbon\Carbon;
 
 class ClientController extends Controller
 {
     // Create company 
     public function createClient(Request $request){
     	try{
-    		$inputs = $request->all();
+    		    $inputs = $request->all();
 			
-			$validator = ( new Client )->validateCompany( $inputs );
+            $validator = ( new Client )->ValidateClientApp( $inputs );
             if( $validator->fails() ) {
                 return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
             }
+            $status_type = $inputs['status'];
+            $user_id = \Auth::User()->id;
+            $company_id = Company::where('status', 1)->value('id');
+            $inputs = $inputs + [
+                                  'user_id' => $user_id,
+                                  'company_id' => $company_id,
+                                  ];
 
-            $name = $inputs['company_name'];
-            $check = (new Company)->where('company_name', '=', $name)->first();
-
-            if (count($check) >= 1) {
-                $message = array('Company' => 'Company Details already exist in our records');
-                return apiResponseApp(false, 406, "",  $message);
+            if (isset($inputs['alt_contact'])) {
+                $inputs = $inputs + [
+                                  'alt_contact' => $inputs['alt_contact'],
+                                  ];
             }
-
-            if ($inputs['status'] == 1) {
-                $all_companies = Company::get();
-                foreach ($all_companies as $company) {
-                    Company::where('id', $company->id)->update(['status' => 0]);
-                }
+            if (isset($inputs['anni_date'])) {
+                $inputs = $inputs + [
+                                  'anni_date' => $inputs['anni_date'],
+                  ];
             }
+            
+            $client_id = (new Client)->store($inputs);
 
-            $company_logo = rand(100000, 999999);
+            $user_type = \Auth::User()->user_type;
+            $inputs = $inputs + [
+                                  'client_id' => $client_id,
+                                  'user_type' => $user_type,
+                                  'w_e_f' => Carbon::now(),
+                                  'status' => 1,
+                  ];
+            (new LeadAssignment)->store($inputs);
 
-            $request->file('company_logo')->move(public_path().'/uploads/company_logo/', $company_logo);
-            unset($inputs['company_logo']);
-            $inputs = $inputs + ['company_logo' => $company_logo];
-            $id = (new Company)->store($inputs);
-            return apiResponseApp(true, 200, lang('Company created successfully'));
+            $inputs = $inputs + [
+                                  'status_type' => $status_type,
+                  ];
+
+            (new StatusUpdate)->store($inputs);
+
+            if ($status_type ==  3) {
+              $inputs = $inputs + [
+                                  'offered_price' => $inputs['product_price'],
+                                  'recieved_amount' => 0,
+                                  'discount' => 0,
+                                  'out_amount' => 0,
+                  ];
+            }
+            (new Payment)->store($inputs);
+            return apiResponseApp(true, 200, lang('Clinet created successfully'));
 
 
     	}catch(Exception $e){
@@ -48,44 +76,60 @@ class ClientController extends Controller
     }
 
    //   // Create company 
-   //  public function editCompany(Request $request){
+   //  public function editClient(Request $request){
    //  	try{
-   //  		$inputs = $request->all();
-			
-			// $validator = ( new Company )->validateCompanyEdit( $inputs );
+   //  		  $inputs = $request->all();
+      
+   //          $validator = ( new Client )->ValidateClientAppUpdate( $inputs );
    //          if( $validator->fails() ) {
    //              return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
    //          }
+   //          $status_type = $inputs['status'];
+   //          $user_id = \Auth::User()->id;
+   //          $company_id = Company::where('status', 1)->value('id');
+   //          $inputs = $inputs + [
+   //                                'user_id' => $user_id,
+   //                                'company_id' => $company_id,
+   //                                ];
 
-   //          $id = $inputs['id'];
-
-
-   //          if (isset($inputs['company_name'])) {
-   //          	$name = $inputs['company_name'];
-	  //           $check = (new Company)->where('company_name', '=', $name)->where('id', '!=', $id)->first();
-
-	  //           if (count($check) >= 1) {
-	  //               $message = array('Company' => 'Company Details by name '. $name. ' already exist in our records');
-	  //               return apiResponseApp(false, 406, "",  $message);
-	  //           }
+   //          if (isset($inputs['alt_contact'])) {
+   //              $inputs = $inputs + [
+   //                                'alt_contact' => $inputs['alt_contact'],
+   //                                ];
    //          }
-
-   //          if ($inputs['status'] == 1) {
-   //              $all_companies = Company::get();
-   //              foreach ($all_companies as $company) {
-   //                  Company::where('id', $company->id)->update(['status' => 0]);
-   //              }
+   //          if (isset($inputs['anni_date'])) {
+   //              $inputs = $inputs + [
+   //                                'anni_date' => $inputs['anni_date'],
+   //                ];
    //          }
+            
+   //          $client_id = (new Client)->store($inputs);
 
-   //          if (isset($inputs['company_logo'])) {
-   //              $company_logo = rand(100000, 999999);
-   //              $request->file('company_logo')->move(public_path().'/uploads/company_logo/', $company_logo);
-   //              unset($inputs['company_logo']);
-   //              $inputs = $inputs + ['company_logo' => $company_logo];
+   //          $user_type = \Auth::User()->user_type;
+   //          $inputs = $inputs + [
+   //                                'client_id' => $client_id,
+   //                                'user_type' => $user_type,
+   //                                'w_e_f' => Carbon::now(),
+   //                                'status' => 1,
+   //                ];
+   //          (new LeadAssignment)->store($inputs);
+
+   //          $inputs = $inputs + [
+   //                                'status_type' => $status_type,
+   //                ];
+
+   //          (new StatusUpdate)->store($inputs);
+
+   //          if ($status_type ==  3) {
+   //            $inputs = $inputs + [
+   //                                'offered_price' => $inputs['product_price'],
+   //                                'recieved_amount' => 0,
+   //                                'discount' => 0,
+   //                                'out_amount' => 0,
+   //                ];
    //          }
+   //          return apiResponseApp(true, 200, lang('Client updated successfully'));
 
-   //          $id = (new Company)->store($inputs, $id);
-   //          return apiResponseApp(true, 200, lang('Company updated successfully'));
 
 
    //  	}catch(Exception $e){
@@ -113,15 +157,19 @@ class ClientController extends Controller
    //      }
    //  }
 
-   //   //Company List
-   //  public function companyList(){
-   //      try{            
-   //          $user_profile = Company::get();
-   //          return apiResponseApp(true, 200, null, [], $user_profile);
+     //Client List
+    public function clientList(){
+        try{            
+            $client = Client::get();
+            if (count($client) != 0) {
+              return apiResponseApp(true, 200, null, [], $client);
+            }else{
+              return apiResponseApp(false, 400, lang('No Client record found'));
+            }
 
 
-   //      }catch(Exception $e){
-   //          return apiResponseApp(false, 500, lang('messages.server_error'));
-   //      }
-   //  }
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
 }

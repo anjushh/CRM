@@ -47,7 +47,7 @@
             @endif
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('name',\App\Client::where('id',$edit_records->client_id)->pluck('name')->first(), array('placeholder' => 'Enter Name','class' => 'form-control d-inline-block float-left')) !!}
+                    {!! Form::text('name',\App\Models\Client::where('id',$edit_records->client_id)->pluck('name')->first(), array('placeholder' => 'Enter Name','class' => 'form-control d-inline-block float-left')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">

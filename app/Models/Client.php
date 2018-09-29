@@ -34,5 +34,45 @@ class Client extends Model
 	    return $valids;
     }
 
+     // For App --Khushboo
+    public function ValidateClientApp($inputs){
+	    $rules = array(
+	        'name' => 'required|max:30',
+	        'business_name' => 'required|max:100',
+	        'address' => 'required',
+	        'phone_no' => 'required|digits:10',
+	        'email' => 'required|max:50|email',
+	        'status' => 'required',
+	        'product' => 'required',
+	        'birth_date' => 'required',
+	        'lead_head' => 'required',
+	        'remarks' => 'required',
+	        'follow_ups' => 'required',
+	        'product_price' => 'required',
+	        'conv_type' => 'required',
+	    );
+	    $valids = Validator::make($inputs, $rules);
+	    return $valids;
+    }
+
+      // For App --Khushboo
+    public function ValidateClientAppUpdate($inputs){
+	    $rules = array(
+	    	'id' => 'required|numeric'
+	    );
+	    $valids = Validator::make($inputs, $rules);
+	    return $valids;
+    }
+
+    //For App --- Khushboo
+    public function store($input, $id = null)
+     {
+         if ($id) {
+             return $this->find($id)->update($input);
+         } else {
+             return $this->create($input)->id;
+         }
+     } 
+
     
 }
