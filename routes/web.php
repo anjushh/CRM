@@ -114,5 +114,5 @@ Route::group(['middleware' => 'login'], function (){
 
 	// Payment Status Update Routes
 	Route::get('/payment-update/status/{id}/{id1}', 'PaymentStatusController@create')->name('payment_status.update');
-	Route::post('/payment-update/status_update/{id}', 'PaymentStatusController@store')->name('payment_status.store');
+	Route::post('/payment-update/status_update/{id}/{id1}', 'PaymentStatusController@store')->name('payment_status.store');
 });

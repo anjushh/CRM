@@ -16,6 +16,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/scss/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/lib/vector-map/jqvmap.min.css') }}">
-
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" sizes="50x50" type="image/png"> 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     

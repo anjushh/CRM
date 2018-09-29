@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ServiceType;
+use App\Models\ServiceType;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;

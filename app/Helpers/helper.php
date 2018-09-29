@@ -1,7 +1,7 @@
 <?php
 	function active_company()
     {
-        return App\Company::where('status',1)->pluck('id')->first();
+        return App\Models\Company::where('status',1)->pluck('id')->first();
     }
     function user_type() {
     	$user = Session::get('userdata');

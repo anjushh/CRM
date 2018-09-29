@@ -793,7 +793,7 @@ function getReportType($reportType = null)
  */
 function getCompanyInfo()
 {
-    $result = (new \App\Company())->getCompanyInfo(loggedInCompanyId());
+    $result = (new \App\Models\Company())->getCompanyInfo(loggedInCompanyId());
     return $result;
 }
 

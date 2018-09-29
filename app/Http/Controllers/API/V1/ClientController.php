@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Client;
+use App\Models\Client;
 
 class ClientController extends Controller
 {

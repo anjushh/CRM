@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\ServiceType;
+use App\Models\ServiceType;
 
 class ServiceTypeContoller extends Controller
 {

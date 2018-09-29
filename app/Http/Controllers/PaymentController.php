@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Payment;
-use App\PaymentStatus;
+use App\Models\Payment;
+use App\Models\PaymentStatus;
 
 use DB;
 use Validator;

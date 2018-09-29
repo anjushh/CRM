@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Conv extends Model
+class Doc extends Model
 {
-    protected $fillable = ['conv_type'];
+    protected $fillable = ['status_type'];
     public function edit($id)
     {
         return $this->where('id',$id)->first();

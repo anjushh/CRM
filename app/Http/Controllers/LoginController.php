@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Login;
-use App\UserLogin;
+use App\Models\Login;
+use App\Models\UserLogin;
 use Illuminate\Http\Request;
 use Validator;
 use Session;
 use DB;
-use App\Company;
+use App\Models\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Foundation\Validation\ValidatesRequests;

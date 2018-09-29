@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\UserLogin;
-use App\UserType;
+use App\Models\UserLogin;
+use App\Models\UserType;
 
 class UserController extends Controller
 {

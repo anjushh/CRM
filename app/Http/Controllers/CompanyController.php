@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
@@ -65,7 +65,6 @@ class CompanyController extends Controller
                 foreach ($all_status as $statu) {
                     Company::where('id', $statu->id)->update(['status' => 0]);
                 }
-                
             }
             if($request->hasFile('company_logo')){
                 $file = $request->file('company_logo');

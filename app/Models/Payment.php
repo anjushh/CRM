@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 use DB;
 
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,14 @@ class Payment extends Model
     	return $name;
     }
     public function pay_id($id){
-        $pay_id = DB::table('payment_statuses')->where('payment_id', $id)->OrderBy('id','desc')->pluck('id')->first();
+        $pay_id = DB::table('payment_statuses')->where('payment_id',$id)->OrderBy('id','desc')->pluck('id')->first();
         return $pay_id;
+    }
+    public function paymentCreate($client_id, $user, $request, $company_id){
+        $this->client_id = $client_id;
+        $this->company_id = $company_id;
+        $this->user_id = $user->id;
+        $this->offered_price = $request->product_price;
+        $this->save();
     }
 }
