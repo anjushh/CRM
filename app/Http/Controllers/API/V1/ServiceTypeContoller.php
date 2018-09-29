@@ -80,6 +80,8 @@ class ServiceTypeContoller extends Controller
         }
     }
 
+
+
      //Delete Company
     public function deleteService(Request $request){
         try{

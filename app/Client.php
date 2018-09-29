@@ -11,4 +11,21 @@ class Client extends Model
     {
         return $this->where('id',$id)->first();
     }
+
+    //for App -- Khushboo
+    public function validateClient($input){
+    	 $rules = [
+            'name' => 'required|max:30',
+            'business_name' => 'required|max:100',
+            'address' => 'required',
+            'phone_no' => 'required|digits:10',
+            'email' => 'required|max:50|email',
+            'status' => 'required|numeric',
+            'product' => 'required|numeric',
+            'conv_type' => 'required|numeric',
+            'lead_head' => 'required|numeric',
+            'product_price' => 'required',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
 }
