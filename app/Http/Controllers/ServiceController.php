@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Service;
-use App\ServicePrice;
-use App\ServiceType;
+use App\Models\Service;
+use App\Models\ServicePrice;
+use App\Models\ServiceType;
 use Validator;
 use DB;
 use Illuminate\Http\Request;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\LeadAssignment;
+use App\Models\LeadAssignment;
 use DB;
 use Illuminate\Http\Request;
 

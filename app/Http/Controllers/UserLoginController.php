@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\UserLogin;
+use App\Models\UserLogin;
 use Illuminate\Http\Request;
 use DB;
 use Session;

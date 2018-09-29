@@ -116,7 +116,7 @@
                         <td>{{ $create_record->name }}</td>
                         <td>{{ $create_record->mobile }}</td>
                         <td>
-                            {{ \App\UserType::where('id',$create_record->user_type)->pluck('user_type')->first() }}
+                            {{ \App\Models\UserType::where('id',$create_record->user_type)->pluck('user_type')->first() }}
                         </td>
                         <td>
                         @if($create_record->status == 1)

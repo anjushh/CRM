@@ -10,15 +10,15 @@
         <div class="card-body card-block">
             <div class="col-12">
                 @if($errors->any())
+                    @foreach ($errors->all() as $error)
                     <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
                         <span class="badge badge-pill badge-danger">Failed</span>
-                        @foreach ($errors->all() as $error)
                             {{ $error }}
-                        @endforeach
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
+                    @endforeach
                 @endif
                 @if($errors = Session::get('success'))
                  <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
@@ -39,74 +39,74 @@
             {{--Form Opened--}}
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('name', Input::old('name'), array('placeholder' => 'Enter Client Name','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('name', Input::old('name'), array('placeholder' => 'Enter Client Name','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('business_name', Input::old('business_name'), array('placeholder' => 'Enter Business Name','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('business_name', Input::old('business_name'), array('placeholder' => 'Enter Business Name','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('address', Input::old('address'), array('placeholder' => 'Enter Address','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('address', Input::old('address'), array('placeholder' => 'Enter Address','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('email', Input::old('email'), array('placeholder' => 'Enter Email Address','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('email', Input::old('email'), array('placeholder' => 'Enter Email Address','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('phone_no', Input::old('phone_no'), array('placeholder' => 'Enter Phone Number','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('phone_no', Input::old('phone_no'), array('placeholder' => 'Enter Phone Number','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('alt_contact', Input::old('alt_contact'), array('placeholder' => 'Enter Alternate Contact Number','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('alt_contact', Input::old('alt_contact'), array('placeholder' => 'Enter Alternate Contact Number','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::select('product',$services->pluck('service_name','id'),null, array('placeholder' => 'Choose Service','class' => 'form-control service_change', 'required'=>'required')) !!}
+                    {!! Form::select('product',$services->pluck('service_name','id'),null, array('placeholder' => 'Choose Service','class' => 'form-control service_change')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('product_price', Input::old('product_price'), array('placeholder' => 'Service Price','class' => 'form-control service_price', 'required'=>'required')) !!}
+                    {!! Form::text('product_price', Input::old('product_price'), array('placeholder' => 'Service Price','class' => 'form-control service_price')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::select('conv_type',$convs->pluck('conv_type','id'),null, array('placeholder' => 'Conversation Medium','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::select('conv_type',$convs->pluck('conv_type','id'),null, array('placeholder' => 'Conversation Medium','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::select('lead_head',$execus->pluck('name','id'),null, array('placeholder' => 'Choose Lead Manager','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::select('lead_head',$execus->pluck('name','id'),null, array('placeholder' => 'Choose Lead Manager','class' => 'form-control')) !!}
                 </div>
             </div>
             
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('anni_date',Input::old('anni_date'), array('placeholder' => 'Anniversay Date','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::date('anni_date',Input::old('anni_date'), array('placeholder' => 'Anniversay Date','class' => 'form-control')) !!}
                 </div>
             </div>
 
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('birth_date',Input::old('birth_date'), array('placeholder' => 'Birth Date','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::date('birth_date',Input::old('birth_date'), array('placeholder' => 'Birth Date','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('follow_ups',Input::old('follow_ups'), array('placeholder' => 'Enter Folloups','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('follow_ups',Input::old('follow_ups'), array('placeholder' => 'Enter Folloups','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::select('status',$statuses->pluck('status_type','id'),null, array('placeholder' => 'Choose Status','class' => 'form-control status_change', 'required'=>'required')) !!}
+                    {!! Form::select('status',$statuses->pluck('status_type','id'),null, array('placeholder' => 'Choose Status','class' => 'form-control status_change')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 final_date">
@@ -173,7 +173,7 @@
                             @endif
                             <td>
                                 @php
-                                    $stat_id = \App\StatusUpdate::where('client_id',$create_record->id)->OrderBy('id','desc')->pluck('id')->first();
+                                    $stat_id = \App\Models\StatusUpdate::where('client_id',$create_record->id)->OrderBy('id','desc')->pluck('id')->first();
                                     $client_id = $create_record->id;
                                 @endphp
                                 <a class="btn btn-success btn-sm" href="{{ route('status_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>

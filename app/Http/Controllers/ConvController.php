@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Conv;
+use App\Models\Conv;
 use Illuminate\Http\Request;
 use Validator;
 use DB;

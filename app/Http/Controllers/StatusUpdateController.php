@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\StatusUpdate;
-use App\Client;
-use App\Doc;
+use App\Models\StatusUpdate;
+use App\Models\Client;
+use App\Models\Doc;
 use DB;
 use Illuminate\Http\Request;
 
