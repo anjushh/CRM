@@ -37,7 +37,6 @@
             <div class="form-group">
                 {!! Form::text('client_id',$edit_records->client_id, array('hidden'=>'hidden')) !!}
             </div>
-            
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Offered Price</label>

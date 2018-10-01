@@ -16,19 +16,19 @@ class Client extends Model
     // For Web --Anju
     public function ValidateClient($inputs){
 	    $rules = array(
-	        'name' => 'required',
-	        'business_name' => 'required',
+	        'name' => 'required|max:30',
+	        'business_name' => 'required|max:100',
 	        'address' => 'required',
-	        'phone_no' => 'required',
-	        'email' => 'required',
-	        'alt_contact' => 'required',
+	        'phone_no' => 'required|digits:10',
+	        'email' => 'required|max:50|email',
 	        'status' => 'required',
 	        'product' => 'required',
-	        'anni_date' => 'required',
 	        'birth_date' => 'required',
+	        'lead_head' => 'required',
 	        'remarks' => 'required',
 	        'follow_ups' => 'required',
 	        'product_price' => 'required',
+	        'conv_type' => 'required',
 	    );
 	    $valids = Validator::make($inputs, $rules);
 	    return $valids;
@@ -72,7 +72,12 @@ class Client extends Model
          } else {
              return $this->create($input)->id;
          }
-     } 
+     }
+
+    // For Web --- Anju
+    public function status_id($id){
+        return StatusUpdate::where('client_id',$id)->OrderBy('id','desc')->pluck('id')->first();
+    }
 
     
 }

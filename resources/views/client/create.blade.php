@@ -154,7 +154,7 @@
                             <th scope="col">Service Price</th>
                             @php $j = user_type(); @endphp
                             @if($j == 1) 
-                                <th scope="col">Edit</th>
+                                <th scope="col">Edit Client</th>
                             @endif
                             <th scope="col">Update Status</th>
                         </tr>
@@ -174,6 +174,8 @@
                             <td>
                                 @php
                                     $stat_id = \App\Models\StatusUpdate::where('client_id',$create_record->id)->OrderBy('id','desc')->pluck('id')->first();
+
+                                    $stat_id = $create_record->status_id($create_record->id);
                                     $client_id = $create_record->id;
                                 @endphp
                                 <a class="btn btn-success btn-sm" href="{{ route('status_update.edit',[$stat_id, $client_id]) }}"><i class="fa fa-edit"></i></a>
@@ -229,5 +231,14 @@ jQuery('body').on('change', '.status_change', function(e) {
         jQuery('.time_period').hide();
     }
 });
+</script>
+<script type="text/javascript">
+    function status_check(){
+        if(jQuery('.status_change').val() != ''){
+            jQuery('.status_change').attr('readonly','readonly');
+            jQuery('.status_change').css("pointer-events","none");
+        }
+    }
+    status_check();
 </script>
 @endsection

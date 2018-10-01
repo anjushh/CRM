@@ -24,6 +24,7 @@ class StatusUpdate extends Model
         $this->save();
     }
 
+    
     //For App --- Khushboo
     public function store($input, $id = null)
      {
@@ -32,6 +33,6 @@ class StatusUpdate extends Model
          } else {
              return $this->create($input)->id;
          }
-     } 
+    }
 		
 }

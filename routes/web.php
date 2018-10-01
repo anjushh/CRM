@@ -115,4 +115,12 @@ Route::group(['middleware' => 'login'], function (){
 	// Payment Status Update Routes
 	Route::get('/payment-update/status/{id}/{id1}', 'PaymentStatusController@create')->name('payment_status.update');
 	Route::post('/payment-update/status_update/{id}/{id1}', 'PaymentStatusController@store')->name('payment_status.store');
+	// Payment Status Update Routes
+
+	// Reminder Routes
+	Route::get('/call-reminder','MsgReminderController@show')->name('reminder.show');
+	Route::get('/reminder/create','MsgReminderController@create')->name('reminder.create');
+	Route::get('/reminder/edit/{id}','MsgReminderController@create')->name('reminder.edit');
+	Route::post('/reminder/store','MsgReminderController@store')->name('reminder.store');
+	Route::patch('/reminder/store/{id}','MsgReminderController@store')->name('reminder.update');
 });

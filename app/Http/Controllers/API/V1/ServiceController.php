@@ -22,8 +22,8 @@ class ServiceController extends Controller
 
             $company = Company::where('status', 1)->value('id');
             $inputs = $inputs + [
-                        'company_id' => 1
-               ];
+                'company_id' => $company,
+            ];
             $id = (new Service)->store($inputs);
             return apiResponseApp(true, 200, lang('Service created successfully'));
 

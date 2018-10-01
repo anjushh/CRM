@@ -1952,3 +1952,45 @@ select option:checked:after {
         z-index: 5;
     }
 }
+.set_reminder {
+    padding: 0.5rem .75rem !important;
+    font-size: 1.2rem !important;
+    line-height: 1.4rem !important;   
+}
+a.back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 18px;
+    right: 15px;
+    text-decoration: none;
+}
+a, a:before, a:after {
+  transition: all 1s;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  content: "";
+}
+a.back-to-top i {
+    display: block;
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    background: #e74c3c;
+    border-radius: 2px;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+.lni-chevron-up:before {
+    content: "\e940";
+    font-family: 'FontAwesome';
+}
+.my-read-only-class 
+{   
+   cursor: not-allowed;
+}
