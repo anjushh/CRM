@@ -653,11 +653,15 @@ header .form-inline {
         }
     }
     .dropdown-menu {
-        background: $header-bg;
+        background: #e8e8e8;
         border: none;
         border-radius: 0;
         box-shadow: none;
-        top: 49px !important;
+        top: 35px !important;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.65);
+        max-height: 400px;
+        min-width: 250px;
+        overflow: auto;
         p {
             font-size: 15px;
             margin: 0;
@@ -666,8 +670,10 @@ header .form-inline {
         .dropdown-item {
             color: $menu-color;
             font-size: 13px;
+            min-width: 200px;
             padding: 10px 15px 3px;
             text-overflow: ellipsis;
+            border-bottom: 1px solid #ccc;
             .photo {
                 float: left;
                 margin-right: 15px;
@@ -1964,12 +1970,7 @@ a.back-to-top {
     right: 15px;
     text-decoration: none;
 }
-a, a:before, a:after {
-  transition: all 1s;
-  -webkit-transition: all 1s;
-  -moz-transition: all 1s;
-  content: "";
-}
+
 a.back-to-top i {
     display: block;
     font-size: 22px;
@@ -1993,4 +1994,29 @@ a.back-to-top i {
 .my-read-only-class 
 {   
    cursor: not-allowed;
+}
+.for-notification {
+    a {
+        background: #e8e8e8;
+        .ti-bell {
+            color:#272c33;
+        }
+        h6 {
+            @extend .ti-bell;
+        }
+        p {
+            @extend .ti-bell;   
+        }
+    }
+    a:hover {
+        .ti-bell {
+            color: #272c33;
+        }
+        h6 {
+            @extend .ti-bell;
+        }
+        p {
+            @extend .ti-bell;   
+        }
+    }
 }

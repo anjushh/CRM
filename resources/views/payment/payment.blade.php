@@ -44,10 +44,11 @@
                 <table class="table table-responsive table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col" class="w-5">#</th>
                             <th scope="col">Client Name</th>
                             <th scope="col">Offered Price</th>
-                            <th scope="col">Edit</th>
+                            <th scope="col">Payment Status</th>
+                            <th scope="col">Edit Payment Details</th>
                             <th scope="col">Update Payment Status</th>
                         </tr>
                     </thead>
@@ -63,10 +64,16 @@
                                 {{ $create_record->offered_price }}
                             </td>
                             <td>
+                                @if($create_record->pay_status($create_record->client_id))
+                                    {{ $create_record->pay_status($create_record->client_id) }}
+                                @else
+                                Pending
+                                @endif
+                            </td>
+                            <td>
                                 <a class="btn btn-success btn-sm" href="{{ route('payment.edit', $create_record->id) }}"><i class="fa fa-edit"></i></a>
                             </td>
                             <td>
-                                
                                 <a class="btn btn-success btn-sm" href="{{ route('payment_status.update', [$create_record->id,$create_record->pay_id($create_record->id)]) }}"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>

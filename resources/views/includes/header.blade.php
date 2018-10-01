@@ -1,3 +1,4 @@
+
 <!-- Header-->
 <header id="header" class="header">
     <div class="header-menu">
@@ -14,22 +15,27 @@
                 <div class="dropdown for-notification">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
-                    <span class="count bg-danger">5</span>
+                    @php
+                        $notifications = notification();
+                        $noti_count = count($notifications->where('read_status','1'));
+                    @endphp
+                    <span class="count noti_count bg-danger">{{ $noti_count }}</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="notification">
-                        <p class="red">You have 3 Notification</p>
-                        <a class="dropdown-item media bg-flat-color-1" href="#">
-                            <i class="fa fa-check"></i>
-                            <p>Server #1 overloaded.</p>
-                        </a>
-                        <a class="dropdown-item media bg-flat-color-4" href="#">
-                            <i class="fa fa-info"></i>
-                            <p>Server #2 overloaded.</p>
-                        </a>
-                        <a class="dropdown-item media bg-flat-color-5" href="#">
-                            <i class="fa fa-warning"></i>
-                            <p>Server #3 overloaded.</p>
-                        </a>
+                        @php
+                            $notifications = $notifications->sortByDesc('read_status')->slice(0, 5);
+                        @endphp
+                        @foreach($notifications as $notification)
+                            <a class="dropdown-item msg_read media bg-flat-color-1" href="#">
+                                <input value="{{ $notification->id }}" name="msg_read" hidden="hidden" class="noti_id">
+                                <div class="w-15 d-inline-block float-left"><i class="ti-bell"></i></div>
+                                <div class="w-85 d-inline-block float-left">
+                                    <h6>{{ $notification->client_name }}</h6>
+                                    <p>{{ $notification->remarks }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                        <span class="d-block text-center btn btn-default border-top border-left-0 border-right-0 border-bottom-0 border-secondary"><a href="{{ route('all_noti') }}" class="underline">View All</a></span>
                     </div>
                 </div>
                 <div class="dropdown for-message">
@@ -111,5 +117,22 @@
         </div>
     </div>
 </header>
+<script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
+<script type="text/javascript">
+    jQuery('.for-notification').on('click','.msg_read', function(e) {
+        var noti_id = (jQuery(this).closest('.msg_read').find('.noti_id').val());
+        jQuery('#smallmodal').modal('show');
+        var route = "{{ route('noti.read', 'item') }}";
+        var getData = {};
+        jQuery.ajax({
+            method: "GET",
+            dataType: "json",
+            url: route.replace('item', noti_id),         
+            success: function(getData) {
+                jQuery('.noti_count').html(getData.noti_count);
+            }
+        });
+    });
+</script>
 <!-- /header -->
 <!-- Header-->

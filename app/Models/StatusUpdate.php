@@ -11,10 +11,16 @@ class StatusUpdate extends Model
     // For Web -- Anju
     public function statusUpdate($client_id, $user, $request, $company_id)
     {
+
     	$this->client_id = $client_id;
         $this->company_id = $company_id;
         $this->user_id = $user->id;
-        $this->status_type = $request->status;
+        if($request->status){
+            $this->status_type = $request->status;
+        }
+        else {
+            $this->status_type = $request->status_type;   
+        }
         $this->next_followup = $request->next_followup;
         $this->finali_date = $request->finali_date;
         $this->start_date = $request->start_date;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
 class Client extends Model
@@ -32,6 +33,12 @@ class Client extends Model
 	    );
 	    $valids = Validator::make($inputs, $rules);
 	    return $valids;
+    }
+
+    // For Web --- Anju
+    public function status($id){
+    	$status = StatusUpdate::where('client_id',$id)->OrderBy('id','desc')->pluck('status_type')->first();
+    	return Status::where('id', $status)->pluck('status_type')->first();
     }
 
      // For App --Khushboo

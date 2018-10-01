@@ -62,17 +62,12 @@
                         <label class="label_pay">Date of Payment</label>
                         <div class="clearfix"></div> 
                         {!! Form::date('pay_date','', array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount d-inline-block w-80', 'required'=>'required')) !!}
-                        <button type="button" class="btn btn-dark rounded-0 w-15 d-inline-block set_reminder" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-dark rounded-0 w-15 d-inline-block set_reminder" data-toggle="modal" data-target="#reminder_Modal">
                             <span class="ti-bell"></span>
                         </button>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <div class="form-group">
-                        <label class="label_pay">Status</label>
-                        {!! Form::select('status',['1' => 'Pending','2' => 'Complete'],null,array('placeholder' => 'Payment Status','class' => 'form-control', 'required'=>'required')) !!}
-                    </div>
-                </div>
+                
                 <div class="clearfix"></div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class="form-group">

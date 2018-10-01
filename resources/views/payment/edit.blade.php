@@ -62,7 +62,7 @@
             <div class="clearfix"></div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    Installments: {!! Form::checkbox('check','check',null, array('placeholder' => 'First Installment Amount','class' => 'insta')) !!}
+                    Installments: {!! Form::checkbox('check',Input::old('check'), array('class' => 'insta')) !!}
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -159,7 +159,6 @@
             jQuery(".insta_no").hide(400);
         }
     });
-    jQuery(".insta_no").hide();
 </script>
 
 <script type="text/javascript">

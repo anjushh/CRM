@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MsgReminder;
 use App\Models\Client;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class MsgReminderController extends Controller
@@ -91,17 +92,23 @@ class MsgReminderController extends Controller
      */
     public function show(Request $request)
     {
-        $reminders = MsgReminder::get();
-        foreach ($reminders as $reminder){
-            if($reminder->rem_date == date('Y-m-d')){
-                print_r('Show Reminder <br/>');
+        try {
+            $reminders = MsgReminder::get();
+            $company_id = active_company();
+            $user_id = user_data();
+            foreach ($reminders as $reminder){
+                if($reminder->rem_date == date('Y-m-d')){
+                    (new Notification)->createNotification($reminder, $company_id,$user_id->id);
+                }
+                else {
+                    // return redirect()->back()->with('alert', 'Deleted!');
+                }
             }
-            else {
-                print_r('Do Not Show Reminder <br/>');
-            }
+            return view('reminder.view')->with('alert', 'Deleted!');
         }
-        die();
-        return view('reminder.view')->with('alert', 'Deleted!');
+        catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
     }
 
     /**

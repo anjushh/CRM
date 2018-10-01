@@ -123,4 +123,10 @@ Route::group(['middleware' => 'login'], function (){
 	Route::get('/reminder/edit/{id}','MsgReminderController@create')->name('reminder.edit');
 	Route::post('/reminder/store','MsgReminderController@store')->name('reminder.store');
 	Route::patch('/reminder/store/{id}','MsgReminderController@store')->name('reminder.update');
+
+
+	// Notifications routes
+	Route::get('/notification/read/{id}','NotificationController@read')->name('noti.read');
+	Route::get('/notifications','NotificationController@index')->name('all_noti');
+
 });

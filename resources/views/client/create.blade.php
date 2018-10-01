@@ -79,7 +79,7 @@
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::select('conv_type',$convs->pluck('conv_type','id'),null, array('placeholder' => 'Conversation Medium','class' => 'form-control')) !!}
+                    {!! Form::select('conv_type',$convs->pluck('conv_type','id'),null, array('placeholder' => 'Conversation Medium','class' => 'form-control conv_type')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -131,7 +131,7 @@
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::textarea('remarks',Input::old('remarks'), array('placeholder' => 'Enter Remarks','class' => 'form-control')) !!}
+                    {!! Form::textarea('remarks',Input::old('remarks'), array('placeholder' => 'Enter Remarks','class' => 'form-control remarks')) !!}
                 </div>
             </div>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -152,6 +152,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Service Price</th>
+                            <th scope="col">Lead Status</th>
                             @php $j = user_type(); @endphp
                             @if($j == 1) 
                                 <th scope="col">Edit Client</th>
@@ -165,6 +166,7 @@
                             <td>{{ ++$i }}</td>
                             <td>{{ $create_record->name }}</td>
                             <td>{{ $create_record->product_price }}</td>
+                            <td>{{ $create_record->status($create_record->id) }}</td>
                             @php $j = user_type(); @endphp
                             @if($j == 1) 
                             <td>
@@ -237,6 +239,13 @@ jQuery('body').on('change', '.status_change', function(e) {
         if(jQuery('.status_change').val() != ''){
             jQuery('.status_change').attr('readonly','readonly');
             jQuery('.status_change').css("pointer-events","none");
+        }
+        if(jQuery('.conv_type').val() != ''){
+            jQuery('.conv_type').attr('readonly','readonly');
+            jQuery('.conv_type').css("pointer-events","none");
+        }
+        if(jQuery('.remarks').val() != ''){
+            jQuery('.remarks').css("display","none");
         }
     }
     status_check();
