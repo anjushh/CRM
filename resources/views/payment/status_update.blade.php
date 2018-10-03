@@ -32,47 +32,60 @@
             </div>
             {!! Form::model($edit_records, ['method' => 'POST','route' => ['payment_status.store',$edit_records->id,$edit_records->payment_id($edit_records->id)]]) !!}
             <!-- {{--Form Opened--}} -->
-            <div class="form-group">
-                {!! Form::text('client_id',$edit_records->client_id, array('hidden'=>'hidden')) !!}
-                {!! Form::text('remain_amt',Input::old('remain_amt'), array('hidden'=>'hidden','class'=>'remain_amt')) !!}
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label class="label_pay">Outstanding Amount</label>
-                    {!! Form::text('out_amount',$edit_records->out_amount('$edit_records->id'), array('class' => 'form-control out_amount','readonly'=>'readonly')) !!}
-                </div>  
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label class="label_pay">Amount Received</label>
-                    {!! Form::text('amt_rcvd','',array('placeholder' => 'Enter Received Amount','class' => 'form-control amt_rcvd','required'=>'required')) !!}
+            
+            @if($edit_records->out_amount == 0)
+                <div class="text-center w-100 mt-4">
+                    There is no outstanding amount.<br/>
+                    We have received whole payment of this client.
+                    <div class="clearfix"></div>
+                    <a href="{{ route('all_payments') }}" class="btn btn-primary d-inline-block mx-auto mt-5"><span class="ti-arrow-left"></span> Go Back</a>
                 </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label class="label_pay">Date of Payment</label>
-                    {!! Form::date('pay_date','', array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount', 'required'=>'required')) !!}
+            @else
+                <div>
+                    {!! Form::text('client_id',$edit_records->client_id, array('hidden'=>'hidden')) !!}
+                    {!! Form::text('remain_amt',Input::old('remain_amt'), array('hidden'=>'hidden','class'=>'remain_amt')) !!}
                 </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label class="label_pay">Status</label>
-                    {!! Form::select('status',['1' => 'Pending','2' => 'Complete'],null,array('placeholder' => 'Payment Status','class' => 'form-control', 'required'=>'required')) !!}
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="label_pay">Outstanding Amount</label>
+                        {!! Form::text('out_amount',$edit_records->out_amount('$edit_records->id'), array('class' => 'form-control out_amount','readonly'=>'readonly')) !!}
+                    </div>  
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="form-group">
-                    {{ Form::submit('Submit', ['name' => 'submit','class'=>'form-control d-inline-block w-50 float-left btn-primary btn-xl ml-2']) }}
-                    {{ Form::close() }}
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="label_pay">Amount Received</label>
+                        {!! Form::text('amt_rcvd','',array('placeholder' => 'Enter Received Amount','class' => 'form-control amt_rcvd','required'=>'required')) !!}
+                    </div>
                 </div>
-            </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="label_pay">Date of Payment</label>
+                        <div class="clearfix"></div> 
+                        {!! Form::date('pay_date','', array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount d-inline-block w-80', 'required'=>'required')) !!}
+                        <button type="button" class="btn btn-dark rounded-0 w-15 d-inline-block set_reminder" data-toggle="modal" data-target="#reminder_Modal">
+                            <span class="ti-bell"></span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="clearfix"></div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        {{ Form::submit('Submit', ['name' => 'submit','class'=>'form-control d-inline-block w-50 float-left btn-primary btn-xl ml-2']) }}
+                        {{ Form::close() }}
+                    </div>
+                </div>
+            @endif
         </div>
         <!-- {{-- Form Closed --}} -->
         {{ Form::close() }}
         <!-- {{-- Form Closed --}}  -->
     </div>
 </div>
+<div class="clearfix"></div>
+<!-- Button to Open the Modal -->
+
+
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
 <script type="text/javascript">
     remaining_amount();

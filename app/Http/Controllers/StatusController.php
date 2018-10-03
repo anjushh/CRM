@@ -45,6 +45,7 @@ class StatusController extends Controller
      */
     public function store(Request $request, $id = null)
     {
+        dd($request);
         $inputs = $request->all();
         $rules = array('status_type' => 'required');
         $valids = Validator::make($inputs, $rules);

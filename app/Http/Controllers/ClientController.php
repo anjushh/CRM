@@ -83,7 +83,7 @@ class ClientController extends Controller
             }
             else {
                 if($id != null){
-
+                    
                     //Get Client Info
                     $client_info = Client::where('id', $id)->first();
                     
@@ -101,8 +101,11 @@ class ClientController extends Controller
                     // Lead Assiggnment Code
 
                     // Status Create Code
-                    $statid = (new StatusUpdate)->statusUpdate($client_info->id, $user, $request, $company_id);
+                    if($client_info->status != $request->status ){
+                        $statid = (new StatusUpdate)->statusUpdate($client_info->id, $user, $request, $company_id);
+                    }
                     // Status Create Code
+
 
                     // Payment Create Code
                     if($request->status == 3){

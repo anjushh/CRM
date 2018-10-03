@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StatusUpdate;
 use App\Models\Client;
 use App\Models\Doc;
+use App\Models\Payment;
 use DB;
 use Illuminate\Http\Request;
 
@@ -53,34 +54,26 @@ class StatusUpdateController extends Controller
                 $path = $all_file->storeAs('doc',$filename.'.'.$fileExtension,'public');
 
                 // Document Model
-                $doc = new Doc;
-                $doc['company_id'] = $company_id;
-                $doc['user_id'] = $user_id->id;
-                $doc['client_id'] = $id1;
-                $doc['status_type'] = $request->status_type;
-                $doc['doc']= $path;
-                $doc->save();
+                $doc = (new Doc)->createDoc($id1, $user_id->id, $request, $company_id, $path);
                 // Document Model
             }
             
         }
+
+
         // Status Update Code
         $stat = $request->all();
         if($request->status_type == 3){
             $stat['next_followup'] = null;
+            // dd($request);
+            // Payment Create Code
+            $statid = (new Payment)->paymentCreate($id1, $user_id, $request, $company_id);
+            // Payment Create Code
         }
-        $stat['status_type'] = $request->status_type;
-        $stat['client_id'] = $id1;
-        $stat['company_id'] = $company_id;
-        $stat['user_id'] = $user_id->id;
-        $stat['finali_date'] = $request->finali_date;
-        $stat['start_date'] = $request->start_date;
-        $stat['end_date'] = $request->end_date;
-        $stat['time_period'] = $request->time_period;
+
+
+        $statid = (new StatusUpdate)->statusUpdate($id1, $user_id, $request, $company_id);
         // Status Update Code
-
-        StatusUpdate::create($stat);
-
 
         // Client Table Update
         DB::table('clients')->where('id',$id1)->update(['status' => $request->status_type]);

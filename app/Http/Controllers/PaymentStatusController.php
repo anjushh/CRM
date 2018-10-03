@@ -48,6 +48,9 @@ class PaymentStatusController extends Controller
         if($request->remain_amt == 0){
             $pay['status'] = 2;    
         }
+        else {
+            $pay['status'] = 1;   
+        }
         $pay['user_id'] = $user->id;
         $pay['payment_id'] = $id1;
         PaymentStatus::create($pay);

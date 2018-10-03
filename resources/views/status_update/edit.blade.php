@@ -177,6 +177,7 @@ jQuery('body').on('change', '.status_change', function(e) {
         if(status_id == 3){
             jQuery('.next_followup').hide();
             jQuery('.status_change').attr('readonly','readonly');
+            jQuery('.status_change').css("pointer-events","none");
         }
     }
     status_check();

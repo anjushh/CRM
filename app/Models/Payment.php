@@ -22,11 +22,23 @@ class Payment extends Model
         return $pay_id;
     }
     public function paymentCreate($client_id, $user, $request, $company_id){
+
         $this->client_id = $client_id;
         $this->company_id = $company_id;
         $this->user_id = $user->id;
-        $this->offered_price = $request->product_price;
+        if($request->product_price){
+            $this->offered_price = $request->product_price;
+        }
+        else {
+            $this->offered_price = DB::table('clients')->where('id',$client_id)->pluck('product_price')->first();
+        }
         $this->save();
+    }
+
+    // For Web --- Anju
+    public function pay_status($id){
+        $pay_status = PaymentStatus::where('client_id',$id)->OrderBy('id','desc')->pluck('status')->first();
+        return $pay_status;
     }
 
      //For App --- Khushboo
