@@ -74,5 +74,17 @@ class Client extends Model
          }
      } 
 
+       // For App --Khushboo
+    public function ValidateClientStatus($inputs){
+	    $rules = array(
+	    	'id' => 'required|numeric',
+	    	'remarks' => 'required',
+	    	'next_followup' => 'required',
+	    	'status' => 'required|numeric',
+	    );
+	    $valids = Validator::make($inputs, $rules);
+	    return $valids;
+    }
+
     
 }
