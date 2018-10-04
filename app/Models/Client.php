@@ -103,4 +103,6 @@ class Client extends Model
     public function payment_status($id){
     	return PaymentStatus::where('client_id',$id)->orderBy('id','desc')->pluck('status')->first();
     }
+
+   
 }

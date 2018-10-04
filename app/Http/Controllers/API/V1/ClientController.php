@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\LeadAssignment;
 use App\Models\StatusUpdate;
 use App\Models\Payment;
+use App\Models\Status;
 use Carbon\Carbon;
 
 class ClientController extends Controller
@@ -202,6 +203,9 @@ class ClientController extends Controller
         try{            
             $client = Client::get();
             if (count($client) != 0) {
+              foreach ($client as $cl) {
+                $cl['lead_status'] = Status::where('id', $cl->status);
+              }
               return apiResponseApp(true, 200, null, [], $client);
             }else{
               return apiResponseApp(false, 400, lang('No Client record found'));
