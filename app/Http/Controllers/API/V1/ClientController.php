@@ -204,7 +204,7 @@ class ClientController extends Controller
             $client = Client::get();
             if (count($client) != 0) {
               foreach ($client as $cl) {
-                $cl['lead_status'] = Status::where('id', $cl->status);
+                $cl['lead_status'] = Status::where('id', $cl->status)->value('status_type');
               }
               return apiResponseApp(true, 200, null, [], $client);
             }else{
