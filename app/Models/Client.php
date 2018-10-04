@@ -98,6 +98,14 @@ class Client extends Model
 	    $valids = Validator::make($inputs, $rules);
 	    return $valids;
     }
+
+    public function ValidateClientProfile($inputs){
+	    $rules = array(
+	    	'id' => 'required|numeric',
+	    );
+	    $valids = Validator::make($inputs, $rules);
+	    return $valids;
+    }
     
     // For Web --- Anju
     public function payment_status($id){

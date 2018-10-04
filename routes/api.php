@@ -87,4 +87,6 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/edit-client', ['as' => 'edit-client','uses' => 'API\V1\ClientController@editClient']);
 	/*Route Company*/
 	Route::any('v1/update-status-client', ['as' => 'update-status-client','uses' => 'API\V1\ClientController@updateStatus']);
+	/*Route Company*/
+	Route::any('v1/client-profile', ['as' => 'client-profile','uses' => 'API\V1\ClientController@clientProfile']);
 });

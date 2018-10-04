@@ -10,6 +10,9 @@ use App\Models\LeadAssignment;
 use App\Models\StatusUpdate;
 use App\Models\Payment;
 use App\Models\Status;
+use App\Models\Service;
+use App\Models\Conv;
+use App\Models\UserLogin;
 use Carbon\Carbon;
 
 class ClientController extends Controller
@@ -92,54 +95,84 @@ class ClientController extends Controller
             if( $validator->fails() ) {
                 return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
             }
-            $status_type = $inputs['status'];
             $user_id = \Auth::User()->id;
-            $company_id = Company::where('status', 1)->value('id');
-            $inputs = $inputs + [
-                                  'user_id' => $user_id,
-                                  'company_id' => $company_id,
-                                  ];
+            $id = $inputs['id'];
+            
+            if (isset($inputs['name'])) {
+              $name  = Client::where('id', $id)->update([
+                'name' => $inputs['name'],
+                ]);
+            }
+
+
+            if (isset($inputs['business_name'])) {
+              $business_name  = Client::where('id', $id)->update([
+                'business_name' => $inputs['business_name'],
+                ]);
+            }
+
+
+            if (isset($inputs['phone_no'])) {
+              $phone_no  = Client::where('id', $id)->update([
+                'phone_no' => $inputs['phone_no'],
+                ]);
+            }
+
 
             if (isset($inputs['alt_contact'])) {
-                $inputs = $inputs + [
-                                  'alt_contact' => $inputs['alt_contact'],
-                                  ];
+              $alt_contact  = Client::where('id', $id)->update([
+                'alt_contact' => $inputs['alt_contact'],
+                ]);
             }
-            if (isset($inputs['anni_date'])) {
-                $inputs = $inputs + [
-                                  'anni_date' => $inputs['anni_date'],
-                  ];
-            }
-            
-            $client_id = (new Client)->store($inputs, $inputs['id']);
 
-            $user_type = \Auth::User()->user_type;
-            $inputs = $inputs + [
-                                  'client_id' => $client_id,
+
+            if (isset($inputs['address'])) {
+              $address  = Client::where('id', $id)->update([
+                'address' => $inputs['address'],
+                ]);
+            }
+
+
+            if (isset($inputs['email'])) {
+              $email  = Client::where('id', $id)->update([
+                'email' => $inputs['email'],
+                ]);
+            }
+
+            if (isset($inputs['email'])) {
+              $email  = Client::where('id', $id)->update([
+                'email' => $inputs['email'],
+                ]);
+            }
+
+            if (isset($inputs['lead_head'])) {
+                $lead = LeadAssignment::where('client_id', $id)->where('status', 1)->value('lead_head');
+                if ($lead != $inputs['lead_head']) {
+                    $lead_head  = Client::where('id', $id)->update([
+                                  'lead_head' => $inputs['lead_head'],
+                                  ]);
+                    $lead_assignment  = LeadAssignment::where('client_id', $id)->update([
+                                        'status' => 0,
+                                        ]);
+                    $user_type = UserLogin::where('id', $inputs['lead_head'])->value('user_type');
+                    $company_id = Company::where('status', 1)->value('id');
+                    $inputs = $inputs + [
+                                  'client_id' => $id,
+                                  'lead_head' => $inputs['lead_head'],
                                   'user_type' => $user_type,
+                                  'user_id' => \Auth::User()->id,
                                   'w_e_f' => Carbon::now(),
                                   'status' => 1,
-                  ];
+                                  'company_id' => $company_id,
 
-            $lead = LeadAssignment::where('client_id', $inputs['id'])->value('id');
-            if ($lead != $inputs['lead_head']) {
-              $inputs = $inputs + [
-                                  'client_id' => $client_id,
-                                  'user_type' => $user_type,
-                                  'w_e_f' => Carbon::now(),
-                                  'status' => 0,
-                  ];
-              (new LeadAssignment)->store($inputs, $lead);
+                     ];
+                    (new LeadAssignment)->store($inputs);
+              }
             }
-
-
-              (new LeadAssignment)->store($inputs);
-
-           
             return apiResponseApp(true, 200, lang('Client updated successfully'));
 
     	}catch(Exception $e){
-			return apiResponseApp(false, 500, lang('messages.server_error'));
+			 return apiResponseApp(false, 500, lang('messages.server_error'));
     	}
     }
 
@@ -147,20 +180,13 @@ class ClientController extends Controller
     public function updateStatus(Request $request){
       try{
             $inputs = $request->all();
-            // dd($inputs['doc']);
-            if (isset($inputs['doc'])) {
-                foreach ($inputs['doc'] as $docs) {
-                    var_dump($inputs['doc']);
-                }
-            }
-            die;
             $validator = ( new Client )->ValidateClientStatus( $inputs );
             if( $validator->fails() ) {
                 return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
             }
 
-            $company_id = Client::where('id', $inputs['id'])->value('company_id');
-            $product_price = Client::where('id', $inputs['id'])->value('product_price');
+            // $company_id = Client::where('id', $inputs['id'])->value('company_id');
+            // $product_price = Client::where('id', $inputs['id'])->value('product_price');
             $user_id = \Auth::User()->id;
             $status_type = $inputs['status'];
             $inputs = $inputs + [
@@ -210,6 +236,30 @@ class ClientController extends Controller
             }else{
               return apiResponseApp(false, 400, lang('No Client record found'));
             }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+    //Client List
+    public function clientProfile(Request $request){
+        try{            
+            $inputs = $request->all();
+          
+            $validator = ( new Client )->ValidateClientProfile( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }
+
+            $profile = Client::where('id', $inputs['id'])->first();
+            $profile['status'] = Status::where('id', $profile->status)->value('status_type');
+            $profile['product'] = Service::where('id', $profile->product)->value('service_name');
+            $profile['conv_type'] = Conv::where('id', $profile->conv_type)->value('conv_type');
+
+            $profile['lead_head'] = UserLogin::where('id', $profile->lead_head)->value('name');
+              return apiResponseApp(true, 200, null, [], $profile);
 
 
         }catch(Exception $e){
