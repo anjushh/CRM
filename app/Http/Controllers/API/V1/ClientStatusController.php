@@ -8,6 +8,7 @@ use App\Models\Status;
 
 class ClientStatusController extends Controller
 {
+    
     //Add Status
     public function createStatus(Request $request){
     	try{

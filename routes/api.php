@@ -73,6 +73,7 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	/*Route Company*/
 	Route::any('v1/create-status', ['as' => 'create-status','uses' => 'API\V1\ClientStatusController@createStatus']);
 	/*Route Company*/
+
 	Route::any('v1/update-status', ['as' => 'update-status','uses' => 'API\V1\ClientStatusController@updateStatus']);
 	/*Route Company*/
 	Route::any('v1/all-status', ['as' => 'all-status','uses' => 'API\V1\ClientStatusController@allStatus']);
@@ -85,5 +86,5 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	/*Route Company*/
 	Route::any('v1/edit-client', ['as' => 'edit-client','uses' => 'API\V1\ClientController@editClient']);
 	/*Route Company*/
-	Route::any('v1/update-status', ['as' => 'update-status','uses' => 'API\V1\ClientController@updateStatus']);
+	Route::any('v1/update-status-client', ['as' => 'update-status-client','uses' => 'API\V1\ClientController@updateStatus']);
 });
