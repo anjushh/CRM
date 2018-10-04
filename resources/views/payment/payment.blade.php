@@ -64,8 +64,8 @@
                                 {{ $create_record->offered_price }}
                             </td>
                             <td>
-                                @if($create_record->pay_status($create_record->client_id))
-                                    {{ $create_record->pay_status($create_record->client_id) }}
+                                @if($create_record->pay_status($create_record->client_id) == 2)
+                                    Completed
                                 @else
                                 Pending
                                 @endif

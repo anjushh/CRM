@@ -115,6 +115,7 @@ Route::group(['middleware' => 'login'], function (){
 	// Payment Status Update Routes
 	Route::get('/payment-update/status/{id}/{id1}', 'PaymentStatusController@create')->name('payment_status.update');
 	Route::post('/payment-update/status_update/{id}/{id1}', 'PaymentStatusController@store')->name('payment_status.store');
+	Route::get('/payment-update/status/{id}', 'PaymentStatusController@index')->name('payment_status.index');
 	// Payment Status Update Routes
 
 	// Reminder Routes
@@ -123,10 +124,18 @@ Route::group(['middleware' => 'login'], function (){
 	Route::get('/reminder/edit/{id}','MsgReminderController@create')->name('reminder.edit');
 	Route::post('/reminder/store','MsgReminderController@store')->name('reminder.store');
 	Route::patch('/reminder/store/{id}','MsgReminderController@store')->name('reminder.update');
+	Route::get('/reminder/delete/{id}','MsgReminderController@destroy')->name('reminder.delete');
 
 
 	// Notifications routes
 	Route::get('/notification/read/{id}','NotificationController@read')->name('noti.read');
 	Route::get('/notifications','NotificationController@index')->name('all_noti');
 
+
+	Route::get('/send/email', 'ClientController@mail');
+
+	// Reports Routes
+	Route::get('/client-reports', 'ReportController@index')->name('client.reports');
+	Route::get('/client-reports/{id}', 'ReportController@client_data')->name('client.data');
+	
 });

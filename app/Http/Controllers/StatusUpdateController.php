@@ -6,6 +6,7 @@ use App\Models\StatusUpdate;
 use App\Models\Client;
 use App\Models\Doc;
 use App\Models\Payment;
+use App\Models\MsgReminder;
 use DB;
 use Illuminate\Http\Request;
 
@@ -74,6 +75,10 @@ class StatusUpdateController extends Controller
 
         $statid = (new StatusUpdate)->statusUpdate($id1, $user_id, $request, $company_id);
         // Status Update Code
+        
+        if($request->next_followup != null) {
+            $rem_update = (new MsgReminder)->rem_Update($id1,$request->next_followup,$company_id,$user_id->id,$request->remarks);
+        }
 
         // Client Table Update
         DB::table('clients')->where('id',$id1)->update(['status' => $request->status_type]);

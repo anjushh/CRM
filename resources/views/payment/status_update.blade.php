@@ -61,10 +61,7 @@
                     <div class="form-group">
                         <label class="label_pay">Date of Payment</label>
                         <div class="clearfix"></div> 
-                        {!! Form::date('pay_date','', array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount d-inline-block w-80', 'required'=>'required')) !!}
-                        <button type="button" class="btn btn-dark rounded-0 w-15 d-inline-block set_reminder" data-toggle="modal" data-target="#reminder_Modal">
-                            <span class="ti-bell"></span>
-                        </button>
+                        {!! Form::date('pay_date','', array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount d-inline-block w-100', 'required'=>'required')) !!}
                     </div>
                 </div>
                 

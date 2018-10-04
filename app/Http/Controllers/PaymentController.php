@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\PaymentStatus;
-
+use App\Models\Msgreminder;
 use DB;
 use Validator;
 use Illuminate\Http\Request;
@@ -43,24 +43,45 @@ class PaymentController extends Controller
      */
     public function store(Request $request, $id = null, $id1 = null)
     {
-
         $company_id = active_company();
         $user = user_data();
+        $inputs = $request->all();
+        if($id != null && $id1 == null) {
+            $validator = (new PaymentStatus)->ValidateData($inputs);
+            if( $validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            // Reminder To Add
+            // First Installment
+            if($request->inst_date_1 != null){
+                $remarks = 'Today is the First Installment Date this Project';
+                (new Msgreminder)->ins_rem_Update($company_id,$user->id,$request,$request->inst_date_1,$remarks);
+
+                // Second Installment
+                if($request->inst_date_2 != null){
+                    $remarks = 'Today is the Second Installment Date this Project';
+                    (new Msgreminder)->ins_rem_Update($company_id,$user->id,$request,$request->inst_date_2,$remarks);
+
+                    // Third Installment
+                    if($request->inst_date_3 != null){
+                        $remarks = 'Today is the Third Installment Date this Project';
+                        (new Msgreminder)->ins_rem_Update($company_id,$user->id,$request,$request->inst_date_3,$remarks);
+                    }
+                }
+                
+            }
+            
+
+            // Payment Status Update
+            (new PaymentStatus)->PaymentStatusUpdate($company_id,$request->client_id,$user->id,$request,$id);
+            // Payment Status Update
+
+            $create_records = Payment::get();
+            Payment::find($id)->update($request->all());
+            return redirect()->back()->with('success','Data Saved Successfully');
+
+        }
         
-        // Payment Status Update
-        $pay = new PaymentStatus;
-        $pay->company_id = $company_id;
-        $pay->client_id = $request->client_id;
-        $pay->payment_id = $id;
-        $pay->user_id = $user->id;
-        $pay->amt_rcvd = null;
-        $pay->out_amount = $request->out_amount;
-        $pay->status = null;
-        $pay->pay_date = null;
-        $pay->save();
-        // Payment Status Update
-
-
         $create_records = Payment::get();
         Payment::find($id)->update($request->all());
         return redirect()->route('all_payments',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);

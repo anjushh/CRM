@@ -43,11 +43,11 @@ class Payment extends Model
 
      //For App --- Khushboo
     public function store($input, $id = null)
-     {
+    {
          if ($id) {
              return $this->find($id)->update($input);
          } else {
              return $this->create($input)->id;
          }
-     } 
+    } 
 }

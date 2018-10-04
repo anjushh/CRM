@@ -10,15 +10,15 @@
         <div class="card-body card-block">
             <div class="col-12">
                 @if($errors->any())
+                @foreach ($errors->all() as $error)
                     <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
                         <span class="badge badge-pill badge-danger">Failed</span>
-                        @foreach ($errors->all() as $error)
                             {{ $error }}
-                        @endforeach
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
+                @endforeach
                 @endif
                 @if($errors = Session::get('success'))
                  <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
@@ -40,19 +40,19 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Offered Price</label>
-                    {!! Form::text('offered_price',$edit_records->offered_price, array('placeholder' => 'Offered Price','class' => 'form-control offered_price', 'required'=>'required')) !!}
+                    {!! Form::text('offered_price',$edit_records->offered_price, array('placeholder' => 'Offered Price','class' => 'form-control offered_price')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Received Amount</label>
-                    {!! Form::text('recieved_amount', Input::old('recieved_amount'), array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount', 'required'=>'required')) !!}
+                    {!! Form::text('recieved_amount', Input::old('recieved_amount'), array('placeholder' => 'Enter Received Amount','class' => 'form-control recieved_amount')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="label_pay">Discount</label>
-                    {!! Form::text('discount', Input::old('discount'), array('placeholder' => 'Enter Discount','class' => 'form-control discount', 'required'=>'required')) !!}
+                    {!! Form::text('discount', Input::old('discount'), array('placeholder' => 'Enter Discount','class' => 'form-control discount')) !!}
                 </div>
             </div>
             <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 border-right-0 border-left-0 border-bottom-0 border mt-3 p-3">
@@ -199,6 +199,4 @@
         jQuery('.out_amount_3').attr('value',out_amount_3);
     }
 </script>
-
-
 @endsection

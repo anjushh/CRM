@@ -47,10 +47,15 @@
 @else
     <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
 @endif
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
-
 <script>
     if(window.outerWidth < 480) {
         jQuery('.table-responsive').css( 'display','block' );
@@ -79,5 +84,17 @@
 <script type="text/javascript">
     jQuery('body').on('click', '.msg_read', function(e) {
         jQuery('#myModal').modal('show');
+    });
+</script>
+<script type="text/javascript">
+    jQuery('#table_id').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+        
     });
 </script>

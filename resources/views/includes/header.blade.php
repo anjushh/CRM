@@ -30,8 +30,8 @@
                                 <input value="{{ $notification->id }}" name="msg_read" hidden="hidden" class="noti_id">
                                 <div class="w-15 d-inline-block float-left"><i class="ti-bell"></i></div>
                                 <div class="w-85 d-inline-block float-left">
-                                    <h6>{{ $notification->client_name }}</h6>
-                                    <p>{{ $notification->remarks }}</p>
+                                    <h6>{{ str_limit($notification->client_name, $limit = 20, $end = '...') }}</h6>
+                                    <p>{{ str_limit($notification->remarks, $limit = 20, $end = '...') }}</p>
                                 </div>
                             </a>
                         @endforeach

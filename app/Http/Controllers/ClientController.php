@@ -10,6 +10,8 @@ use App\Models\Conv;
 use App\Models\UserLogin;
 use App\Models\StatusUpdate;
 use App\Models\LeadAssignment;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMailable;
 use Validator;
 use DB;
 use Illuminate\Http\Request;
@@ -196,5 +198,11 @@ class ClientController extends Controller
     {
         $service_price = DB::table('services')->where('id',$request->id)->pluck('service_price')->first();
         return response(['service_price' => $service_price], 200);
+    }
+    public function mail()
+    {
+       $name = 'Anju';
+       Mail::to('anju.sharma045@gmail.com')->send(new SendMailable($name));
+       return 'Email was sent';
     }
 }

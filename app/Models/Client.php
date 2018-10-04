@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Status;
+use App\Models\PaymentStatus;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
 class Client extends Model
@@ -97,6 +98,9 @@ class Client extends Model
 	    $valids = Validator::make($inputs, $rules);
 	    return $valids;
     }
-
     
+    // For Web --- Anju
+    public function payment_status($id){
+    	return PaymentStatus::where('client_id',$id)->orderBy('id','desc')->pluck('status')->first();
+    }
 }

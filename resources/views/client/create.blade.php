@@ -134,10 +134,15 @@
                     {!! Form::textarea('remarks',Input::old('remarks'), array('placeholder' => 'Enter Remarks','class' => 'form-control remarks')) !!}
                 </div>
             </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-25 float-left btn-primary btn-xl ml-2']) }}
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-50 float-left btn-primary btn-xl ml-2']) }}
                 {{ Form::close() }}
             </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-50 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
+            
+
             {{-- Form Closed --}}
             {{ Form::close() }}
             {{-- Form Closed --}}   
