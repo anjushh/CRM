@@ -170,7 +170,7 @@ class UserController extends Controller
             $user_profile = UserLogin::get();
             if (count($user_profile) != 0) {
                 foreach ($user_profile as $user_profiles) {
-                    $user_profiles['type'] = \UserType::where('id', $user_profiles->id)->value('user_type');
+                    $user_profiles['type'] = UserType::where('id', $user_profiles->id)->value('user_type');
                 }
                 return apiResponseApp(true, 200, null, [], $user_profile);
             }else{
