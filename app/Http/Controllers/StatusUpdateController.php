@@ -52,10 +52,12 @@ class StatusUpdateController extends Controller
                 $filename = rand(100000, 999999);
                 $fileExtension = $all_file->getClientOriginalExtension();
                 $name = str_slug($request->filename).'.'.$all_file->getClientOriginalExtension();
-                $path = $all_file->storeAs('doc',$filename.'.'.$fileExtension,'public');
+
+                $path =  $all_file->move(public_path().'/uploads/doc/', $filename.'.'.$fileExtension);
+                // $path = $all_file->storeAs('doc',$filename.'.'.$fileExtension,'public');
 
                 // Document Model
-                $doc = (new Doc)->createDoc($id1, $user_id->id, $request, $company_id, $path);
+                $doc = (new Doc)->createDoc($id1, $user_id->id, $request, $company_id, $filename.'.'.$fileExtension);
                 // Document Model
             }
             

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Doc extends Model
 {
-    protected $fillable = ['status_type'];
+    protected $fillable = ['status_type', 'client_id', 'user_id', 'company_id', 'doc'];
     public function edit($id)
     {
         return $this->where('id',$id)->first();
@@ -18,7 +18,18 @@ class Doc extends Model
     	$this->client_id= $client_id;
     	$this->status_type= $request->status_type;
     	$this->doc= $doc;
-    	dd($this);
-    	die();
+        $this->save();
+    	// dd($this);
+    	// die();
     }
+
+    //For App --- Khushboo
+    public function store($input, $id = null)
+     {
+         if ($id) {
+             return $this->find($id)->update($input);
+         } else {
+             return $this->create($input)->id;
+         }
+     }  
 }

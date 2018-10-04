@@ -92,7 +92,6 @@ class Client extends Model
 	    $rules = array(
 	    	'id' => 'required|numeric',
 	    	'remarks' => 'required',
-	    	'next_followup' => 'required',
 	    	'status' => 'required|numeric',
 	    );
 	    $valids = Validator::make($inputs, $rules);

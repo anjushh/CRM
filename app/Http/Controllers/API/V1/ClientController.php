@@ -13,6 +13,7 @@ use App\Models\Status;
 use App\Models\Service;
 use App\Models\Conv;
 use App\Models\UserLogin;
+use App\Models\Doc;
 use Carbon\Carbon;
 
 class ClientController extends Controller
@@ -67,7 +68,11 @@ class ClientController extends Controller
                                   'status_type' => $status_type,
                   ];
 
-            (new StatusUpdate)->store($inputs);
+            $new_status = (new StatusUpdate)->store($inputs);
+
+            $status  = Client::where('id', $client_id)->update([
+                'status' => $new_status,
+                ]);
 
             if ($status_type ==  3) {
               $inputs = $inputs + [
@@ -185,7 +190,7 @@ class ClientController extends Controller
                 return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
             }
 
-            // $company_id = Client::where('id', $inputs['id'])->value('company_id');
+            $company_id = Client::where('id', $inputs['id'])->value('company_id');
             // $product_price = Client::where('id', $inputs['id'])->value('product_price');
             $user_id = \Auth::User()->id;
             $status_type = $inputs['status'];
@@ -195,14 +200,25 @@ class ClientController extends Controller
               'client_id' => $inputs['id'],
               'status_type' => $inputs['status'],
             ];
+            if (isset($inputs['doc'])) {
+                $file = $request->doc;
+                foreach ($file as $files) {
+                  $doc_file = rand(100000, 999999);
+                  $fileExtension = $files->getClientOriginalExtension();
+                  $files->move(public_path().'/uploads/doc/', $doc_file.'.'.$fileExtension);
+                  unset($inputs['doc']);
+                  $inputs = $inputs + [ 'doc' => $doc_file.'.'.$fileExtension ];
+                  $doc= (new Doc)->store($inputs);
+                }
+            }
             if ($status_type != 3) {  
                 $inputs['finali_date'] = null;
                 $inputs['start_date'] = null;
                 $inputs['end_date'] = null;
                 $inputs['time_period'] = null;
             }
-            (new StatusUpdate)->store($inputs);
-
+            $new_status = (new StatusUpdate)->store($inputs);
+            $product_price = Client::where('id', $inputs['id'])->value('product_price');
             if ($status_type ==  3) {
               $inputs = $inputs + [
                                   'offered_price' => $product_price,
@@ -212,6 +228,10 @@ class ClientController extends Controller
                   ];
               (new Payment)->store($inputs);
             }
+
+            unset($inputs['status']);
+            $inputs = $inputs + [ 'status' => $new_status];
+            $client  = (new Client)->store($inputs, $inputs['id']);
 
             
 
