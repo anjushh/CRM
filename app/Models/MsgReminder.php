@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MsgReminder extends Model
 {
+
+    use SoftDeletes;
+
     protected $fillable = ['client_id','user_id','company_id','remarks','rem_date','status'];
 
     // For Web --- Anju
@@ -58,5 +62,33 @@ class MsgReminder extends Model
     	'c.name as client_name',
     	];
     	return $this->join('clients as c', 'c.id', '=', 'msg_reminders.client_id')->get($fields);
+    }
+
+    // For Web --- Anju From StatusUpdateController
+    public function rem_Update($client_id,$rem_date,$company_id,$user_id,$remarks){
+        $this->client_id = $client_id;
+        $this->rem_date = $rem_date;
+        $this->company_id = $company_id;
+        $this->user_id = $user_id;
+        $this->remarks = $remarks;
+        $this->status = 1;
+        $this->save();
+    }
+
+    // For Web --- Anju For Installments
+    public function ins_rem_Update($company_id,$user_id,$request,$rem_date,$remarks){
+        $this->client_id = $request->client_id;
+        $this->rem_date = $rem_date;
+        $this->company_id = $company_id;
+        $this->user_id = $user_id;
+        $this->remarks = $remarks;
+        $this->status = 1;
+        $this->save();
+    }
+
+
+    public function deleteAccount($id)
+    {
+        $this->where('id', $id)->delete();
     }
 }

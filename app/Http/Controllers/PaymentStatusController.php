@@ -15,7 +15,7 @@ class PaymentStatusController extends Controller
      */
     public function index()
     {
-        //
+        return view('payment.edit_first');
     }
 
     /**
@@ -37,7 +37,6 @@ class PaymentStatusController extends Controller
      */
     public function store(Request $request, $id, $id1 = null)
     {
-
         $company_id = active_company();
         $user = user_data();
         
@@ -53,6 +52,7 @@ class PaymentStatusController extends Controller
         }
         $pay['user_id'] = $user->id;
         $pay['payment_id'] = $id1;
+        
         PaymentStatus::create($pay);
         return redirect()->route('all_payments');
     }

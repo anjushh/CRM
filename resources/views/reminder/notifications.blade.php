@@ -16,7 +16,7 @@
                     @foreach ($create_records as $create_record)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $create_record->name }}</td>
+                        <td>{{ $create_record->client_name }}</td>
                         <td>{{ $create_record->rem_date }}</td>
                         <td>{{ $create_record->remarks }}</td>
                     </tr>

@@ -52,6 +52,7 @@ class MsgReminderController extends Controller
     public function store(Request $request, $id = null)
     {
         try{
+            
             $clients = Client::get();
             $reminders = MsgReminder::get();
             $company_id = active_company();
@@ -68,15 +69,16 @@ class MsgReminderController extends Controller
 
             if($id != null){
                 (new MsgReminder)->store($inputs, $id);
-                return view('reminder.create',compact('clients','reminders'));
+                return view('reminder.create',compact('clients','reminders'))->with('i', ($request->input('page', 1) - 1) * 10);
             }
             else {
                 $validator = (new MsgReminder)->ValidateRequest($inputs);
                 if($validator->fails()) {
                    return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
                 }
+
                 (new MsgReminder)->store($inputs);
-                return view('reminder.create',compact('clients','reminders'));
+                return view('reminder.create',compact('clients','reminders'))->with('i', ($request->input('page', 1) - 1) * 10);
             }
         }
         catch(Exception $e){
@@ -140,8 +142,9 @@ class MsgReminderController extends Controller
      * @param  \App\MsgReminder  $msgReminder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MsgReminder $msgReminder)
+    public function destroy($id)
     {
-        //
+        (new MsgReminder)->deleteAccount($id);
+        return redirect()->back()->with('success','Record Deleted Successfully');
     }
 }

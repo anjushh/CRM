@@ -70,7 +70,6 @@
                 <input type="button" value="Clear All Values" onclick="resetAllValues();" class="form-control d-inline-block w-100 float-left btn-danger btn-xl ml-2 rounded-0">
             </div>
         </div>
-        
     </div>
 </div>
 @if(isset($reminders))
@@ -80,18 +79,19 @@
             <table class="table table-responsive table-striped">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col" class="w-5">#</th>
                   <th scope="col">Client Name</th>
                   <th scope="col">Reminder Date</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Edit</th>
+                  <th scope="col" class="w-15">Edit</th>
+                  <th scope="col" class="w-15">Delete Reminder</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($reminders as $reminder)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $reminder->client_name }}</td>
+                        <td>{{ $reminder->client_name}}</td>
                         <td>{{ $reminder->rem_date }}</td>
                         <td>
                             @if($reminder->status == 1)
@@ -99,7 +99,8 @@
                             @else 
                                 Inactive
                             @endif
-                        <td><a class="btn btn-success btn-sm" href="{{ route('reminder.edit', $reminder->id) }}"><i class="fa fa-edit"></i></a></td>
+                        <td><a class="btn btn-success btn-sm" href="{{ route('reminder.edit',$reminder->id) }}"><i class="fa fa-edit"></i></a></td>
+                        <td><a class="btn btn-danger btn-sm rounded-circle" href="{{ route('reminder.delete', $reminder->id) }}"><i class="fa fa-minus"></i></a></td>
                   </tr>
                   @endforeach
               </tbody>

@@ -15,7 +15,10 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-        $create_records = DB::table('notifications')->join('clients','clients.id','=','notifications.client_id')->paginate(10);
+        $create_records = \DB::table('notifications')
+        ->join('clients', 'clients.id' , '=', 'notifications.client_id')
+        ->select('clients.name as client_name', 'notifications.rem_date',  'notifications.remarks as remarks')
+        ->paginate(10);
         return view('reminder.notifications', compact('create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
