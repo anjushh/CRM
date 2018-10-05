@@ -43,4 +43,30 @@ class PaymentStatus extends Model
         $this->pay_date = null;
         $this->save();
     }
+
+    //For App -khushboo
+    public function updatePaymentStatus($company_id,$client_id,$user_id,$amount,$id){
+        $this->company_id = $company_id;
+        $this->client_id = $client_id;
+        $this->user_id = $user_id;
+        $this->payment_id = $id;
+        $this->amt_rcvd = null;
+        $this->out_amount = $amount;
+        $this->status = null;
+        $this->pay_date = null;
+        $this->save();
+    }
+
+     //For App -khushboo
+    public function updatePaymentStatusReceived($company_id,$client_id,$user_id,$amount,$id, $amt_rcvd, $status, $pay_date){
+        $this->company_id = $company_id;
+        $this->client_id = $client_id;
+        $this->user_id = $user_id;
+        $this->payment_id = $id;
+        $this->amt_rcvd = $amt_rcvd;
+        $this->out_amount = $amount;
+        $this->status = $status;
+        $this->pay_date = $pay_date;
+        $this->save();
+    }
 }

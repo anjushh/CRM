@@ -50,4 +50,25 @@ class Payment extends Model
              return $this->create($input)->id;
          }
     } 
+
+    //For App-- Khushboo
+    public function validatePayment($inputs){
+         $rules = [
+            'payment_id' => 'required|numeric',
+            'recieved_amount' => 'required',
+            'discount' => 'required',
+            'out_amount' => 'required',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
+
+    public function validatePaymentUpdate($inputs){
+         $rules = [
+            'payment_id' => 'required|numeric',
+            'amt_rcvd' => 'required',
+            'pay_date' => 'required',
+            'out_amount' => 'required',
+        ];
+        return \Validator::make($inputs, $rules);
+    }
 }
