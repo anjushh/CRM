@@ -9,6 +9,8 @@ use App\Models\StatusUpdate;
 use App\Models\Status;
 use App\Models\Payment;
 use App\Models\PaymentStatus;
+use App\Models\LeadAssignment;
+use App\Models\UserLogin;
 
 class ReportingController extends Controller
 {
@@ -29,6 +31,8 @@ class ReportingController extends Controller
             			$payment_status = 'Pending';
             		}
             		$client['payment_status'] = $payment_status;
+            		$lead_head = LeadAssignment::where('client_id', $client->client_id)->where('status', 1)->orderBy('created_at', 'desc')->limit(1)->value('lead_head');
+            		$client['lead_manager'] = UserLogin::where('id', $lead_head)->value('name');
             	}
             	return apiResponseApp(true, 200, null, [], $clients);
             }else{
@@ -65,6 +69,8 @@ class ReportingController extends Controller
             			$payment_status = 'Pending';
             		}
             		$client['payment_status'] = $payment_status;
+            		$lead_head = LeadAssignment::where('client_id', $client->client_id)->where('status', 1)->orderBy('created_at', 'desc')->limit(1)->value('lead_head');
+            		$client['lead_manager'] = UserLogin::where('id', $lead_head)->value('name');
             	}
             	return apiResponseApp(true, 200, null, [], $clients);
             }else{
@@ -101,6 +107,8 @@ class ReportingController extends Controller
             			$payment_status = 'Pending';
             		}
             		$client['payment_status'] = $payment_status;
+            		$lead_head = LeadAssignment::where('client_id', $client->client_id)->where('status', 1)->orderBy('created_at', 'desc')->limit(1)->value('lead_head');
+            		$client['lead_manager'] = UserLogin::where('id', $lead_head)->value('name');
             	}
             	return apiResponseApp(true, 200, null, [], $clients);
             }else{
