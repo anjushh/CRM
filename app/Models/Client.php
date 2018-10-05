@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Status;
 use App\Models\Client;
+use App\Models\UserType;
 use App\Models\PaymentStatus;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
@@ -129,7 +130,52 @@ class Client extends Model
    
     //For Web --- Anju
 	public static function clientFilter($clients, $client_id){
-		return $clients->where('id', $client_id);
+		return $clients->where('clients.id', $client_id)->get();
+    }
+    
+    public static function statusFiler($clients, $status){
+		return $clients->where('clients.status', $status)->get();
+    }
+
+    public static function fromFilter($clients, $from_date){
+		return $clients->where('clients.created_at', '>=', $from_date)->get();
+    }
+    public static function toFilter($clients, $to_date){
+		return $clients->where('clients.created_at', '<=', $to_date)->get();
+    }
+    public static function fromtoFilter($clients, $to_date, $from_date){
+		return $clients->whereBetween('clients.created_at',[$from_date,$to_date])->get();
+    }
+    public static function stafFilter($clients, $status, $to_date, $from_date){
+		return $clients->whereBetween('clients.created_at',[$from_date,$to_date])->where('clients.status', $status)->get();
+    }
+    public static function leadFilter($leads, $lead_id){
+    	$leads = $leads->where('lead_head', $lead_id)->get();
+    	$arr['lead_name'] = UserLogin::where('id',$lead_id)->pluck('name')->first();
+    	$arr['leads_count'] = $leads->count();
+    	$arr['pending'] = $leads->where('status',1)->count();
+    	$arr['process'] = $leads->where('status',2)->count();
+    	$arr['close'] = $leads->where('status',3)->count();
+    	$arr['refuse'] = $leads->where('status',4)->count();
+    	$user_id = UserLogin::where('id',$lead_id)->pluck('user_type')->first();
+    	$arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+    	return $arr;
+    }
+    public static function leadDateFilter($leads, $to_date, $from_date){
+    	$leads1 = $leads->whereBetween('created_at',[$from_date, $to_date])->get();
+    	$names = $leads1->groupBy('lead_head');
+    	foreach ($names as $key => $rs) {
+    		$arr['lead_name'] = UserLogin::where('id',$key)->pluck('name')->first();
+    		$arr['leads_count'] = $rs->count();
+    		$arr['pending'] = $rs->where('status','1')->count();
+    		$arr['process'] = $rs->where('status','2')->count();
+    		$arr['close'] = $rs->where('status','3')->count();
+    		$arr['refuse'] = $rs->where('status','4')->count();
+    		$user_id = UserLogin::where('id', $key)->pluck('user_type')->first();
+    		$arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+    		$all[$key] = $arr;
+    	}
+    	return $all;
     }
 
      //For App-- Khushboo

@@ -71,6 +71,7 @@
         jQuery('input:email').val('');
         jQuery('input:checkbox').removeAttr('checked');
         jQuery("input[type=date]").val('');
+        jQuery('selector').datepicker('setDate', null);
     }
 </script>
 <script type="text/javascript">
@@ -102,6 +103,7 @@
 </script>
 <script type="text/javascript">
     jQuery("#datepicker1").datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             minDate: new Date(),
             onSelect: function(dateStr) 
@@ -112,6 +114,7 @@
             }
         });
     jQuery('#datepicker2').datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             onSelect: function(dateStr) {
             toDate = new Date(dateStr);
@@ -119,6 +122,7 @@
             }
         });
     jQuery('#datepicker3').datepicker({
+            dateFormat: "yy-mm-dd",
         defaultDate: new Date(),
         onSelect: function(dateStr) {
         toDate = new Date(dateStr);
@@ -126,6 +130,7 @@
     });
 
     jQuery("#datepicker4").datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             minDate: new Date(),
             onSelect: function(dateStr) 
@@ -136,6 +141,7 @@
             }
         });
     jQuery('#datepicker5').datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             onSelect: function(dateStr) {
             toDate = new Date(dateStr);
@@ -143,9 +149,16 @@
             }
         });
     jQuery('#datepicker6').datepicker({
+            dateFormat: "yy-mm-dd",
         defaultDate: new Date(),
         onSelect: function(dateStr) {
         toDate = new Date(dateStr);
         }
+    });
+    
+    jQuery('.datepick').each(function(){
+        jQuery(this).datepicker({
+            dateFormat: "yy-mm-dd"
+        });
     });
 </script>

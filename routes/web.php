@@ -136,10 +136,10 @@ Route::group(['middleware' => 'login'], function (){
 
 	// Client Reports Routes
 	Route::get('/client-reports', 'ReportController@index')->name('client.reports');
-	Route::get('/client-reports/{client_id}/{status}', 'ReportController@client_data')->name('client.data');
+	Route::get('/client-reports/{client_id}/{status}/{from_date}/{to_date}', 'ReportController@client_data')->name('client.data');
 	Route::get('/pay/{id}', 'ReportController@pay_status')->name('get_payment');
 
 	// Lead Reports Routes
 	Route::get('/lead-reports', 'ReportController@lead')->name('lead');
-	Route::get('/lead-reports/{id}', 'ReportController@lead_data')->name('lead.data');
+	Route::get('/lead-reports/{id}/{from_date}/{to_date}', 'ReportController@lead_data')->name('lead.data');
 });
