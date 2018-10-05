@@ -69,9 +69,9 @@ class PaymentController extends Controller
             $client_id = Payment::where('id', $inputs['payment_id'])->value('client_id');
             $user_id = Payment::where('id', $inputs['payment_id'])->value('user_id');
             if ($inputs['out_amount'] == 0) {
-            	$status = 1;
-            }else{
             	$status = 2;
+            }else{
+            	$status = 1;
             }
            	$updatePayment = (new Payment)->store($inputs, $inputs['payment_id']);
            	$updatePaymentStatus = (new PaymentStatus)->updatePaymentStatusReceived($company_id,$client_id,$user_id,$inputs['out_amount'],$inputs['payment_id'], $inputs['amt_rcvd'], $status, $inputs['pay_date']);

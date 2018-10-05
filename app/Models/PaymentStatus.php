@@ -52,7 +52,11 @@ class PaymentStatus extends Model
         $this->payment_id = $id;
         $this->amt_rcvd = null;
         $this->out_amount = $amount;
-        $this->status = null;
+        if ($amount == 0) {
+            $this->status = 2;
+        }else{
+            $this->status = 1;
+        }
         $this->pay_date = null;
         $this->save();
     }
