@@ -20,6 +20,12 @@ class PaymentController extends Controller
             	foreach ($payments as $payment) {
             		$payment['client_name'] = Client::where('id', $payment->client_id)->value('name');
             		$payment['company_name'] = Company::where('id', $payment->company_id)->value('company_name');
+            		$status = PaymentStatus::where('id', $payment->id)->value('status');
+            		if ($status == 2) {
+            			$payment['payment_status'] = 'Completed';
+            		}else{
+            			$payment['payment_status'] = 'Pending';
+            		}
             	}
             	return apiResponseApp(true, 200, null, [], $payments);
             }else{
