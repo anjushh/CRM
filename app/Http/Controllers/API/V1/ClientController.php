@@ -286,4 +286,22 @@ class ClientController extends Controller
             return apiResponseApp(false, 500, lang('messages.server_error'));
         }
     }
+
+     //Client Name List
+    public function clientNameList(){
+        try{            
+            $fields = ['name as name'];
+            $client = Client::get($fields );
+            if (count($client) != 0) {
+             
+              return apiResponseApp(true, 200, null, [], $client);
+            }else{
+              return apiResponseApp(false, 400, lang('No Client record found'));
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
 }

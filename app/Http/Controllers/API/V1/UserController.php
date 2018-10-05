@@ -38,7 +38,11 @@ class UserController extends Controller
             }
 			$password = \Hash::make($inputs['password']);
 			unset($inputs['password']);
-            $inputs = $inputs + ['password' => $password];
+            $api_key = $this->generateApiKey();
+            $inputs = $inputs + [
+                                    'password' => $password,
+                                    'api_key'   => $api_key
+                                ];
 
             $id = (new UserLogin)->store($inputs);
             return apiResponseApp(true, 200, lang('User created successfully'));
@@ -48,6 +52,11 @@ class UserController extends Controller
 			return apiResponseApp(false, 500, lang('messages.server_error'));
     	}
     }
+
+    private function generateTokenKey() {
+        return md5(uniqid(rand(), true));
+    }
+
 
     //Create User
     public function userType(Request $request){

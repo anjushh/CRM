@@ -119,9 +119,47 @@ class Client extends Model
     	return $this->get($fields);
     }
 
+    //For App-- Khushboo
+    public function allclientReportName($name){
+    	$fields =  [ 'id as client_id',
+    	'name as client_name','created_at as joining_date', 'status as project_status'];
+    	return $this->where('name', 'like', '%' . $name . '%')->get($fields);
+    }
+
    
     //For Web --- Anju
 	public static function clientFilter($clients, $client_id){
 		return $clients->where('id', $client_id);
+    }
+
+     //For App-- Khushboo
+   public function ValidateClientName($inputs){
+	    $rules = array(
+	    	'name' => 'required',
+	    );
+	    $valids = Validator::make($inputs, $rules);
+	    return $valids;
+    }
+
+     //For App-- Khushboo
+   public function ValidateClientByStatus($inputs){
+	    $rules = array(
+	    	'id' => 'required',
+	    );
+	    $valids = Validator::make($inputs, $rules);
+	    return $valids;
+    }
+
+    //For App-- Khushboo
+    public function allclientReportStatus($id){
+    	$fields =  [ 'clients.id as client_id',
+    	'clients.name as client_name','clients.created_at as joining_date', 'clients.status as project_status'];
+    	return $this->join('status_updates as statusupdate', function($join) use ($id){
+						    $join->on('statusupdate.id', '=', 'clients.status');
+						    $join->on(function($query) use ($id)
+						            {
+						             $query->where('statusupdate.status_type', '=', $id);
+						            });
+					})->get($fields);
     }
 }
