@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use App\Models\Client;
 use App\Models\Status;
+use App\Models\UserLogin;
+use App\Models\PaymentStatus;
 use Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -33,65 +35,26 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function client_data($id)
+    
+    public function client_data($client_id, $status)
     {
-        $clients_datas = Client::where('status',$id)->get();
-        return response(['clients_datas' => $clients_datas], 200);
+        $clients = new Client;
+        $clients = $clients::join('statuses', 'statuses.id','=', 'clients.status')->join('user_logins','user_logins.id','=','clients.lead_head')->select('clients.id as id','clients.status as status','clients.created_at as created_at','clients.name as client_name', 'statuses.status_type as project_status','user_logins.name as lead_name');
+        if ($client_id) {
+            $clients = Client::clientFilter($clients, $client_id);
+        }
+        $data = $clients->get();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function lead(){
+        $leads = UserLogin::where('user_type','!=','1')->get();
+        return view('reports.lead_reports',compact('leads'));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Report $report)
-    {
-        //
+    public function lead_data($id){
+        $client_count = Client::where('lead_head',$id)->count();
+        // $data[] =['client_count',] 
+        return response(['client_count' => $client_count], 200);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Report $report)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Report $report)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Report $report)
-    {
-        //
+    public function pay_status($id){
+        return PaymentStatus::where('client_id',$id)->orderBy('id','desc')->pluck('status')->first();
     }
 }

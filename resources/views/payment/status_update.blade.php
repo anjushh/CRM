@@ -95,5 +95,6 @@
     jQuery('.amt_rcvd').keyup(function(event){
         remaining_amount();
     });
+    
 </script>
 @endsection

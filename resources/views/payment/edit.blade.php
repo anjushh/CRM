@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <div class="form-group">
-                        {!! Form::date('inst_date_1', Input::old('inst_date_1'), array('placeholder' => 'First Installment Date','class' => 'form-control')) !!}
+                        {!! Form::text('inst_date_1', Input::old('inst_date_1'), array('placeholder' => 'First Installment Date','class' => 'form-control ','id'=>'datepicker1')) !!}
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <div class="form-group">
-                        {!! Form::date('inst_date_2', Input::old('inst_date_2'), array('placeholder' => 'Second Installment Date','class' => 'form-control')) !!}
+                        {!! Form::text('inst_date_2', Input::old('inst_date_2'), array('placeholder' => 'Second Installment Date','class' => 'form-control','id'=>'datepicker2')) !!}
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <div class="form-group">
-                        {!! Form::date('inst_date_3', Input::old('inst_date_3'), array('placeholder' => 'Third Installment Date','class' => 'form-control')) !!}
+                        {!! Form::text('inst_date_3', Input::old('inst_date_3'), array('placeholder' => 'Third Installment Date','class' => 'form-control','id'=>'datepicker3')) !!}
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
@@ -129,6 +129,7 @@
     </div>
 </div>
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
+
 <script type="text/javascript">
     outstanding_amount();
     function outstanding_amount(){
@@ -199,4 +200,5 @@
         jQuery('.out_amount_3').attr('value',out_amount_3);
     }
 </script>
+
 @endsection
