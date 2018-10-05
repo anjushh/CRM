@@ -95,4 +95,6 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/edit-payment', ['as' => 'edit-payment','uses' => 'API\V1\PaymentController@editPayment']);
 	/*update Payment*/
 	Route::any('v1/update-payment', ['as' => 'update-payment','uses' => 'API\V1\PaymentController@updatePayment']);
+	/*update Payment*/
+	Route::any('v1/all-client-report', ['as' => 'all-client-report','uses' => 'API\V1\ReportingController@allClientReports']);
 });

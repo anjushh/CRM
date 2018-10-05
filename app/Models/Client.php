@@ -111,5 +111,12 @@ class Client extends Model
     	return PaymentStatus::where('client_id',$id)->orderBy('id','desc')->pluck('status')->first();
     }
 
+    //For App-- Khushboo
+    public function allclientReport(){
+    	$fields =  [ 'id as client_id',
+    	'name as client_name','created_at as joining_date', 'status as project_status'];
+    	return $this->get($fields);
+    }
+
    
 }
