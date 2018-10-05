@@ -47,7 +47,8 @@
 @else
     <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
 @endif
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
@@ -56,6 +57,7 @@
 <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
 <script>
     if(window.outerWidth < 480) {
         jQuery('.table-responsive').css( 'display','block' );
@@ -96,5 +98,54 @@
             'pdfHtml5'
         ]
         
+    });
+</script>
+<script type="text/javascript">
+    jQuery("#datepicker1").datepicker({
+            defaultDate: new Date(),
+            minDate: new Date(),
+            onSelect: function(dateStr) 
+            {         
+                // jQuery("#datepicker2").val(dateStr);
+                jQuery("#datepicker2").datepicker("option",{ minDate: new Date(dateStr)})
+
+            }
+        });
+    jQuery('#datepicker2').datepicker({
+            defaultDate: new Date(),
+            onSelect: function(dateStr) {
+            toDate = new Date(dateStr);
+            jQuery("#datepicker3").datepicker("option",{ minDate: new Date(dateStr)})
+            }
+        });
+    jQuery('#datepicker3').datepicker({
+        defaultDate: new Date(),
+        onSelect: function(dateStr) {
+        toDate = new Date(dateStr);
+        }
+    });
+
+    jQuery("#datepicker4").datepicker({
+            defaultDate: new Date(),
+            minDate: new Date(),
+            onSelect: function(dateStr) 
+            {         
+                // jQuery("#datepicker2").val(dateStr);
+                jQuery("#datepicker5").datepicker("option",{ minDate: new Date(dateStr)})
+
+            }
+        });
+    jQuery('#datepicker5').datepicker({
+            defaultDate: new Date(),
+            onSelect: function(dateStr) {
+            toDate = new Date(dateStr);
+            jQuery("#datepicker6").datepicker("option",{ minDate: new Date(dateStr)})
+            }
+        });
+    jQuery('#datepicker6').datepicker({
+        defaultDate: new Date(),
+        onSelect: function(dateStr) {
+        toDate = new Date(dateStr);
+        }
     });
 </script>

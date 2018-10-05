@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Status;
+use App\Models\Client;
 use App\Models\PaymentStatus;
 use Illuminate\Database\Eloquent\Model;
 use Validator;
@@ -74,7 +75,7 @@ class Client extends Model
 
     //For App --- Khushboo
     public function store($input, $id = null)
-     {
+    {
          if ($id) {
              return $this->find($id)->update($input);
          } else {
@@ -119,4 +120,8 @@ class Client extends Model
     }
 
    
+    //For Web --- Anju
+	public static function clientFilter($clients, $client_id){
+		return $clients->where('id', $client_id);
+    }
 }

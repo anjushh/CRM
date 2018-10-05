@@ -4,10 +4,21 @@
     <div class="card">
         <div class="card-body">
             <div class="col-3">
-                {!! Form::select('choose_status',$status->pluck('status_type','id'), Input::old('choose_status'), array('placeholder' => 'Choose Status','class' => 'form-control choose_status')) !!}    
+                {!! Form::select('choose_client',$clients->pluck('name','id'), Input::old('choose_status'), array('placeholder' => 'Choose Client','class' => 'form-control choose_client rounded-0')) !!}    
             </div>
             <div class="col-3">
-                {!! Form::select('choose_time',['1'=>'Daily','2'=>'Monthly','3'=>'Quarterly','4'=>'Six Months','5'=>'Yearly'], Input::old('choose_time'), array('placeholder' => 'Choose Report Span','class' => 'form-control choose_time')) !!}
+                {!! Form::select('choose_status',$status->pluck('status_type','id'), Input::old('choose_status'), array('placeholder' => 'Choose Status','class' => 'form-control choose_status rounded-0')) !!}    
+            </div>
+            <div class="col-3">
+                {!! Form::text('from_date', Input::old('from_date'), array('placeholder' => 'From Date','class' => 'form-control choose_from rounded-0','id' => 'datepicker1')) !!}    
+            </div>
+            <div class="col-3">
+                {!! Form::text('to_date', Input::old('to_date'), array('placeholder' => 'To Date','class' => 'form-control choose_to rounded-0','id' => 'datepicker2')) !!}    
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-3">
+                <button class="btn mt-4 btn-brown text-light w-50 text-center show_report_btn">Show Report</button>
+                <button class="btn mt-4 btn-brown text-light w-50 text-center" onclick="resetAllValues1()">Clear All</button>
             </div>
         </div>
     </div>
@@ -45,26 +56,83 @@
                 </tbody>
             </table>
             <div class="clearfix"></div>
-
         </div>
     </div>
 </div>
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
 <script>
-    jQuery(function() {
-        var route = "{{ route('client.data', 'item') }}";
-        jQuery('body').on('change', '.choose_status', function(e) {
-            var id = jQuery(this).val();
-            var getData = {};
-            jQuery.ajax({
-                method: "GET",
-                dataType: "json",
-                url: route.replace('item', id ),            
-                success: function(getData) {
-                    var datas = getData.clients_datas;
+    jQuery('body').on('change', '.choose_client', function(e) {
+        jQuery('.choose_status').val('');
+        jQuery('.choose_status').attr('readonly','readonly');
+        jQuery('.choose_status').css("pointer-events","none");
+    });
+    jQuery('body').on('change', '.choose_status', function(e) {
+        jQuery('.choose_client').val('');
+        jQuery('.choose_client').attr('readonly','readonly');
+        jQuery('.choose_client').css("pointer-events","none");
+    });
+</script>
+<script type="text/javascript">
+    function resetAllValues1() {
+        jQuery('select').val('');
+        jQuery('select').removeAttr('readonly');
+        jQuery('select').css("pointer-events","auto");
+    }
+</script>
+<script type="text/javascript">
+    jQuery('body').on('click','.show_report_btn', function() {
+        var client_id = jQuery('.choose_client').val();
+        var status = jQuery('.choose_status').val();
+        if (jQuery('.choose_client').val() != ''){
+            var client_id = jQuery('.choose_client').val();
+        }
+        else {
+            var client_id = 0;
+        }
+
+        if (jQuery('.choose_status').val() != ''){
+            var status = jQuery('.choose_status').val();
+        }
+        else {
+            var status = 0;
+        }
+        var route = "{{ route('client.data',['client_id','status']) }}";
+        var id = jQuery(this).val();
+        var getData = {};
+        jQuery.ajax({
+            method: "GET",
+            dataType: "json",
+            url: route.replace('client_id',client_id).replace('status',status),          
+            success: function(getData) {
+
+                jQuery("#table_id > tbody").html("");
+                for (var i = getData.clients_datas.length - 1; i >= 0; i--) {
+                    console.log(getData.clients_datas[i].id);
+                    var _row = '<tr role="row"><td class="sorting_1">'+getData.clients_datas[i].client_name+'</td><td>'+getData.clients_datas[i].created_at+'</td><td>'+getData.clients_datas[i].project_status+'</td><td class="pay_data">'+ get_payment(getData.clients_datas[i].id) +'</td><td>'+getData.clients_datas[i].lead_name+'</td></tr>';
+                    jQuery('tbody').append(_row);
                 }
-            });
+            }
         });
     });
+    function get_payment($id){
+        var data;
+        var route = "{{ route('get_payment','item') }}";
+        var getData = '';
+        jQuery.ajax({
+            method: "GET",
+            dataType: "json",
+            async: false,
+            url: route.replace('item',$id),            
+            success: function(data) {
+                getData = data;
+            }
+        });
+        if(getData == 2){
+            return 'Completed';
+        }
+        else {
+            return 'Pending';
+        }
+    }
 </script>
 @endsection

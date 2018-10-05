@@ -78,7 +78,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-line-chart"></i>Reports</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-bar-chart"></i><a href="{{ route('client.reports') }}">Client Reports</a></li>
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="{{ route('client.reports') }}">Lead Manager Reports</a></li>
+                            <li><i class="menu-icon fa fa-area-chart"></i><a href="{{ route('lead') }}">Lead Manager Reports</a></li>
                         </ul>
                     </li>
                     {{-- 

@@ -2691,4 +2691,11 @@ a.back-to-top i {
 .for-notification a:hover .ti-bell, .for-notification a:hover h6, .for-notification a:hover p {
   color: #272c33; }
 
+.btn-brown {
+  background: #007bff;
+  font-size: 12px;
+  height: 24px;
+  padding: 0;
+  width: 93px !important; }
+
 /*# sourceMappingURL=style.css.map */

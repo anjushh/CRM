@@ -57,22 +57,22 @@
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 next_followup">
                 <div class="form-group">
-                    {!! Form::date('next_followup', Input::old('next_followup'), array('placeholder' => 'Select Next Followup Date','class' => 'form-control d-inline-block float-left')) !!}
+                    {!! Form::text('next_followup', Input::old('next_followup'), array('placeholder' => 'Select Next Followup Date','class' => 'form-control d-inline-block float-left')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 finali_date1">
                 <div class="form-group">
-                    {!! Form::date('finali_date',Input::old('finali_date'), array('placeholder' => 'Finalization Date','class' => 'form-control','novalidate' => 'novalidate')) !!}
+                    {!! Form::text('finali_date',Input::old('finali_date'), array('placeholder' => 'Finalization Date','class' => 'form-control','novalidate' => 'novalidate','id'=>'datepicker1')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 start_date1">
                 <div class="form-group">
-                    {!! Form::date('start_date',Input::old('start_date'), array('placeholder' => 'Project Start Date','class' => 'form-control','novalidate' => 'novalidate')) !!}
+                    {!! Form::text('start_date',Input::old('start_date'), array('placeholder' => 'Project Start Date','class' => 'form-control','novalidate' => 'novalidate','id'=>'datepicker2')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 end_date1">
                 <div class="form-group">
-                    {!! Form::date('end_date',Input::old('end_date'), array('placeholder' => 'Project Ending Date','class' => 'form-control','novalidate' => 'novalidate')) !!}
+                    {!! Form::text('end_date',Input::old('end_date'), array('placeholder' => 'Project Ending Date','class' => 'form-control','id'=>'datepicker3','novalidate' => 'novalidate')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 time_period1">
@@ -83,21 +83,21 @@
             @if(isset($edit_records->finali_date))
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('finali_date',Input::old('finali_date'), array('placeholder' => 'Finalization Date','class' => 'form-control','novalidate' => 'novalidate')) !!}
+                    {!! Form::text('finali_date',Input::old('finali_date'), array('placeholder' => 'Finalization Date','class' => 'form-control','novalidate' => 'novalidate','id'=>'datepicker4')) !!}
                 </div>
             </div>
             @endif
             @if(isset($edit_records->start_date))
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('start_date',Input::old('start_date'), array('placeholder' => 'Project Start Date','class' => 'form-control','novalidate' => 'novalidate')) !!}
+                    {!! Form::text('start_date',Input::old('start_date'), array('placeholder' => 'Project Start Date','class' => 'form-control','novalidate' => 'novalidate','id'=>'datepicker5')) !!}
                 </div>
             </div>
             @endif
             @if(isset($edit_records->end_date))
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('end_date',Input::old('end_date'), array('placeholder' => 'Project Ending Date','class' => 'form-control','novalidate' => 'novalidate')) !!}
+                    {!! Form::text('end_date',Input::old('end_date'), array('placeholder' => 'Project Ending Date','class' => 'form-control','novalidate' => 'novalidate','id'=>'datepicker6')) !!}
                 </div>
             </div>
             @endif
@@ -167,7 +167,7 @@ jQuery('body').on('change', '.status_change', function(e) {
 <script type="text/javascript">
     var i = 1;
     jQuery('body').on('click', '.add_file', function(e) {
-        jQuery("#new_file").append("<div class='col-xl-3 col-lg-3 col-md-6 col-sm-12 d-block'><div class='form-group w-20'><span class='fa fa-paperclip'></span><a class='btn btn-primary mx-2 rounded'>Browse...</a><input name='doc[]' type='file'></div></div>");
+        jQuery("#new_file").append("<div class='col-xl-12 col-lg-3 col-md-6 col-sm-12 d-block'><div class='form-group w-20'><span class='fa fa-paperclip'></span><a class='btn btn-primary mx-2 rounded'>Browse...</a><input name='doc[]' type='file'></div></div><div class='clearfix'></div>");
     });
     
 </script>

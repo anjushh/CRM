@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Client;
+use App\Models\StatusUpdate;
+use App\Models\UserType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -63,11 +65,32 @@ class UserLogin extends Model
 
     //For App --- Khushboo
     public function store($input, $id = null)
-     {
+    {
          if ($id) {
              return $this->find($id)->update($input);
          } else {
              return $this->create($input)->id;
          }
-     }  
+    }
+    public function pro_count($id){
+        $client_count = Client::where('lead_head',$id)->count();
+        return $client_count;
+    }
+    public function close_count($id){
+        $client_count = Client::where('lead_head',$id)->where('status',3)->count();
+        return $client_count;
+    }
+    public function pen_count($id){
+        $client_count = Client::where('lead_head',$id)->where('status',1)->count();
+        return $client_count;
+    }
+    public function refuse_count($id){
+        $client_count = Client::where('lead_head',$id)->where('status',4)->count();
+        return $client_count;
+    }
+    public function desg($id){
+        $client_count = UserType::where('id',$id)->pluck('user_type')->first();
+        return $client_count;
+    }
+    
 }
