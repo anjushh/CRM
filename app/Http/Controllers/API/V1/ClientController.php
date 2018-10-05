@@ -275,7 +275,8 @@ class ClientController extends Controller
             }
 
             $profile = Client::where('id', $inputs['id'])->first();
-            $profile['status'] = Status::where('id', $profile->status)->value('status_type');
+            $status = StatusUpdate::where('id', $profile->status)->value('status_type');
+            $profile['status'] = Status::where('id', $status)->value('status_type');
             $profile['product'] = Service::where('id', $profile->product)->value('service_name');
             $profile['conv_type'] = Conv::where('id', $profile->conv_type)->value('conv_type');
 
