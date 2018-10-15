@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-body">
             <div class="col-3">
-                {!! Form::select('choose_lead',$leads->pluck('name','id'), Input::old('choose_lead'), array('placeholder' => 'Choose Client','class' => 'form-control choose_lead rounded-0')) !!}    
+                {!! Form::select('choose_lead',$leads->pluck('name','id'), Input::old('choose_lead'), array('placeholder' => 'Choose Lead','class' => 'form-control choose_lead rounded-0')) !!}    
             </div>
             <div class="col-3">
                 {!! Form::text('from_date', Input::old('from_date'), array('placeholder' => 'From Date','class' => 'form-control datepick choose_from rounded-0','id' => 'datepicker11')) !!}    
@@ -99,19 +99,14 @@
             url: route.replace('lead_id',lead_id).replace('from_date',from_date).replace('to_date',to_date),          
             success: function(getData) {
                 jQuery("#table_id > tbody").html("");
-                var tops = getData.leads;
+
                 // For more than one Row
-                var count = $.map(tops, function(n, i) { return i; }).length;
-                if(count > 1){
+                if(Object.keys(getData.leads).length > 1){
                     $.each(getData.leads, function (index, value) {
                         var index = index;
                         var _row = '<tr role="row"><td class="sorting_1">'+getData.leads[index]['lead_name']+'</td><td>'+getData.leads[index]['desg']+'</td><td>'+getData.leads[index]['leads_count']+'</td><td>'+ getData.leads[index]['pending'] +'</td><td>'+getData.leads[index]['process']+'</td><td>'+getData.leads[index]['refuse']+'</td></tr>';
                         jQuery('tbody').append(_row);
                     });
-                }
-                else {
-                    var _row = '<tr role="row"><td class="sorting_1">'+getData.leads['lead_name']+'</td><td>'+getData.leads['desg']+'</td><td>'+getData.leads['leads_count']+'</td><td>'+ getData.leads['pending'] +'</td><td>'+getData.leads['process']+'</td><td>'+getData.leads['refuse']+'</td></tr>';
-                    jQuery('tbody').append(_row);
                 }
             }
         });

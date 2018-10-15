@@ -104,7 +104,6 @@
             var status = 0;
         }
 
-
         if (jQuery('.choose_from').val() != ''){
             var from_date = jQuery('.choose_from').val();
         }
@@ -129,7 +128,9 @@
 
                 jQuery("#table_id > tbody").html("");
                 for (var i = getData.clients.length - 1; i >= 0; i--) {
-                    console.log(getData.clients[i].id);
+
+                    // alert(getData.clients[i].created_at);    
+
                     var _row = '<tr role="row"><td class="sorting_1">'+getData.clients[i].client_name+'</td><td>'+getData.clients[i].created_at+'</td><td>'+getData.clients[i].project_status+'</td><td class="pay_data">'+ get_payment(getData.clients[i].id) +'</td><td>'+getData.clients[i].lead_name+'</td></tr>';
                     jQuery('tbody').append(_row);
                 }

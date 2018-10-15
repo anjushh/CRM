@@ -129,12 +129,29 @@ class Client extends Model
 
    
     //For Web --- Anju
+
+    public static function allFilter($clients){
+        return $clients->get();
+    }
+
 	public static function clientFilter($clients, $client_id){
 		return $clients->where('clients.id', $client_id)->get();
     }
     
     public static function statusFiler($clients, $status){
 		return $clients->where('clients.status', $status)->get();
+    }
+
+    public static function statusToFilter($clients, $status, $to_date){
+        return $clients->where('clients.status', $status)->where('clients.created_at', '<=', $to_date)->get();
+    }
+
+    public static function statusToFromFilter($clients, $status, $to_date, $from_date){
+        return $clients->where('clients.status', $status)->where('clients.created_at', '>=', $from_date)->where('clients.created_at', '<', $to_date)->get();
+    }
+    
+    public static function statusFromFilter($clients, $status, $from_date){
+        return $clients->where('clients.status', $status)->where('clients.created_at', '>=', $from_date)->get();
     }
 
     public static function fromFilter($clients, $from_date){
@@ -147,39 +164,130 @@ class Client extends Model
 		return $clients->whereBetween('clients.created_at',[$from_date,$to_date])->get();
     }
     public static function stafFilter($clients, $status, $to_date, $from_date){
-		return $clients->whereBetween('clients.created_at',[$from_date,$to_date])->where('clients.status', $status)->get();
+		return $clients->where('clients.status', $status)->where('clients.created_at', '>=', $from_date)->where('clients.created_at', '<', $to_date)->get();
     }
-    public static function leadFilter($leads, $lead_id){
-    	$leads = $leads->where('lead_head', $lead_id)->get();
-    	$arr['lead_name'] = UserLogin::where('id',$lead_id)->pluck('name')->first();
-    	$arr['leads_count'] = $leads->count();
-    	$arr['pending'] = $leads->where('status',1)->count();
-    	$arr['process'] = $leads->where('status',2)->count();
-    	$arr['close'] = $leads->where('status',3)->count();
-    	$arr['refuse'] = $leads->where('status',4)->count();
-    	$user_id = UserLogin::where('id',$lead_id)->pluck('user_type')->first();
-    	$arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
-    	return $arr;
-    }
-    public static function leadDateFilter($leads, $to_date, $from_date){
-    	$leads1 = $leads->whereBetween('created_at',[$from_date, $to_date])->get();
-    	$names = $leads1->groupBy('lead_head');
-    	foreach ($names as $key => $rs) {
-    		$arr['lead_name'] = UserLogin::where('id',$key)->pluck('name')->first();
-    		$arr['leads_count'] = $rs->count();
-    		$arr['pending'] = $rs->where('status','1')->count();
-    		$arr['process'] = $rs->where('status','2')->count();
-    		$arr['close'] = $rs->where('status','3')->count();
-    		$arr['refuse'] = $rs->where('status','4')->count();
-    		$user_id = UserLogin::where('id', $key)->pluck('user_type')->first();
-    		$arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
-    		$all[$key] = $arr;
-    	}
-    	return $all;
+    
+    //For Web-- Anju
+    public static function leadDateFilter($leads, $to_date = null, $from_date = null, $lead_id = null){
+
+        // When Lead is Selected
+
+        if ($lead_id != null && $from_date == 0 && $to_date == 0 ){
+            $leads1 = $leads->where('lead_head', $lead_id)->get();
+        }
+
+        // When All Options Selected
+
+        if ($lead_id != null && $from_date != 0 && $to_date != 0 ){
+            $leads1 = $leads->where('lead_head', $lead_id)->whereBetween('created_at',[$from_date, $to_date])->get();
+        }
+
+        // When Lead & From Date are Selected
+
+        if ($lead_id != null && $from_date != 0 && $to_date == 0 ){
+            $leads1 = $leads->where('lead_head', $lead_id)->where('created_at','>=', $from_date)->get();
+        }
+
+        // When Lead & To Date are Selected
+
+        if ($lead_id != null && $from_date == 0 && $to_date != 0 ){
+            $leads1 = $leads->where('lead_head', $lead_id)->where('created_at','<=', $to_date)->get();
+        }
+
+        // When None of the Options are Selected
+
+        if ($lead_id == 0 && $from_date == 0 && $to_date == 0 ){
+            $leads1 = $leads->get();
+        }
+
+        // When From & To Dates are Selected
+
+        if ($lead_id == 0 && $from_date != 0 && $to_date != 0 ){
+            $leads1 = $leads->get();
+            $names = $leads1->groupBy('lead_head');
+            foreach ($names as $key => $rs) {
+                $arr['lead_name'] = UserLogin::where('id',$key)->pluck('name')->first();
+                $arr['leads_count'] = $rs->where('created_at', '>=', $from_date)->where('created_at', '<', $to_date)->count();
+                $arr['pending'] = $rs->where('status','1')->where('created_at', '>=', $from_date)->where('created_at', '<', $to_date)->count();
+                $arr['process'] = $rs->where('status','2')->where('created_at', '>=', $from_date)->where('created_at', '<', $to_date)->count();
+                $arr['close'] = $rs->where('status','3')->where('created_at', '>=', $from_date)->where('created_at', '<', $to_date)->count();
+                $arr['refuse'] = $rs->where('status','4')->where('created_at', '>=', $from_date)->where('created_at', '<', $to_date)->count();
+                $user_id = UserLogin::where('id', $key)->pluck('user_type')->first();
+                $arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+                $all[$key] = $arr;
+            }
+            return $all;
+        }
+
+        // When Only To Date is Selected
+
+        if ($lead_id == 0 && $from_date == 0 && $to_date != 0 ){
+            $leads1 = $leads->get();
+            $names = $leads1->groupBy('lead_head');
+            foreach ($names as $key => $rs) {
+                $arr['lead_name'] = UserLogin::where('id',$key)->pluck('name')->first();
+                $arr['leads_count'] = $rs->where('created_at','<=', $to_date)->count();
+                $arr['pending'] = $rs->where('status','1')->where('created_at','<=', $to_date)->count();
+                $arr['process'] = $rs->where('status','2')->where('created_at','<=', $to_date)->count();
+                $arr['close'] = $rs->where('status','3')->where('created_at','<=', $to_date)->count();
+                $arr['refuse'] = $rs->where('status','4')->where('created_at','<=', $to_date)->count();
+                $user_id = UserLogin::where('id', $key)->pluck('user_type')->first();
+                $arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+                $all[$key] = $arr;
+            }
+            return $all;
+        }
+
+        // When Only From Date is Selected
+
+        if ($lead_id == 0 && $from_date != 0 && $to_date == 0 ){
+            $leads1 = $leads->get();
+            $names = $leads1->groupBy('lead_head');
+            foreach ($names as $key => $rs) {
+                $arr['lead_name'] = UserLogin::where('id',$key)->pluck('name')->first();
+                $arr['leads_count'] = $rs->where('created_at','>=', $from_date)->count();
+                $arr['pending'] = $rs->where('status','1')->where('created_at','>=', $from_date)->count();
+                $arr['process'] = $rs->where('status','2')->where('created_at','>=', $from_date)->count();
+                $arr['close'] = $rs->where('status','3')->where('created_at','>=', $from_date)->count();
+                $arr['refuse'] = $rs->where('status','4')->where('created_at','>=', $from_date)->count();
+                $user_id = UserLogin::where('id', $key)->pluck('user_type')->first();
+                $arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+                $all[$key] = $arr;
+            }
+            return $all;
+        }
+
+        $names = $leads1->groupBy('lead_head');
+        if(count($names) > 0) {
+            foreach ($names as $key => $rs) {
+                $arr['lead_name'] = UserLogin::where('id',$key)->pluck('name')->first();
+                $arr['leads_count'] = $rs->count();
+                $arr['pending'] = $rs->where('status','1')->count();
+                $arr['process'] = $rs->where('status','2')->count();
+                $arr['close'] = $rs->where('status','3')->count();
+                $arr['refuse'] = $rs->where('status','4')->count();
+                $user_id = UserLogin::where('id', $key)->pluck('user_type')->first();
+                $arr['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+                $all[$key] = $arr;
+            }
+        	return $all;
+        }
+
+        else {
+            $all['lead_name'] = UserLogin::where('id',$lead_id)->pluck('name')->first();
+            $all['leads_count'] = '0';
+            $all['pending'] = '0';
+            $all['process'] = '0';
+            $all['close'] = '0';
+            $all['refuse'] = '0';
+            $user_id = UserLogin::where('id', $lead_id)->pluck('user_type')->first();
+            $all['desg'] = UserType::where('id',$user_id)->pluck('user_type')->first();
+            return $all;
+        }
     }
 
-     //For App-- Khushboo
-   public function ValidateClientName($inputs){
+    //For App-- Khushboo
+    public function ValidateClientName($inputs){
 	    $rules = array(
 	    	'name' => 'required',
 	    );

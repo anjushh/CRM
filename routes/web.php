@@ -22,7 +22,7 @@ Route::post('/login','LoginController@loginstore')->name('login.loginstore');
 
 
 Route::group(['middleware' => 'login'], function (){
-	Route::get('/dashboard', function () { return view('home'); })->name('dashboard');
+	Route::get('/dashboard', 'ChartController@index')->name('dashboard');
 
 	Route::get('/dummy', function () {
 	    return view('admin.dummy');

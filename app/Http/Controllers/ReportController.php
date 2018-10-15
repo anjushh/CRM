@@ -41,11 +41,32 @@ class ReportController extends Controller
         $clients = new Client;
         $clients = Client::join('statuses', 'statuses.id','=', 'clients.status')->join('user_logins','user_logins.id','=','clients.lead_head')->select('clients.id as id','clients.status as status','clients.created_at as created_at','clients.name as client_name', 'statuses.status_type as project_status','user_logins.name as lead_name');
 
+
+        // If None of the option is selected
+        if ($client_id == 0 && $status == 0 && $to_date == 0 && $from_date == 0) {
+            $clients = Client::allFilter($clients);
+        }
+
         // When only Client is selected
         if ($client_id != 0 && $status == 0 && $to_date == 0 && $from_date == 0) {
             $clients = Client::clientFilter($clients, $client_id);
         }
-        
+       
+        // If Status and From Date selected
+        if ($client_id == 0 && $status != 0 && $to_date == 0 && $from_date != 0) {
+            $clients = Client::statusFromFilter($clients,$status,$from_date);
+        }
+
+        // If Status, To Date and From Date selected
+        if ($client_id == 0 && $status != 0 && $to_date != 0 && $from_date != 0) {
+            $clients = Client::statusToFromFilter($clients, $status, $to_date, $from_date);
+        }
+
+        // If Status and To Date selected
+        if ($client_id == 0 && $status != 0 && $to_date != 0 && $from_date == 0) {
+            $clients = Client::statusToFilter($clients, $status, $to_date);
+        }
+
         // When only Status is selected
         if ($client_id == 0 && $status != 0 && $to_date == 0 && $from_date == 0) {
             $clients = Client::statusFiler($clients, $status);
@@ -67,9 +88,9 @@ class ReportController extends Controller
         }
 
         // When To Date, From Date & Status is selected
-        if ($client_id == 0 && $status != 0 && $to_date != 0 && $from_date != 0) {
-            $clients = Client::stafFilter($clients, $status, $to_date, $from_date);
-        }
+        // if ($client_id == 0 && $status != 0 && $to_date != 0 && $from_date != 0) {
+        //     $clients = Client::stafFilter($clients, $status, $to_date, $from_date);
+        // }
         return response(['clients' => $clients], 200);   
     }
 
@@ -80,14 +101,7 @@ class ReportController extends Controller
     }
     public function lead_data($lead_id, $from_date, $to_date){
         $leads = new Client;
-        // When only Lead is selected
-        if ($lead_id != 0 && $to_date == 0 && $from_date == 0) {
-            $leads = Client::leadFilter($leads, $lead_id);
-        }
-        // When Dates selected
-        if ($lead_id == 0 && $to_date != 0 && $from_date != 0) {
-            $leads = Client::leadDateFilter($leads, $to_date, $from_date);
-        }
+        $leads = Client::leadDateFilter($leads, $to_date, $from_date, $lead_id );
         return response(['leads' => $leads], 200);
     }
     public function pay_status($id){

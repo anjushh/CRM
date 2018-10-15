@@ -2698,4 +2698,15 @@ a.back-to-top i {
   padding: 0;
   width: 93px !important; }
 
+.home_charts .fa {
+  font-size: 47px;
+  transition: all 0.6s ease; }
+
+.home_charts:hover .fa {
+  font-size: 50px;
+  transition: all 0.6s ease; }
+
+.bg-flat-color-12 {
+  background: #1783a9; }
+
 /*# sourceMappingURL=style.css.map */
