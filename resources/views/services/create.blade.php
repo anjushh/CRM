@@ -50,7 +50,7 @@
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
                     <select name="parent_id" class="form-control">
-                        <option selected="selected" disabled>Select Parent Service</option>
+                        <option selected="selected" disabled>Select Main Service</option>
                         @foreach($parent_ids as $parent_id)
                         @if(empty($parent_id->parent_id))
                             <option class="level-1" value="{{ $parent_id->id }}">{{ $parent_id->service_name }}</option>
