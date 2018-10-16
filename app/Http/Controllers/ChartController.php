@@ -30,7 +30,15 @@ class ChartController extends Controller
 
         // TO GET MAXIMUM CLOSED LEADS
 
-        $arrays = ['1','2','3','4'];
+        // CLOSED PROJECT
+
+        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-01-01 00:00:00.001','2018-04-01 00:00:00.001'])->get()->count();
+        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-04-01 00:00:00.001','2018-07-01 00:00:00.001'])->get()->count();
+        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-07-01 00:00:00.001','2018-10-01 00:00:00.001'])->get()->count();
+        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-10-01 00:00:00.001','2019-01-01 00:00:00.001'])->get()->count();
+        
+        // CLOSED PROJECT
+
 
         $years = Client::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))->groupby('year','month')->get();
 
