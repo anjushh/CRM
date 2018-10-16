@@ -143,7 +143,8 @@ class MsgReminderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    { 
+        // dd($id);
         (new MsgReminder)->deleteAccount($id);
         return redirect()->back()->with('success','Record Deleted Successfully');
     }

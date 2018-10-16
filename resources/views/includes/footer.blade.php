@@ -58,6 +58,7 @@
 <script src="{{ asset('assets/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.6/SmoothScroll.min.js"></script>
 <script>
     if(window.outerWidth < 480) {
         jQuery('.table-responsive').css( 'display','block' );
@@ -71,6 +72,7 @@
         jQuery('input:email').val('');
         jQuery('input:checkbox').removeAttr('checked');
         jQuery("input[type=date]").val('');
+        jQuery('selector').datepicker('setDate', null);
     }
 </script>
 <script type="text/javascript">
@@ -102,6 +104,7 @@
 </script>
 <script type="text/javascript">
     jQuery("#datepicker1").datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             minDate: new Date(),
             onSelect: function(dateStr) 
@@ -112,6 +115,7 @@
             }
         });
     jQuery('#datepicker2').datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             onSelect: function(dateStr) {
             toDate = new Date(dateStr);
@@ -119,6 +123,7 @@
             }
         });
     jQuery('#datepicker3').datepicker({
+            dateFormat: "yy-mm-dd",
         defaultDate: new Date(),
         onSelect: function(dateStr) {
         toDate = new Date(dateStr);
@@ -126,6 +131,7 @@
     });
 
     jQuery("#datepicker4").datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             minDate: new Date(),
             onSelect: function(dateStr) 
@@ -136,6 +142,7 @@
             }
         });
     jQuery('#datepicker5').datepicker({
+            dateFormat: "yy-mm-dd",
             defaultDate: new Date(),
             onSelect: function(dateStr) {
             toDate = new Date(dateStr);
@@ -143,9 +150,16 @@
             }
         });
     jQuery('#datepicker6').datepicker({
+            dateFormat: "yy-mm-dd",
         defaultDate: new Date(),
         onSelect: function(dateStr) {
         toDate = new Date(dateStr);
         }
+    });
+    
+    jQuery('.datepick').each(function(){
+        jQuery(this).datepicker({
+            dateFormat: "yy-mm-dd"
+        });
     });
 </script>

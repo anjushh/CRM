@@ -10,10 +10,10 @@
                 {!! Form::select('choose_status',$status->pluck('status_type','id'), Input::old('choose_status'), array('placeholder' => 'Choose Status','class' => 'form-control choose_status rounded-0')) !!}    
             </div>
             <div class="col-3">
-                {!! Form::text('from_date', Input::old('from_date'), array('placeholder' => 'From Date','class' => 'form-control choose_from rounded-0','id' => 'datepicker1')) !!}    
+                {!! Form::text('from_date', Input::old('from_date'), array('placeholder' => 'From Date','class' => 'form-control datepick choose_from rounded-0','id' => 'datepicker11')) !!}    
             </div>
             <div class="col-3">
-                {!! Form::text('to_date', Input::old('to_date'), array('placeholder' => 'To Date','class' => 'form-control choose_to rounded-0','id' => 'datepicker2')) !!}    
+                {!! Form::text('to_date', Input::old('to_date'), array('placeholder' => 'To Date','class' => 'form-control choose_to datepick rounded-0','id' => 'datepicker2')) !!}    
             </div>
             <div class="clearfix"></div>
             <div class="col-3">
@@ -65,6 +65,10 @@
         jQuery('.choose_status').val('');
         jQuery('.choose_status').attr('readonly','readonly');
         jQuery('.choose_status').css("pointer-events","none");
+        jQuery('.choose_from').attr('readonly','readonly');
+        jQuery('.choose_from').css("pointer-events","none");
+        jQuery('.choose_to').attr('readonly','readonly');
+        jQuery('.choose_to').css("pointer-events","none");
     });
     jQuery('body').on('change', '.choose_status', function(e) {
         jQuery('.choose_client').val('');
@@ -76,7 +80,10 @@
     function resetAllValues1() {
         jQuery('select').val('');
         jQuery('select').removeAttr('readonly');
+        jQuery('.datepick').prop("readonly","");
+        jQuery('.datepick').css("pointer-events","auto");
         jQuery('select').css("pointer-events","auto");
+        jQuery('.datepick').datepicker('setDate', null);
     }
 </script>
 <script type="text/javascript">
@@ -96,19 +103,35 @@
         else {
             var status = 0;
         }
-        var route = "{{ route('client.data',['client_id','status']) }}";
+
+        if (jQuery('.choose_from').val() != ''){
+            var from_date = jQuery('.choose_from').val();
+        }
+        else {
+            var from_date = 0;
+        }
+
+        if (jQuery('.choose_to').val() != ''){
+            var to_date = jQuery('.choose_to').val();
+        }
+        else {
+            var to_date = 0;
+        }
+        var route = "{{ route('client.data',['client_id','status','from_date','to_date']) }}";
         var id = jQuery(this).val();
         var getData = {};
         jQuery.ajax({
             method: "GET",
             dataType: "json",
-            url: route.replace('client_id',client_id).replace('status',status),          
+            url: route.replace('client_id',client_id).replace('status',status).replace('from_date',from_date).replace('to_date',to_date),          
             success: function(getData) {
 
                 jQuery("#table_id > tbody").html("");
-                for (var i = getData.clients_datas.length - 1; i >= 0; i--) {
-                    console.log(getData.clients_datas[i].id);
-                    var _row = '<tr role="row"><td class="sorting_1">'+getData.clients_datas[i].client_name+'</td><td>'+getData.clients_datas[i].created_at+'</td><td>'+getData.clients_datas[i].project_status+'</td><td class="pay_data">'+ get_payment(getData.clients_datas[i].id) +'</td><td>'+getData.clients_datas[i].lead_name+'</td></tr>';
+                for (var i = getData.clients.length - 1; i >= 0; i--) {
+
+                    // alert(getData.clients[i].created_at);    
+
+                    var _row = '<tr role="row"><td class="sorting_1">'+getData.clients[i].client_name+'</td><td>'+getData.clients[i].created_at+'</td><td>'+getData.clients[i].project_status+'</td><td class="pay_data">'+ get_payment(getData.clients[i].id) +'</td><td>'+getData.clients[i].lead_name+'</td></tr>';
                     jQuery('tbody').append(_row);
                 }
             }

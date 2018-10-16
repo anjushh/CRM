@@ -4,7 +4,13 @@
     <div class="card">
         <div class="card-body">
             <div class="col-3">
-                {!! Form::select('choose_lead',$leads->pluck('name','id'), Input::old('choose_lead'), array('placeholder' => 'Choose Client','class' => 'form-control choose_lead rounded-0')) !!}    
+                {!! Form::select('choose_lead',$leads->pluck('name','id'), Input::old('choose_lead'), array('placeholder' => 'Choose Lead','class' => 'form-control choose_lead rounded-0')) !!}    
+            </div>
+            <div class="col-3">
+                {!! Form::text('from_date', Input::old('from_date'), array('placeholder' => 'From Date','class' => 'form-control datepick choose_from rounded-0','id' => 'datepicker11')) !!}    
+            </div>
+            <div class="col-3">
+                {!! Form::text('to_date', Input::old('to_date'), array('placeholder' => 'To Date','class' => 'form-control choose_to datepick rounded-0','id' => 'datepicker2')) !!}    
             </div>
             <div class="clearfix"></div>
             <div class="col-3">
@@ -52,7 +58,10 @@
     function resetAllValues1() {
         jQuery('select').val('');
         jQuery('select').removeAttr('readonly');
+        jQuery('.datepick').prop("readonly","");
+        jQuery('.datepick').css("pointer-events","auto");
         jQuery('select').css("pointer-events","auto");
+        jQuery('.datepick').datepicker('setDate', null);
     }
 </script>
 
@@ -67,21 +76,38 @@
             var lead_id = 0;
         }
 
-        var route = "{{ route('lead.data','lead_id') }}";
+        if (jQuery('.choose_from').val() != ''){
+            var from_date = jQuery('.choose_from').val();
+        }
+        else {
+            var from_date = 0;
+        }
+
+        if (jQuery('.choose_to').val() != ''){
+            var to_date = jQuery('.choose_to').val();
+        }
+        else {
+            var to_date = 0;
+        }
+
+        var route = "{{ route('lead.data',['lead_id','from_date','to_date']) }}";
         var id = jQuery(this).val();
         var getData = {};
         jQuery.ajax({
             method: "GET",
             dataType: "json",
-            url: route.replace('lead_id',lead_id),          
+            url: route.replace('lead_id',lead_id).replace('from_date',from_date).replace('to_date',to_date),          
             success: function(getData) {
-                console.log(getData);
-                // jQuery("#table_id > tbody").html("");
-                // for (var i = getData.clients_datas.length - 1; i >= 0; i--) {
-                //     console.log(getData.clients_datas[i].id);
-                //     var _row = '<tr role="row"><td class="sorting_1">'+getData.clients_datas[i].client_name+'</td><td>'+getData.clients_datas[i].created_at+'</td><td>'+getData.clients_datas[i].project_status+'</td><td class="pay_data">'+ get_payment(getData.clients_datas[i].id) +'</td><td>'+getData.clients_datas[i].lead_name+'</td></tr>';
-                //     jQuery('tbody').append(_row);
-                // }
+                jQuery("#table_id > tbody").html("");
+
+                // For more than one Row
+                if(Object.keys(getData.leads).length > 1){
+                    $.each(getData.leads, function (index, value) {
+                        var index = index;
+                        var _row = '<tr role="row"><td class="sorting_1">'+getData.leads[index]['lead_name']+'</td><td>'+getData.leads[index]['desg']+'</td><td>'+getData.leads[index]['leads_count']+'</td><td>'+ getData.leads[index]['pending'] +'</td><td>'+getData.leads[index]['process']+'</td><td>'+getData.leads[index]['refuse']+'</td></tr>';
+                        jQuery('tbody').append(_row);
+                    });
+                }
             }
         });
     });

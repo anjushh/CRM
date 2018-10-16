@@ -92,5 +92,9 @@ class UserLogin extends Model
         $client_count = UserType::where('id',$id)->pluck('user_type')->first();
         return $client_count;
     }
+    public static function desg1($id){
+        $client_count = UserType::where('id',$id)->pluck('user_type')->first();
+        return $client_count;
+    }
     
 }

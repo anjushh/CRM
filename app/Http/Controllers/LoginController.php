@@ -98,6 +98,7 @@ class LoginController extends Controller
     public function loginstore(Request $request)
     {   
         $userData = UserLogin::where('email', $request->email)->first();
+        // dd($request);
         $password = \Hash::check($request->password, $userData->password);
         if ($password) {
             if( $userData->status == 1) {
@@ -110,7 +111,7 @@ class LoginController extends Controller
             }
         }
         else {
-            return redirect()->route('login.login');
+            return redirect()->route('login.login')->with('failed','Credential combination is invalid');
         }
     }
     public function logout(Request $request)

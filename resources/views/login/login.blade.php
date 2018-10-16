@@ -22,7 +22,7 @@
                     @endif
                     @if ($message = Session::get('failed'))
                         <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show mt-3">
-                            <span class="badge badge-pill badge-danger">Success</span>
+                            <span class="badge badge-pill badge-danger">Failed</span>
                                 {{ $message }}
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
