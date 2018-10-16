@@ -127,6 +127,7 @@
                         <td><a class="btn btn-success btn-sm" href="{{ route('user.edit',$create_record->id) }}"><i class="fa fa-edit"></i></a></td>
                   </tr>
                   @endforeach
+                  
               </tbody>
             </table>
         </div>

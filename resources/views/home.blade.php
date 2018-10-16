@@ -28,7 +28,7 @@
                         <p class="text-light">Total Projects</p>
                         <div class="chart-wrapper px-0" style="height:70px;" height="70">
                             <i class="fa fa-bar-chart float-right"></i>
-                            <canvas id="widgetChart1"></canvas>
+                           
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,6 @@
                         <p class="text-light">Pending Projects</p>
                         <div class="chart-wrapper px-0" style="height:70px;" height="70">
                             <i class="fa fa-bar-chart float-right"></i>
-                            <canvas id="widgetChart1"></canvas>
                         </div>
                     </div>
                 </div>
@@ -56,7 +55,6 @@
                         <p class="text-light">In Process Projects</p>
                         <div class="chart-wrapper px-0" style="height:70px;" height="70">
                             <i class="fa fa-bar-chart float-right"></i>
-                            <canvas id="widgetChart1"></canvas>
                         </div>
                     </div>
                 </div>
@@ -70,7 +68,6 @@
                         <p class="text-light">Closed Projects</p>
                         <div class="chart-wrapper px-0" style="height:70px;" height="70">
                             <i class="fa fa-bar-chart float-right"></i>
-                            <canvas id="widgetChart1"></canvas>
                         </div>
                     </div>
                 </div>
@@ -90,9 +87,26 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3 col-md-6 col-xl-3">
+                <div class="card text-white bg-flat-color-4">
+                    <div class="card-body pb-0 home_charts">
+                        <h3 class="mb-0">
+                            <span class="count">{{ $refused_projects }}</span>
+                        </h3>
+                        <p class="text-light">Refused Projects</p>
+                        <div class="chart-wrapper px-0" style="height:70px;" height="70">
+                            <img class="d-block img-fluid" src="{{ asset('images/trophy.svg') }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="clearfix"></div>
-            
+            <div class="col-lg-12 col-md-12 my-3">
+                <div class="h5">Select Year</div>
+                {!! Form::select('choose_year',$years->pluck('year'),date('Y'),array('class' => 'form-control choose_year float-left w-25','placeholder' => 'Choose Year')) !!} 
+                <button class="btn btn-brown text-light w-50 text-center float-left">Show</button>
+            </div>
             <!--/.col-->
             <div class="col-lg-12 col-md-12">
                 <div class="card">
@@ -145,4 +159,5 @@
         </div>
     </div>
 </div>
+
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Client;
+use DB;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
@@ -15,13 +16,10 @@ class ChartController extends Controller
     	$closed_projects = Client::where('status',3)->count();
     	$refused_projects = Client::where('status',4)->count();
     	
-        // dd($projects);
-    	// foreach ($projects as $project) {
-    	// 	$months[] = date('F Y', mktime(0, 0, 0, ($project->created_at)->format('m')-1, 1, ($project->created_at)->format('Y')));
-    	// 	$total_projects1[] = $orderbydate->Day_count;
-    	// }
-    	// $sales1 = count($sales);
         $arrays = ['4','7','5','6'];
+
+        $years = Client::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))->groupby('year','month')->get();
+
     	$chartjs = app()->chartjs
         ->name('lineChartTest')
         ->type('bar')
@@ -82,6 +80,6 @@ class ChartController extends Controller
 
         ->options([]);
 
-        return view('home', compact('chartjs','total_projects','pending_projects','closed_projects','process_projects','refused_projects'));
+        return view('home', compact('chartjs','total_projects','pending_projects','closed_projects','process_projects','refused_projects','years'));
     }
 }
