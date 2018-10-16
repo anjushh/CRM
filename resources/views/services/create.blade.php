@@ -3,8 +3,11 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <div class="col-9">
+            <div class="col-6">
                 <div class="master-subhead"><strong>Service</strong> Master</div>
+            </div>
+            <div class="col-6 float-right">
+                <div class="master-subhead"><a href="#view_all" class="btn btn-dark d-inline-block float-right text-light border-0 scroll">View all Services</a></div>
             </div>
         </div>
         <div class="card-body card-block">
@@ -50,7 +53,7 @@
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
                     <select name="parent_id" class="form-control">
-                        <option selected="selected" disabled>Select Main Service</option>
+                        <option selected="selected" value>Select Main Service</option>
                         @foreach($parent_ids as $parent_id)
                         @if(empty($parent_id->parent_id))
                             <option class="level-1" value="{{ $parent_id->id }}">{{ $parent_id->service_name }}</option>
@@ -79,16 +82,23 @@
                     {!! Form::checkbox('status', Input::old('status'),null, array('class' => 'form-control d-inline-block w-5 pt-2')) !!}  
                 </div>
             </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-25 float-left btn-primary btn-xl ml-2']) }}
+            <div class="clearfix"></div>
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-100 float-left btn-primary btn-xl rounded-0']) }}
                 {{ Form::close() }}
+            </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block">
+                <input type="button" value="Clear All Values" onClick="resetAllValues();" class="form-control d-inline-block w-100 float-left btn-danger btn-xl ml-2 rounded-0">
+            </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
             </div>
             {{-- Form Closed --}}
             {{ Form::close() }}
             {{-- Form Closed --}}   
         </div>
         @if(isset($create_records))
-        <div class="card-body">
+        <div class="card-body" id="view_all">
             <div class="card-body">
                 <table class="table table-responsive table-striped">
                     <thead>

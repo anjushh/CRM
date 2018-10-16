@@ -103,15 +103,18 @@
                 </div>
             </div>
 
-            <div class="clearfix"></div>
+            <!-- <div class="clearfix"></div>
             <div class="col-lg-12 col-md-12 my-3">
                 <div class="h5">Select Year</div>
                 {!! Form::select('choose_year',$years->pluck('year'),date('Y'),array('class' => 'form-control choose_year float-left w-25','placeholder' => 'Choose Year')) !!} 
                 <button class="btn btn-brown text-light w-50 text-center float-left">Show</button>
             </div>
-            <!--/.col-->
-            <div class="col-lg-12 col-md-12">
+            -->
+            <div class="col-lg-12 col-md-12 mt-5">
                 <div class="card">
+                    <div class="card-header">
+                    <h3>Projects Summary</h3>
+                    </div>
                     <div class="card-body">
                         {!! $chartjs->render() !!}
                     </div>

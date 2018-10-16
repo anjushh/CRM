@@ -30,7 +30,7 @@ class ChartController extends Controller
 
         // TO GET MAXIMUM CLOSED LEADS
 
-        $arrays = ['4','7','5','6'];
+        $arrays = ['1','2','3','4'];
 
         $years = Client::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))->groupby('year','month')->get();
 
@@ -68,7 +68,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(255, 193, 7, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => ['4','7','5','6'],
+                'data' => ['2','4','8','6'],
             ],
             [
                 "label" => "Closed Projects",
@@ -78,7 +78,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(77, 189, 116, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => ['4','7','5','6'],
+                'data' => ['5','2','4','1'],
             ],
             [
                 "label" => "Refused Projects",

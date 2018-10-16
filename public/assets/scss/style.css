@@ -756,8 +756,7 @@
 .logo_preview {
   top: 24px;
   position: absolute !important;
-  left: 12px !important;
-  border: 1px #ccc solid; }
+  left: 12px !important; }
 
 .logo_update {
   position: relative;
@@ -2720,5 +2719,15 @@ a.back-to-top i {
 .home_charts .chart-wrapper:hover img {
   transform: scale(1.2);
   transition: all 0.8s ease; }
+
+.logo_block {
+  border: 1px solid #ccc !Important;
+  overflow: hidden;
+  margin-top: 24px !important; }
+
+#image_preview {
+  padding: 1px;
+  max-height: 100% !important;
+  margin: 0 auto !Important; }
 
 /*# sourceMappingURL=style.css.map */

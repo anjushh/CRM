@@ -71,7 +71,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-bell"></i>Reminders</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon ti-bell"></i><a href="{{ route('reminder.create') }}">Create Reminder</a></li>
-                            <li><i class="menu-icon ti-bell"></i><a href="{{ route('reminder.create') }}">All Reminders</a></li>
+                            <li><i class="menu-icon ti-bell"></i><a href="{{ route('reminder.create') }}#view_all">All Reminders</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">

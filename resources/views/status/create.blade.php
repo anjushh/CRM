@@ -41,6 +41,7 @@
                     {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-25 float-left btn-primary btn-xl ml-2']) }}
                     {{ Form::close() }}
                 </div>
+                <input type="button" value="Clear All" onClick="resetAllValues();" class="form-control d-inline-block w-30 float-left btn-danger btn-xl rounded-0 w-20 float-left">
             </div>
         </div>
         @if(isset($create_records))
@@ -68,6 +69,9 @@
                 </table>
             </div>
             {{ $create_records->links() }}
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
         </div>
         @endif
     </div>

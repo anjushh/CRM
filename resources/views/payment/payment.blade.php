@@ -3,8 +3,11 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <div class="col-9">
-                <div class="master-subhead"><strong>Payment</strong></div>
+            <div class="col-6">
+                <div class="master-subhead"><strong>Client Payment</strong> Details</div>
+            </div>
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-50 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
             </div>
         </div>
         <div class="card-body card-block">
@@ -80,6 +83,9 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
             </div>
         </div>
         @endif

@@ -8,8 +8,11 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <div class="col-9">
+            <div class="col-6">
                 <div class="master-subhead"><strong>Create Reminder</strong></div>
+            </div>
+            <div class="col-6 float-right">
+                <div class="master-subhead"><a href="#view_all" class="btn btn-dark d-inline-block float-right text-light border-0 scroll">View all Reminders</a></div>
             </div>
         </div>
         <div class="card-body card-block">
@@ -35,8 +38,6 @@
                 </div>
                 @endif
             </div>
-        </div>
-        <div class="card-body card-block">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label>Reminder Date</label>
@@ -69,11 +70,14 @@
             <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block">
                 <input type="button" value="Clear All Values" onclick="resetAllValues();" class="form-control d-inline-block w-100 float-left btn-danger btn-xl ml-2 rounded-0">
             </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
         </div>
     </div>
 </div>
 @if(isset($reminders))
-<div class="col-lg-12">
+<div class="col-lg-12" id="view_all">
     <div class="card">
         <div class="card-body">
             <table class="table table-responsive table-striped">
@@ -105,6 +109,9 @@
                   @endforeach
               </tbody>
             </table>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
         </div>
     </div>
 </div>
