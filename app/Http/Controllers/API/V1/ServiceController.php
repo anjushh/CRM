@@ -86,7 +86,7 @@ class ServiceController extends Controller
             foreach ($data as $datas) {
               $datas['service_type_name'] = ServiceType::where('id', $datas->service_type)->value('service_type');
               $datas['company_name'] = Company::where('id', $datas->company_id)->value('company_name');
-              $datas['parent_name'] = ServiceType::where('id', $datas->parent_id)->value('service_type');
+              $datas['parent_name'] = Service::where('id', $datas->parent_id)->value('service_name');
             }
             return apiResponseApp(true, 200, null, [], $data);
           }else{
