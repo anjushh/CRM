@@ -24,6 +24,7 @@ class ServiceController extends Controller
             $inputs = $inputs + [
                 'company_id' => $company,
             ];
+            $inputs = $inputs + ['status' => 1];
             $id = (new Service)->store($inputs);
             return apiResponseApp(true, 200, lang('Service created successfully'));
 
