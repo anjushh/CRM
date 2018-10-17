@@ -24,18 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-        //$schedule->call(function () {
-        //     DB::table('msg_reminders')->;
-        // })->daily();
-        // $schedule->command('your:command')->daily()->at('12:00')->when(function () use ($dateInDatabase) {
-        //  return (
-        //             $dateInDatabase == Carbon::today() ||
-        //             $dateInDatabase == Carbon::yesterday() ||
-        //             $dateInDatabase == Carbon::subDays(2)
-        //         );
-        //     });
+        $schedule->call('App\Http\Controllers\MsgReminderController@remind')->everyMinute();
     }
 
     /**
