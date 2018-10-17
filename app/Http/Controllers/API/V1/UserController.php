@@ -57,6 +57,10 @@ class UserController extends Controller
         return md5(uniqid(rand(), true));
     }
 
+    private function generateApiKey() {
+        return md5(uniqid(rand(), true));
+    }
+
 
     //Create User
     public function userType(Request $request){
@@ -181,6 +185,23 @@ class UserController extends Controller
                 foreach ($user_profile as $user_profiles) {
                     $user_profiles['type'] = UserType::where('id', $user_profiles->id)->value('user_type');
                 }
+                return apiResponseApp(true, 200, null, [], $user_profile);
+            }else{
+                return apiResponseApp(false, 400, 'No User found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+    //All Lead name
+    public function leadName(){
+        try{
+            $fields = ['name as name'];
+            $user_profile = UserLogin::where('user_type', '!=', 1)->get($fields);
+            if (count($user_profile) != 0) {
                 return apiResponseApp(true, 200, null, [], $user_profile);
             }else{
                 return apiResponseApp(false, 400, 'No User found');

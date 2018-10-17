@@ -120,4 +120,70 @@ class ReportingController extends Controller
             return apiResponseApp(false, 500, lang('messages.server_error'));
         }
     }
+
+    //All Lead Reports by name
+    public function allLeadReportsName(Request $request){
+        try{     
+
+            $inputs = $request->all();
+
+            $validator = ( new Client )->ValidateClientName( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }      
+            $clients = (new UserLogin)->allLeadReportName($inputs['name']);
+
+            if (count($clients) != 0) {
+                $total_projects = Client::where('lead_head', $clients->lead_id)->get();
+                $clients['total_projects'] = count($total_projects);
+                $closed_projects = Client::where('lead_head', $clients->lead_id)->where('status', 3)->get();
+                $clients['closed_projects'] = count($closed_projects);
+                $pending_projects = Client::where('lead_head', $clients->lead_id)->where('status','!=', 3)->where('status','!=', 4)->get();
+                $clients['pending_projects'] = count($pending_projects);
+                $refused_projects = Client::where('lead_head', $clients->lead_id)->where('status', 4)->get();
+                $clients['refused_projects'] = count($refused_projects);
+                return apiResponseApp(true, 200, null, [], $clients);
+            }else{
+                return apiResponseApp(false, 400, 'No client Record found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+    //All Lead Reports by date
+    public function allLeadReportsByDate(Request $request){
+        try{     
+
+            $inputs = $request->all();
+
+            $validator = ( new Client )->ValidateClientName( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }      
+            $clients = (new UserLogin)->allLeadReportByDate($inputs);
+            $from = $inputs['from'];
+            $to = $inputs['to'];
+            if (count($clients) != 0) {
+                $total_projects = Client::where('lead_head', $clients->lead_id)->whereDate('clients.created_at', '>=', $from)->whereDate('clients.created_at', '<=', $to)->get();
+                $clients['total_projects'] = count($total_projects);
+                $closed_projects = Client::where('lead_head', $clients->lead_id)->where('status', 3)->whereDate('clients.created_at', '>=', $from)->whereDate('clients.created_at', '<=', $to)->get();
+                $clients['closed_projects'] = count($closed_projects);
+                $pending_projects = Client::where('lead_head', $clients->lead_id)->where('status','!=', 3)->where('status','!=', 4)->whereDate('clients.created_at', '>=', $from)->whereDate('clients.created_at', '<=', $to)->get();
+                $clients['pending_projects'] = count($pending_projects);
+                $refused_projects = Client::where('lead_head', $clients->lead_id)->where('status', 4)->whereDate('clients.created_at', '>=', $from)->whereDate('clients.created_at', '<=', $to)->get();
+                $clients['refused_projects'] = count($refused_projects);
+                return apiResponseApp(true, 200, null, [], $clients);
+            }else{
+                return apiResponseApp(false, 400, 'No client Record found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
 }

@@ -103,4 +103,8 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/all-client-report-bystatus', ['as' => 'all-client-report-bystatus','uses' => 'API\V1\ReportingController@allClientReportsStatus']);
 	/*update Payment*/
 	Route::any('v1/all-client-name', ['as' => 'all-client-name','uses' => 'API\V1\ClientController@clientNameList']);
+	Route::any('v1/all-lead-name', ['as' => 'all-lead-name','uses' => 'API\V1\UserController@leadName']);
+	/*update Payment*/
+	Route::any('v1/all-lead-report-byname', ['as' => 'all-lead-report-byname','uses' => 'API\V1\ReportingController@allLeadReportsName']);
+	Route::any('v1/all-lead-report-bydate', ['as' => 'all-lead-report-bydate','uses' => 'API\V1\ReportingController@allLeadReportsByDate']);
 });

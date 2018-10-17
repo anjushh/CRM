@@ -96,5 +96,26 @@ class UserLogin extends Model
         $client_count = UserType::where('id',$id)->pluck('user_type')->first();
         return $client_count;
     }
-    
+
+     //For App-- Khushboo
+    public function allLeadReportName($name){
+        $fields =  [ 'id as lead_id',
+        'name as lead_name','designation as designation'];
+        return $this->where('name', 'like', '%' . $name . '%')->first($fields);
+    }
+
+    //For App-- Khushboo
+    public function allLeadReportByDate($inputs){
+         $from = $inputs['from']; //need a space after dates.
+        $to = $inputs['to'];
+        $fields =  [ 'user_logins.id as lead_id',
+        'user_logins.name as lead_name','user_logins.designation as designation'];
+        return $this->join('clients', function($join) use ($from, $to)
+              {
+                $join->whereDate('clients.created_at', '>=', $from);
+                        $join->whereDate('clients.created_at', '<=', $to);
+              })->where('user_logins.name', 'like', '%' . $inputs['name'] . '%')->first($fields);
 }
+}
+//->whereBetween('created_at', array($from, $to))->first();
+    
