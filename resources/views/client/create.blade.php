@@ -3,8 +3,11 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <div class="col-9">
+            <div class="col-6">
                 <div class="master-subhead"><strong>Client</strong> Master</div>
+            </div>
+            <div class="col-6 float-right">
+                <div class="master-subhead"><a href="#view_all" class="btn btn-dark d-inline-block float-right text-light border-0 scroll">View all Clients</a></div>
             </div>
         </div>
         <div class="card-body card-block">
@@ -134,9 +137,12 @@
                     {!! Form::textarea('remarks',Input::old('remarks'), array('placeholder' => 'Enter Remarks','class' => 'form-control remarks')) !!}
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-50 float-left btn-primary btn-xl ml-2']) }}
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-100 float-left btn-primary btn-xl rounded-0']) }}
                 {{ Form::close() }}
+            </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block">
+                <input type="button" value="Clear All Values" onClick="resetAllValues();" class="form-control d-inline-block w-100 float-left btn-danger btn-xl ml-2 rounded-0">
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <a href="{{ url()->previous() }}" class="btn btn-primary w-50 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
@@ -149,7 +155,7 @@
         </div>
         @if(isset($create_records))
 
-        <div class="card-body">
+        <div class="card-body" id="view_all">
             <div class="card-body">
                 <table class="table table-responsive table-striped">
                     <thead>
@@ -193,14 +199,14 @@
                 </table>
             </div>
             {{ $create_records->links() }}
-        </div>
-        @endif
-        <div class="card-body">
-            <div class="col-3">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
+            <div class="col-xl-3 col-lg-3 float-right">
                 <a class="btn btn-success w-100" href="{{ route('all_payments') }}" >Manage Payments</a>
             </div>
         </div>
-
+        @endif
     </div>
 </div>
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>

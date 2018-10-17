@@ -2,6 +2,14 @@
 @section('content')
 <div class="col-lg-12">
     <div class="card">
+        <div class="card-header">
+            <div class="col-6">
+                <div class="master-subhead"><strong>Client</strong> Reports</div>
+            </div>
+            <div class="col-6 float-right">
+                <div class="master-subhead"><a href="#view_all" class="btn btn-dark w-25 d-inline-block float-right text-light border-0 scroll">View all</a></div>
+            </div>
+        </div>
         <div class="card-body">
             <div class="col-3">
                 {!! Form::select('choose_client',$clients->pluck('name','id'), Input::old('choose_status'), array('placeholder' => 'Choose Client','class' => 'form-control choose_client rounded-0')) !!}    
@@ -24,7 +32,7 @@
     </div>
 </div>
 
-<div class="col-lg-12">
+<div class="col-lg-12" id="view_all">
     <div class="card">
         <div class="card-body">
             <table id="table_id" class="display">
@@ -55,9 +63,11 @@
                     @endforeach
                 </tbody>
             </table>
+            
             <div class="clearfix"></div>
         </div>
     </div>
+    <div class="clearfix"></div>
 </div>
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
 <script>

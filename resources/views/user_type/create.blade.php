@@ -3,9 +3,12 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <div class="col-9">
+            <div class="col-6">
                 <div class="master-subhead"><strong>User Type</strong> Master</div>
             </div>
+            <!-- <div class="col-6 float-right">
+                <div class="master-subhead"><a href="#view_all" class="btn btn-dark d-inline-block float-right text-light border-0 scroll">View all Users</a></div>
+            </div> -->
         </div>
         <div class="card-body card-block">
             <div class="col-12">
@@ -41,10 +44,14 @@
                     {{ Form::submit('Save', ['name' => 'submit','class'=>'form-control d-inline-block w-25 float-left btn-primary btn-xl ml-2']) }}
                     {{ Form::close() }}
                 </div>
+                <input type="button" value="Clear All" onClick="resetAllValues();" class="form-control d-inline-block w-30 float-left btn-danger btn-xl rounded-0 w-20 float-left">
+            </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block mt-4">
+                
             </div>
         </div>
         @if(isset($user_records))
-        <div class="card-body">
+        <div class="card-body" id="view_all">
             <div class="card-body">
                 <table class="table table-responsive table-striped">
                     <thead>
@@ -68,6 +75,10 @@
                 </table>
             </div>
             {{ $user_records->links() }}
+            <div class="clearfix"></div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 d-block float-right text-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
         </div>
         @endif
     </div>

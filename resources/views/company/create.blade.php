@@ -3,8 +3,11 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <div class="col-9">
+            <div class="col-xl-6">
                 <div class="master-subhead"><strong>Company</strong> Master</div>
+            </div>
+            <div class="col-xl-6 float-right">
+                <div class="master-subhead"><a href="#view_all" class="btn btn-dark d-inline-block float-right text-light border-0 scroll">View all Company Profiles</a></div>
             </div>
         </div>
         <div class="card-body card-block">
@@ -74,26 +77,26 @@
                     {!! Form::text('company_pan', Input::old('company_pan'), array('placeholder' => 'Enter Company PAN Number','class' => 'form-control d-inline-block float-left')) !!}
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-4 pr-0">
             	@if(isset($edit_records))
-                <div class="form-group w-50 d-inline-block">
+                <div class="form-group w-100 d-inline-block">
                     {!! Form::file('company_logo',array('class' => 'form-control logo_update border-0', 'onchange'=>'uploadImage(this)')) !!}
                 </div>
-            	<div class="logo_preview w-50 d-inline-block">
+            	<div class="logo_preview w-100 d-inline-block">
                     <label id="image_error"></label>
                     <img id="image_preview" class="img-fluid" src="{{ asset('storage/'.$edit_records->company_logo) }}" />
                 </div>
                 @else
-                <div class="form-group w-50 d-inline-block">
+                <div class="form-group w-100 d-inline-block logo_block">
                     {!! Form::file('company_logo',array('class' => 'form-control logo_update border-0', 'onchange'=>'uploadImage(this)')) !!}
                 </div>
-                <div class="logo_preview w-50 d-inline-block">
+                <div class="logo_preview w-100 d-inline-block">
                     <label id="image_error"></label>
                     <img id="image_preview" class="img-fluid" src="{{ asset('images/dummy-img.jpg') }}" />
                 </div>
                 @endif
             </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="offset-xl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
                     <label class="d-inline-block mt-3">Active</label>
                     {!! Form::checkbox('status', Input::old('status'),null, array('class' => 'form-control d-inline-block w-5 pt-2')) !!}
@@ -107,12 +110,15 @@
             <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block">
                 <input type="button" value="Clear All Values" onClick="resetAllValues();" class="form-control d-inline-block w-100 float-left btn-danger btn-xl ml-2 rounded-0">
             </div>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
 		</div>
 	</div>
 </div>
 
 @if(isset($create_records))
-<div class="col-lg-12">
+<div class="col-lg-12" id="view_all">
     <div class="card">
         <div class="card-body">
             <table class="table table-responsive table-striped">
@@ -144,6 +150,9 @@
                   @endforeach
               </tbody>
             </table>
+            <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 d-inline-block float-right">
+                <a href="{{ url()->previous() }}" class="btn btn-primary w-100 float-right"><span class="fa fa-long-arrow-left"></span> Go Back</a>
+            </div>
         </div>
     </div>
     {{ $create_records->links() }}
