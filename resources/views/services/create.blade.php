@@ -13,15 +13,15 @@
         <div class="card-body card-block">
             <div class="col-12">
                 @if($errors->any())
-                    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-                        <span class="badge badge-pill badge-danger">Failed</span>
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}
-                        @endforeach
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
+                    @foreach ($errors->all() as $error)
+                        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                            <span class="badge badge-pill badge-danger">Failed</span>
+                                {{ $error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    @endforeach
                 @endif
                 @if($errors = Session::get('success'))
                  <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
@@ -42,12 +42,12 @@
             {{--Form Opened--}}
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('service_name', Input::old('service_name'), array('placeholder' => 'Enter Service Name','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    {!! Form::select('service_type',$service_types->pluck('service_type','id'),null, array('placeholder' => 'Choose Service Type','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::select('service_type',$service_types->pluck('service_type','id'),null, array('placeholder' => 'Choose Service Type','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -73,7 +73,7 @@
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::text('service_price',Input::old('service_price'), array('placeholder' => 'Enter Service Price','class' => 'form-control', 'required'=>'required')) !!}
+                    {!! Form::text('service_price',Input::old('service_price'), array('placeholder' => 'Enter Service Price','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">

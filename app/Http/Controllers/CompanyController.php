@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Validator;
+use Paginate;
 use DB;
 use Illuminate\Support\Facades\Storage;
 

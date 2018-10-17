@@ -93,13 +93,13 @@
             
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('anni_date',Input::old('anni_date'), array('placeholder' => 'Anniversay Date','class' => 'form-control')) !!}
+                    {!! Form::text('anni_date',Input::old('anni_date'), array('placeholder' => 'Anniversay Date','class' => 'form-control datepick','id' => 'anni_date')) !!}
                 </div>
             </div>
 
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group">
-                    {!! Form::date('birth_date',Input::old('birth_date'), array('placeholder' => 'Birth Date','class' => 'form-control')) !!}
+                    {!! Form::text('birth_date',Input::old('birth_date'), array('placeholder' => 'Birth Date','class' => 'form-control datepick','id' => 'birth_date')) !!}
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">

@@ -118,12 +118,11 @@ class ClientController extends Controller
                     return redirect()->route('client.create')->with('success','Data Updated Successfully');
                 }
                 else {
-                    $user_id = user_type();
+                    $user_id = user_data();
                     $company_id = active_company();
                     $data = $request->all();
                     $data['company_id'] = $company_id;
-                    $data['user_id'] = $user_id;
-                    
+                    $data['user_id'] = $user_id->id;
                     // Create Data in Database
                     Client::create($data);
                     // Create Data in Database

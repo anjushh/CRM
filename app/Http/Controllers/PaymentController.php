@@ -76,13 +76,13 @@ class PaymentController extends Controller
             (new PaymentStatus)->PaymentStatusUpdate($company_id,$request->client_id,$user->id,$request,$id);
             // Payment Status Update
 
-            $create_records = Payment::get();
+            $create_records = Payment::paginate(10);
             Payment::find($id)->update($request->all());
             return redirect()->back()->with('success','Data Saved Successfully');
 
         }
         
-        $create_records = Payment::get();
+        $create_records = Payment::paginate(10);
         Payment::find($id)->update($request->all());
         return redirect()->route('all_payments',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }

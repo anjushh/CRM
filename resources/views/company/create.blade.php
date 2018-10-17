@@ -161,7 +161,7 @@
 
 <script src="{{ asset('assets/js/vendor/jquery-2.1.4.min.js') }}"></script>
 <script type="text/javascript">
-  var fileTypes = ['jpg', 'jpeg', 'png', 'gif'];
+var fileTypes = ['jpg', 'jpeg', 'png', 'gif'];
 function uploadImage(input) {
     if (input.files && input.files[0]) {
         var extension = input.files[0].name.split('.').pop().toLowerCase(), //file extension from input file

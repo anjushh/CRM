@@ -6,6 +6,7 @@ use App\Models\Service;
 use App\Models\ServicePrice;
 use App\Models\ServiceType;
 use Validator;
+use Paginate;
 use DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

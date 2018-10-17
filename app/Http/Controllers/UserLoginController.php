@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\UserLogin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use DB;
 use Session;
+use Paginate;
 use Validator;
 
 class UserLoginController extends Controller
@@ -47,6 +49,7 @@ class UserLoginController extends Controller
             'name' => 'required|distinct',
             'email' => 'required|distinct',
             'designation' => 'required',
+            'mobile' => 'required|digits:10',
             'user_type' => 'required',
             'password_confirm' => 'same:password'
         );
@@ -79,6 +82,7 @@ class UserLoginController extends Controller
                 else {
                     $data = $request->all();
                     $data['status'] = $status;
+                    $data['password'] = Hash::make($request->password);
                     UserLogin::create($data);
                     return redirect()->route('user.create',compact('user_datas'))->with('success','Data Submitted Successfully');
                 }

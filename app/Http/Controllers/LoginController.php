@@ -97,6 +97,7 @@ class LoginController extends Controller
     
     public function loginstore(Request $request)
     {   
+        // dd($request);
         $userData = UserLogin::where('email', $request->email)->first();
         // dd($request);
         $password = \Hash::check($request->password, $userData->password);

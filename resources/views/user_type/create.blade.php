@@ -56,7 +56,7 @@
                 <table class="table table-responsive table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col" class="w-7">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Edit</th>
                         </tr>

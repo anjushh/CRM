@@ -74,6 +74,10 @@
                             <li><i class="menu-icon ti-bell"></i><a href="{{ route('reminder.create') }}#view_all">All Reminders</a></li>
                         </ul>
                     </li>
+                    @php 
+                        $i = user_type();
+                    @endphp
+                    @if($i == 1)
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-line-chart"></i>Reports</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -81,6 +85,7 @@
                             <li><i class="menu-icon fa fa-area-chart"></i><a href="{{ route('lead') }}">Lead Manager Reports</a></li>
                         </ul>
                     </li>
+                    @endif
                     {{-- 
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Other</a>

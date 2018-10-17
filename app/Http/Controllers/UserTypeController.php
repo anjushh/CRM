@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserType;
 use Validator;
+use Paginate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -48,7 +49,7 @@ class UserTypeController extends Controller
         }
         else { 
             UserType::create($request->all());
-            return redirect()->route('user_type.create')->with('success','Data Submitted Successfully');
+            return redirect()->back()->with('success','Data Submitted Successfully');
         }
     }
 

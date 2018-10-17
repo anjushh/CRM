@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\Company;
 use App\Models\ServiceType;
+use Paginate;
 
 class ServiceController extends Controller
 {

@@ -6,6 +6,8 @@ use DB;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Paginate;
+
+
 class NotificationController extends Controller
 {
     /**
@@ -18,7 +20,9 @@ class NotificationController extends Controller
         $create_records = \DB::table('notifications')
         ->join('clients', 'clients.id' , '=', 'notifications.client_id')
         ->select('clients.name as client_name', 'notifications.rem_date',  'notifications.remarks as remarks')
+        ->orderBy('notifications.created_at','desc')
         ->paginate(10);
+
         return view('reminder.notifications', compact('create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 

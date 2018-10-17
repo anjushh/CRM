@@ -1943,7 +1943,7 @@ select option:checked:after {
 .file_upload {
     input[type='file'] {
         opacity: 0 !important;
-        position: absolute;
+        position: relative;
         top: 20px;
         left: 0;
         height:40px;
@@ -2066,4 +2066,7 @@ a.back-to-top i {
     padding: 1px;
     max-height: 100% !important;
     margin: 0 auto !Important;
+}
+.doc_msg {
+    display: none;   
 }

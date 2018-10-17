@@ -115,21 +115,32 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                    <div class="form-group w-20">
-                        <div class="file_upload">
-                            Attach File: <span class="fa fa-paperclip"></span><a class="btn btn-primary mx-2 rounded">Browse...</a> 
-                            {!! Form::file('doc[]', Input::old('doc[]'), array('placeholder' => 'Choose File','class' => 'form-control d-inline-block float-left')) !!}
-                        </div>
+                <div class="col-xl-6 col-lg-3 col-md-6 col-sm-12 doc_msg text-danger">
+                    Maximum Document Uploading limit exceeded!!
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 float-left">
+                    <h4>Document</h4>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 float-right">
+                    <div class="form-group">
+                        <a class="btn add_file w-100 bg-transparent border-0 h3">+ Add More</a>
                     </div>
                 </div>
+                <div class="clearfix"></div>
+                <ul class="list-unstyled">
+                    <li class="w-10">
+                        <div class="form-group w-20">
+                            <div class="file_upload">
+                                <img src="{{ asset('images/upload.png') }}"><a class="btn btn-primary mx-2 rounded">Browse...</a> 
+                                {!! Form::file('doc[]', Input::old('doc[]'), array('placeholder' => 'Choose File','class' => 'form-control d-inline-block float-left')) !!}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
                 <div id="new_file">
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                    <div class="form-group">
-                        <a class="btn btn-primary add_file">+ Add More</a>
-                    </div>
-                </div>
+                
                 
                 <div class="clearfix"></div>
                 
@@ -173,9 +184,17 @@ jQuery('body').on('change', '.status_change', function(e) {
 });
 </script>
 <script type="text/javascript">
+    jQuery('.doc_msg').hide();
     var i = 1;
     jQuery('body').on('click', '.add_file', function(e) {
-        jQuery("#new_file").append("<div class='col-xl-12 col-lg-3 col-md-6 col-sm-12 d-block'><div class='form-group w-20'><span class='fa fa-paperclip'></span><a class='btn btn-primary mx-2 rounded'>Browse...</a><input name='doc[]' type='file'></div></div><div class='clearfix'></div>");
+        if(i > 4) {
+            jQuery('.doc_msg').show();
+            return false;
+        }
+        else {
+            jQuery("#new_file").append("<div class='col-xl-12 col-lg-3 col-md-6 col-sm-12 d-block'><div class='form-group w-20'><span class='fa fa-paperclip'></span><a class='btn btn-primary mx-2 rounded'>Browse...</a><input name='doc[]' type='file'></div></div><div class='clearfix'></div>");
+        }
+        i++;
     });
     
 </script>

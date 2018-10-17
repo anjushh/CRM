@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Validator;
+use Paginate;
 use DB;
 use App\Http\Controllers\Controller;
 
@@ -45,7 +46,6 @@ class StatusController extends Controller
      */
     public function store(Request $request, $id = null)
     {
-        dd($request);
         $inputs = $request->all();
         $rules = array('status_type' => 'required');
         $valids = Validator::make($inputs, $rules);
