@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\UserLogin;
+use App\Models\Status;
 use DB;
 use Illuminate\Http\Request;
 
@@ -30,17 +31,33 @@ class ChartController extends Controller
 
         // TO GET MAXIMUM CLOSED LEADS
 
-        // CLOSED PROJECT
-
-        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-01-01 00:00:00.001','2018-04-01 00:00:00.001'])->get()->count();
-        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-04-01 00:00:00.001','2018-07-01 00:00:00.001'])->get()->count();
-        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-07-01 00:00:00.001','2018-10-01 00:00:00.001'])->get()->count();
-        $arrays[] = Client::where('status',3)->whereBetween('created_at',['2018-10-01 00:00:00.001','2019-01-01 00:00:00.001'])->get()->count();
-        
-        // CLOSED PROJECT
-
-
         $years = Client::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))->groupby('year','month')->get();
+        
+        
+        $statuses = Status::get();
+        $dates = [['2018-01-01 00:00:00.001','2018-04-01 00:00:00.001'],['2018-04-01 00:00:00.001','2018-07-01 00:00:00.001'],['2018-07-01 00:00:00.001','2018-10-01 00:00:00.001'],['2018-10-01 00:00:00.001','2019-01-01 00:00:00.001']];
+
+        // GENERATE QUARTER PROJECT STATUS
+        
+        foreach ($statuses as $key => $statuse) {
+            foreach ($dates as $keys => $date) {
+                $tots_chart[$keys] = Client::where('status',$statuse->id)->whereBetween('created_at',$date)->get()->count();
+            }
+            $charts[$key] = $tots_chart;
+        }
+
+        // GENERATE QUARTER PROJECT STATUS
+
+        // TOTAL PROJECT
+
+        $tot_chart[] = Client::whereBetween('created_at',['2018-01-01 00:00:00.001','2018-04-01 00:00:00.001'])->get()->count();
+        $tot_chart[] = Client::whereBetween('created_at',['2018-04-01 00:00:00.001','2018-07-01 00:00:00.001'])->get()->count();
+        $tot_chart[] = Client::whereBetween('created_at',['2018-07-01 00:00:00.001','2018-10-01 00:00:00.001'])->get()->count();
+        $tot_chart[] = Client::whereBetween('created_at',['2018-10-01 00:00:00.001','2019-01-01 00:00:00.001'])->get()->count();
+        
+        // TOTAL PROJECTS
+
+        
 
     	$chartjs = app()->chartjs
         ->name('lineChartTest')
@@ -56,7 +73,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(32, 168, 216, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => $arrays,
+                'data' => $tot_chart,
             ],
             [
                 "label" => "Pending Projects",
@@ -66,7 +83,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(23, 131, 169, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => ['0','7','5','6'],
+                'data' => $charts[0],
             ],
             [
                 "label" => "In Process Projects",
@@ -76,7 +93,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(255, 193, 7, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => ['2','4','8','6'],
+                'data' => $charts[1],
             ],
             [
                 "label" => "Closed Projects",
@@ -86,7 +103,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(77, 189, 116, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => ['5','2','4','1'],
+                'data' => $charts[2],
             ],
             [
                 "label" => "Refused Projects",
@@ -96,7 +113,7 @@ class ChartController extends Controller
                 "pointBackgroundColor" => "rgba(248, 108, 107, 0.7)",
                 "pointHoverBackgroundColor" => "#fff",
                 "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                'data' => ['4','7','5','6'],
+                'data' => $charts[3],
             ]
         ])
 
