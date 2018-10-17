@@ -26,6 +26,16 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        //$schedule->call(function () {
+        //     DB::table('msg_reminders')->;
+        // })->daily();
+        // $schedule->command('your:command')->daily()->at('12:00')->when(function () use ($dateInDatabase) {
+        //  return (
+        //             $dateInDatabase == Carbon::today() ||
+        //             $dateInDatabase == Carbon::yesterday() ||
+        //             $dateInDatabase == Carbon::subDays(2)
+        //         );
+        //     });
     }
 
     /**

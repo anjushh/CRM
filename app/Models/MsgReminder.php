@@ -91,4 +91,15 @@ class MsgReminder extends Model
     {
         $this->where('id', $id)->delete();
     }
+
+     // For Web -- Khushboo
+    public function ValidateRequestApp($inputs){
+        $rules = [
+            'rem_date' => 'required',
+            'client_id' => 'required|numeric',
+            'remarks' => 'required',
+            'status' => 'required|numeric'
+        ];
+        return \Validator::make($inputs, $rules);
+    }
 }

@@ -111,4 +111,6 @@ Route::group(array('middleware' => 'auth.api'), function () {
 	Route::any('v1/all-client-report-bydatename', ['as' => 'all-client-report-bydatename','uses' => 'API\V1\ReportingController@allClientReportsByDateName']);
 	Route::any('v1/all-client-report-bydatestatus', ['as' => 'all-client-report-bydatestatus','uses' => 'API\V1\ReportingController@allClientReportsByDateStatus']);
 	Route::any('v1/add-device', ['as' => 'add-device','uses' => 'API\V1\UserController@addDevice']);
+	Route::any('v1/add-reminder', ['as' => 'add-reminder','uses' => 'API\V1\MessageReminderController@createReminder']);
+	Route::any('v1/reminders-list', ['as' => 'reminders-list','uses' => 'API\V1\MessageReminderController@remindersList']);
 });
