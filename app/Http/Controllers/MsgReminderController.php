@@ -28,7 +28,14 @@ class MsgReminderController extends Controller
     {
 
         try{
-            $clients = Client::get();
+            $company_id = active_company();
+            $user_id = user_data();
+            if($user_id->user_type == 1){
+                $clients = Client::where('company_id',$company_id)->get();
+            }
+            else {
+                $clients = Client::where('company_id',$company_id)->where('user_id',$user_id->id)->get();
+            }
             $reminders = (new MsgReminder)->msgRemindersData();
             if($id) {
                 $edit_records = (new MsgReminder)->edit($id);
@@ -53,8 +60,17 @@ class MsgReminderController extends Controller
     {
         try{
             
-            $clients = Client::get();
-            $reminders = MsgReminder::get();
+            $company_id = active_company();
+            $user_id = user_data();
+            if($user_id->user_type == 1){
+                $clients = Client::where('company_id',$company_id)->get();
+                $reminders = MsgReminder::where('company_id',$company_id)->get();
+            }
+            else {
+                $clients = Client::where('company_id',$company_id)->where('user_id',$user_id->id)->get();
+                $reminders = MsgReminder::where('company_id',$company_id)->where('user_id',$user_id->id)->get();
+            }
+            
             $company_id = active_company();
             // To get user_type
             $user = user_data();
@@ -78,7 +94,7 @@ class MsgReminderController extends Controller
                 }
 
                 (new MsgReminder)->store($inputs);
-                return view('reminder.create',compact('clients','reminders'))->with('i', ($request->input('page', 1) - 1) * 10);
+                return redirect()->back()->with('clients',$clients)->with('reminders',$reminders)->with('i', ($request->input('page', 1) - 1) * 10);
             }
         }
         catch(Exception $e){

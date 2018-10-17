@@ -6,6 +6,7 @@ use App\Models\PaymentStatus;
 use App\Models\Msgreminder;
 use DB;
 use Validator;
+use Paginate;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -27,11 +28,18 @@ class PaymentController extends Controller
      */
     public function create(Request $request, $id = null)
     {
+        $company_id = active_company();
+        $user_id = user_data();
         if($id != null){
             $edit_records = Payment::where('id',$id)->first();
             return view('payment.edit',compact('edit_records'))->with('i', ($request->input('page', 1) - 1) * 10);    
         }
-        $create_records = Payment::get();
+        if($user_id->user_type == '1') {
+            $create_records = Payment::where('company_id',$company_id)->paginate(10);
+        }
+        else {
+            $create_records = Payment::where('user_id',$user_id->id)->where('company_id',$company_id)->paginate(10);
+        }
         return view('payment.payment',compact('statuses','create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 

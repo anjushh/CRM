@@ -53,6 +53,8 @@ class MsgReminder extends Model
 
     //For web -- Anju
     public function msgRemindersData(){
+        $company_id = active_company();
+        $user_id = user_data();
     	$fields = [
     	'msg_reminders.id as id',
     	'msg_reminders.client_id as client_id',
@@ -61,7 +63,12 @@ class MsgReminder extends Model
     	'msg_reminders.status as status',
     	'c.name as client_name',
     	];
-    	return $this->join('clients as c', 'c.id', '=', 'msg_reminders.client_id')->get($fields);
+        if($user_id->user_type == 1){
+    	   return $this->join('clients as c', 'c.id', '=', 'msg_reminders.client_id')->where('msg_reminders.company_id',$company_id)->get($fields);
+        }
+        else {
+            return $this->join('clients as c', 'c.id', '=', 'msg_reminders.client_id')->where('msg_reminders.company_id',$company_id)->where('msg_reminders.user_id',$user_id->id)->get($fields);
+        }
     }
 
     // For Web --- Anju From StatusUpdateController

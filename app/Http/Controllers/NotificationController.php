@@ -17,12 +17,24 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-        $create_records = \DB::table('notifications')
-        ->join('clients', 'clients.id' , '=', 'notifications.client_id')
-        ->select('clients.name as client_name', 'notifications.rem_date',  'notifications.remarks as remarks')
-        ->orderBy('notifications.created_at','desc')
-        ->paginate(10);
-
+        $company_id = active_company();
+        $user_id = user_data();
+        if($user_id->user_type == 1){
+            $create_records = \DB::table('notifications')
+            ->join('clients', 'clients.id' , '=', 'notifications.client_id')
+            ->select('clients.name as client_name', 'notifications.rem_date',  'notifications.remarks as remarks')
+            ->orderBy('notifications.created_at','desc')
+            ->paginate(10);
+        }
+        else {
+            $create_records = \DB::table('notifications')
+            ->join('clients', 'clients.id' , '=', 'notifications.client_id')
+            ->select('clients.name as client_name', 'notifications.rem_date',  'notifications.remarks as remarks')
+            ->where('notifications.user_id',$user_id->id)
+            ->where('notifications.company_id', $company_id)
+            ->orderBy('notifications.created_at','desc')
+            ->paginate(10);
+        }
         return view('reminder.notifications', compact('create_records'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 

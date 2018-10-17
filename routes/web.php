@@ -143,4 +143,8 @@ Route::group(['middleware' => 'login'], function (){
 	// Lead Reports Routes
 	Route::get('/lead-reports', 'ReportController@lead')->name('lead');
 	Route::get('/lead-reports/{id}/{from_date}/{to_date}', 'ReportController@lead_data')->name('lead.data');
+
+	//Profile Routes
+	Route::get('/profile', 'ProfileController@index')->name('profile');
+
 });

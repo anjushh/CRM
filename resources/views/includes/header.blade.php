@@ -16,14 +16,26 @@
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
                     @php
+                        $company_id = active_company();
+                        $user_id = user_data();
                         $notifications = notification();
-                        $noti_count = count($notifications->where('read_status','1'));
+                        if($user_id->user_type == 1){
+                            $noti_count = count($notifications->where('read_status','1')->where('company_id',$company_id));
+                        }
+                        else{
+                            $noti_count = count($notifications->where('read_status','1')->where('user_id',$user_id->id)->where('company_id',$company_id));
+                        }
                     @endphp
                     <span class="count noti_count bg-danger">{{ $noti_count }}</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="notification">
                         @php
+                        if($user_id->user_type == 1){
                             $notifications = $notifications->sortByDesc('read_status')->slice(0, 5);
+                        }
+                        else {
+                            $notifications = $notifications->where('user_id',$user_id->id)->where('company_id',$company_id)->sortByDesc('read_status')->slice(0, 5);
+                        }
                         @endphp
                         @foreach($notifications as $notification)
                             <a class="dropdown-item msg_read media bg-flat-color-1" href="#">
@@ -38,7 +50,7 @@
                         <span class="d-block text-center btn btn-default border-top border-left-0 border-right-0 border-bottom-0 border-secondary"><a href="{{ route('all_noti') }}" class="underline">View All</a></span>
                     </div>
                 </div>
-                <div class="dropdown for-message">
+                <!-- <div class="dropdown for-message">
                     <button class="btn btn-secondary dropdown-toggle" type="button"
                         id="message"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,7 +92,7 @@
                             </span>
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-sm-5">
@@ -89,13 +101,13 @@
                 <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}" alt="User Avatar">
                 </a>
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
-                    <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
-                    <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+                    <a class="nav-link" href="{{ route('profile') }}"><i class="fa fa- user"></i>My Profile</a>
+                    <a class="nav-link" href="{{ route('all_noti') }}"><i class="fa fa- user"></i>Notifications <span class="count">{{ $noti_count }}</span></a>
+                    <!-- <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a> -->
                     <a class="nav-link" href="{{ route('login.logout') }}"><i class="fa fa-power -off"></i>Logout</a>
                 </div>
             </div>
-            <div class="language-select dropdown" id="language-select">
+            <!-- <div class="language-select dropdown" id="language-select">
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
                 <i class="flag-icon flag-icon-us"></i>
                 </a>
@@ -113,7 +125,7 @@
                         <i class="flag-icon flag-icon-it"></i>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </header>
