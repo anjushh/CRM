@@ -11,6 +11,7 @@
 |
 */
 
+// Route::get('/remind', 'MsgReminderController@remind');
 
 
 // Login Routes

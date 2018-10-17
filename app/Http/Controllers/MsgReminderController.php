@@ -95,17 +95,9 @@ class MsgReminderController extends Controller
     public function show(Request $request)
     {
         try {
-            $reminders = MsgReminder::get();
             $company_id = active_company();
             $user_id = user_data();
-            foreach ($reminders as $reminder){
-                if($reminder->rem_date == date('Y-m-d')){
-                    (new Notification)->createNotification($reminder, $company_id,$user_id->id);
-                }
-                else {
-                    // return redirect()->back()->with('alert', 'Deleted!');
-                }
-            }
+            
             return view('reminder.view')->with('alert', 'Deleted!');
         }
         catch(Exception $e){
@@ -143,9 +135,17 @@ class MsgReminderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    { 
-        // dd($id);
+    {
         (new MsgReminder)->deleteAccount($id);
         return redirect()->back()->with('success','Record Deleted Successfully');
+    }
+
+    public function remind(){
+        $reminders = MsgReminder::get();
+        foreach ($reminders as $reminder){
+            if($reminder->rem_date == date('Y-m-d')){
+                (new Notification)->createNotification($reminder, $reminder->company_id,$reminder->user_id);
+            }
+        }
     }
 }
