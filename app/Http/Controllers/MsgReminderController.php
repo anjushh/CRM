@@ -141,6 +141,7 @@ class MsgReminderController extends Controller
     }
 
     public function remind(){
+        \Log::info('Cron run');
         $reminders = MsgReminder::get();
         foreach ($reminders as $reminder){
             if($reminder->rem_date == date('Y-m-d')){
