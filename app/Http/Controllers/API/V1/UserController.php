@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\UserLogin;
 use App\Models\UserType;
+use App\Models\DeviceTokens;
 
 class UserController extends Controller
 {
@@ -212,6 +213,28 @@ class UserController extends Controller
             return apiResponseApp(false, 500, lang('messages.server_error'));
         }
     }
+
+    //Create User
+    public function addDevice(Request $request){
+        try{
+            $inputs = $request->all();
+            
+            $validator = ( new DeviceTokens )->validatetoken( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }
+            $inputs = $inputs + ['user_id' => \Auth::User()->id];
+            if ($inputs['device_token'] != '') {
+                $id = (new DeviceTokens)->store($inputs);
+            }
+            return apiResponseApp(true, 200, lang('Device token created successfully'));
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
 
     
 }

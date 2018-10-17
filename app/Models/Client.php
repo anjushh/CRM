@@ -316,4 +316,38 @@ class Client extends Model
 						            });
 					})->get($fields);
     }
+
+
+    //For App-- Khushboo
+    public function allclientReportByDateOnly($from, $to){
+        $fields =  [ 'id as client_id',
+        'name as client_name','created_at as joining_date', 'status as project_status'];
+        return $this->whereDate('clients.created_at', '>=', $from)
+                    ->whereDate('clients.created_at', '<=', $to)->get($fields);
+    }
+
+    //For App-- Khushboo
+    public function allclientReportByDateName($from, $to, $name){
+        $fields =  [ 'id as client_id',
+        'name as client_name','created_at as joining_date', 'status as project_status'];
+        return $this->whereDate('clients.created_at', '>=', $from)
+                    ->whereDate('clients.created_at', '<=', $to)
+                    ->where('name', 'like', '%' . $name . '%')
+                    ->get($fields);
+    }
+
+    //For App-- Khushboo
+    public function allclientReportStatusDate($id, $from, $to){
+        $fields =  [ 'clients.id as client_id',
+        'clients.name as client_name','clients.created_at as joining_date', 'clients.status as project_status'];
+        return $this->join('status_updates as statusupdate', function($join) use ($id){
+                            $join->on('statusupdate.id', '=', 'clients.status');
+                            $join->on(function($query) use ($id)
+                                    {
+                                     $query->where('statusupdate.status_type', '=', $id);
+                                    });
+                    })->whereDate('clients.created_at', '>=', $from)
+                    ->whereDate('clients.created_at', '<=', $to)
+                    ->get($fields);
+    }
 }

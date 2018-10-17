@@ -186,4 +186,110 @@ class ReportingController extends Controller
         }
     }
 
+    //All Client Reports by date
+    public function allClientReportsByOnlyDate(Request $request){
+        try{            
+            $inputs = $request->all();
+            $from = $inputs['from'];
+            $to = $inputs['to'];
+            $clients = (new Client)->allclientReportByDateOnly($from, $to);
+
+            if (count($clients) != 0) {
+                foreach ($clients as $client) {
+                    $status_type = StatusUpdate::where('id', $client->project_status)->value('status_type');
+                    $client['project_status'] = Status::where('id', $status_type)->value('status_type');
+                    $payment = Payment::where('client_id', $client->client_id)->value('id');
+                    $payment_status = PaymentStatus::where('id', $payment)->orderBy('created_at', 'desc')->limit(1)->value('status');
+                    if ($payment_status == 2) {
+                        $payment_status = 'Completed';
+                    }else{
+                        $payment_status = 'Pending';
+                    }
+                    $client['payment_status'] = $payment_status;
+                    $lead_head = LeadAssignment::where('client_id', $client->client_id)->where('status', 1)->orderBy('created_at', 'desc')->limit(1)->value('lead_head');
+                    $client['lead_manager'] = UserLogin::where('id', $lead_head)->value('name');
+                }
+                return apiResponseApp(true, 200, null, [], $clients);
+            }else{
+                return apiResponseApp(false, 400, 'No client Record found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+    //All Client Reports by date and name
+    public function allClientReportsByDateName(Request $request){
+        try{            
+            $inputs = $request->all();
+            $from = $inputs['from'];
+            $to = $inputs['to'];
+            $clients = (new Client)->allclientReportByDateName($from, $to, $inputs['name']);
+
+            if (count($clients) != 0) {
+                foreach ($clients as $client) {
+                    $status_type = StatusUpdate::where('id', $client->project_status)->value('status_type');
+                    $client['project_status'] = Status::where('id', $status_type)->value('status_type');
+                    $payment = Payment::where('client_id', $client->client_id)->value('id');
+                    $payment_status = PaymentStatus::where('id', $payment)->orderBy('created_at', 'desc')->limit(1)->value('status');
+                    if ($payment_status == 2) {
+                        $payment_status = 'Completed';
+                    }else{
+                        $payment_status = 'Pending';
+                    }
+                    $client['payment_status'] = $payment_status;
+                    $lead_head = LeadAssignment::where('client_id', $client->client_id)->where('status', 1)->orderBy('created_at', 'desc')->limit(1)->value('lead_head');
+                    $client['lead_manager'] = UserLogin::where('id', $lead_head)->value('name');
+                }
+                return apiResponseApp(true, 200, null, [], $clients);
+            }else{
+                return apiResponseApp(false, 400, 'No client Record found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
+
+    //All Client Reports by date and sattes
+    public function allClientReportsByDateStatus(Request $request){
+        try{            
+            $inputs = $request->all();
+             $validator = ( new Client )->ValidateClientByStatus( $inputs );
+            if( $validator->fails() ) {
+                return apiResponseApp(false, 406, "", errorMessages($validator->messages()));
+            }      
+
+            $from = $inputs['from'];
+            $to = $inputs['to'];
+            $clients = (new Client)->allclientReportStatusDate($inputs['id'], $from, $to);
+
+            if (count($clients) != 0) {
+                foreach ($clients as $client) {
+                    $status_type = StatusUpdate::where('id', $client->project_status)->value('status_type');
+                    $client['project_status'] = Status::where('id', $status_type)->value('status_type');
+                    $payment = Payment::where('client_id', $client->client_id)->value('id');
+                    $payment_status = PaymentStatus::where('id', $payment)->orderBy('created_at', 'desc')->limit(1)->value('status');
+                    if ($payment_status == 2) {
+                        $payment_status = 'Completed';
+                    }else{
+                        $payment_status = 'Pending';
+                    }
+                    $client['payment_status'] = $payment_status;
+                    $lead_head = LeadAssignment::where('client_id', $client->client_id)->where('status', 1)->orderBy('created_at', 'desc')->limit(1)->value('lead_head');
+                    $client['lead_manager'] = UserLogin::where('id', $lead_head)->value('name');
+                }
+                return apiResponseApp(true, 200, null, [], $clients);
+            }else{
+                return apiResponseApp(false, 400, 'No client Record found');
+            }
+
+
+        }catch(Exception $e){
+            return apiResponseApp(false, 500, lang('messages.server_error'));
+        }
+    }
 }
